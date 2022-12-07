@@ -1,7 +1,11 @@
-import { ChainId, DAppProvider } from "@usedapp/core"
-import Navbar from "./components/Navbar/Navbar"
+import { ChainId, DAppProvider, useEthers } from "@usedapp/core"
+import Navbar from "./components/navbar/Navbar"
+import Header from "./components/header/Header"
+import Content from "./components/content/Content"
+import "./App.css"
 
 function App() {
+    const { account, activateBrowserWallet } = useEthers()
     return (
         <DAppProvider
             config={{
@@ -9,6 +13,8 @@ function App() {
             }}
         >
             <Navbar />
+            <Header />
+            <Content />
         </DAppProvider>
     )
 }
