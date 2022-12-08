@@ -1,31 +1,21 @@
 import React from "react"
+import { FaBars, FaTimes } from "react-icons/fa"
 
 const Navbar = () => {
     return (
-        //create a navbar with wallet connect options
-        <nav className="flex items-center justify-between flex-wrap p-6">
-            <div>
-                <span className="font-thin text-xl tracking-tight text-white">
-                labore solverit
-                </span>
+        <header className="flex bg-white border-b-2 justify-between text-white p-6">
+            <h3 className="text-2xl flex-grow-0 text-black font-bold">LogoHier</h3>
+            <nav className="flex">
+                <ul className="flex text-black text-2xl">
+                    <li className="mx-8"><a href="/">About</a></li>
+                    <li className="mx-8"><a href="/">Staking</a></li>
+                    <li className="mx-8"><a href="/">Roadman</a></li>
+                </ul>
+            </nav>
+            <div className="flex flex-grow-0">
+                <button className="text-2xl text-black">Connect</button>
             </div>
-            <div>
-                <span className="font-thin text-xl tracking-tight mx-16 text-white">
-                    About
-                </span>
-                <span className="font-thin text-xl tracking-tight mx-16 text-white">
-                    Staking
-                </span>
-                <span className="font-thin text-xl tracking-tight mx-16 text-white">
-                    Roadmap
-                </span>
-            </div>
-            <div>
-                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 shadow-lg shadow-blue-500/40 hover:shadow-blue-500/40 rounded">
-                    Connect Wallet
-                </button>
-            </div>
-        </nav>
+        </header>
     )
 }
 

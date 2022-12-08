@@ -1,4 +1,8 @@
-body {
-    --tw-bg-opacity: 1;
-    background-color: rgb(15 23 42 / var(--tw-bg-opacity));
+@font-face {
+    font-family: Doodle_Head;
+    src: url(fonts/Doodle_Head.ttf);
+}
+
+#root {
+    font-family: Doodle_Head;
 }

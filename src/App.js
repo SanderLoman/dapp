@@ -3,6 +3,7 @@ import Navbar from "./components/navbar/Navbar"
 import Header from "./components/header/Header"
 import Content from "./components/content/Content"
 import "./App.css"
+import React from "react"
 
 function App() {
     const { account, activateBrowserWallet } = useEthers()
@@ -12,9 +13,11 @@ function App() {
                 supportedChains: [ChainId.Goerli, ChainId.BSC, ChainId.Mainnet],
             }}
         >
-            <Navbar />
-            <Header />
-            <Content />
+            <React.Fragment>
+                <Navbar />
+            </React.Fragment>
+            {/* <Header /> */}
+            {/* <Content /> */}
         </DAppProvider>
     )
 }
