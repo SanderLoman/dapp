@@ -12,7 +12,7 @@ const Navbar = () => {
         <header className="flex bg-white justify-between p-4">
             <h3 className="text-4xl text-black font-bold">LogoHier</h3>
             <nav ref={navRef} className="flex">
-                <ul className="flex text-black text-4xl">
+                <ul className="flex text-black text-4xl nav-items">
                     <li className="mx-8">
                         <a href="/">About</a>
                     </li>
