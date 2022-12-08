@@ -1,5 +1,6 @@
 import { React, useRef } from "react"
 import { FaBars, FaTimes } from "react-icons/fa"
+import "./Navbar.css"
 
 const Navbar = () => {
     const navRef = useRef(null)
@@ -8,7 +9,7 @@ const Navbar = () => {
         navRef.current.classList.toggle("hidden")
     }
     return (
-        <header className="flex bg-white justify-between text-white p-4">
+        <header className="flex bg-white justify-between p-4">
             <h3 className="text-4xl text-black font-bold">LogoHier</h3>
             <nav ref={navRef} className="flex">
                 <ul className="flex text-black text-4xl">
@@ -22,15 +23,15 @@ const Navbar = () => {
                         <a href="/">Roadman</a>
                     </li>
                 </ul>
-                <button onClick={showNavbar}>
+                <button className="nav-btn nav-close-btn" onClick={showNavbar}>
                     <FaTimes />
                 </button>
             </nav>
-            <button onClick={showNavbar}>
+            <button className="nav-btn" onClick={showNavbar}>
                 <FaBars />
             </button>
 
-            <button className="text-4xl font-bold text-black">Connect</button>
+            <button className="text-4xl font-bold">Connect</button>
         </header>
     )
 }
