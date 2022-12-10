@@ -1,5 +1,5 @@
 import { React, useRef } from "react"
-import { FaBars, FaTimes } from "react-icons/fa"
+import uni from "../../assets/uni.png"
 import "./Navbar.css"
 
 const Navbar = () => {
@@ -9,29 +9,21 @@ const Navbar = () => {
         navRef.current.classList.toggle("hidden")
     }
     return (
-        <header className="flex bg-white justify-between p-4">
-            <h3 className="text-4xl text-black font-bold">LogoHier</h3>
-            <nav ref={navRef} className="flex">
-                <ul className="flex text-black text-4xl nav-items">
-                    <li className="mx-8">
-                        <a href="/">About</a>
+        <header className="flex justify-between h-full">
+            <img src={uni} alt="logo" className="w-20 h-20" />
+            <nav className="text-black" ref={navRef}>
+                <ul className="flex">
+                    <li className="text-4xl m-5">
+                        <a href="#projects">Staking</a>
                     </li>
-                    <li className="mx-8">
-                        <a href="/">Staking</a>
+                    <li className="text-4xl m-5">
+                        <a href="#roadmap">Roadmap</a>
                     </li>
-                    <li className="mx-8">
-                        <a href="/">Roadman</a>
+                    <li className="text-4xl m-5">
+                        <a href="#team">Team</a>
                     </li>
                 </ul>
-                <button className="nav-btn nav-close-btn" onClick={showNavbar}>
-                    <FaTimes />
-                </button>
             </nav>
-            <button className="nav-btn" onClick={showNavbar}>
-                <FaBars />
-            </button>
-
-            <button className="text-4xl font-bold">Connect</button>
         </header>
     )
 }

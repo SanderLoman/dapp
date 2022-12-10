@@ -6,3 +6,17 @@
 #root {
     font-family: Doodle_Head;
 }
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+    nav {
+        display: none;
+    }
+
+    .text-25xl {
+        font-size: 5rem;
+    }
+}

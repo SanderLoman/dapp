@@ -1,18 +1,1 @@
-header .nav-btn {
-    padding: 5px;
-    cursor: pointer;
-    background: transparent;
-    border: none;
-    outline: none;
-    display: none;
-    opacity: 0;
-}
 
-@media screen and (max-width: 768px) {
-    header .nav-btn {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        opacity: 1;
-    }
-}
