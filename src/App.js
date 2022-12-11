@@ -17,7 +17,7 @@ function App() {
                 <Navbar />
             </React.Fragment>
             <Header />
-            {/* <Content /> */}
+            <Content />
         </DAppProvider>
     )
 }

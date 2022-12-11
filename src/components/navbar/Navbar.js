@@ -1,17 +1,20 @@
-import { React, useRef } from "react"
+import { React, useState } from "react"
+import { FaTimes, FaBars } from "react-icons/fa"
 import uni from "../../assets/uni.png"
 import "./Navbar.css"
 
 const Navbar = () => {
-    const navRef = useRef(null)
+    const [click, setClick] = useState(false)
+    const handleClick = () => setClick(!click)
+    const closemenu = () => setClick(false)
 
-    const showNavbar = () => {
-        navRef.current.classList.toggle("hidden")
-    }
     return (
         <header className="flex justify-between h-full">
             <img src={uni} alt="logo" className="w-20 h-20" />
-            <nav className="text-black" ref={navRef}>
+            <div className="" onClick={handleClick}>
+                {click ? <FaBars /> : <FaTimes />}
+            </div>
+            <nav className="text-black">
                 <ul className="flex">
                     <li className="text-4xl m-5">
                         <a href="#projects">Staking</a>
