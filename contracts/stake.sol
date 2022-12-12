@@ -678,7 +678,7 @@ contract POODOGEstake is ReentrancyGuard, Pausable, Ownable {
         if(locked){
             lockDuration = _rewardsDuration;
         }
-        stakeAdmin = 0x78cBC521e02bf346bCE8FF6Cb63B1540A77C4343;
+        stakeAdmin = 0x78cBC521e02bf346bCE8FF6Cb63B1540A77C4343; // owner wallet
     }
 
 
