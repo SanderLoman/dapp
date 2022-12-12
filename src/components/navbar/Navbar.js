@@ -1,6 +1,6 @@
 import { React, useState } from "react"
 import { FaTimes, FaBars } from "react-icons/fa"
-import uni from "../../assets/uni.png"
+import WTFlogo from "../../assets/WTFlogo.png"
 import "./Navbar.css"
 
 const Navbar = () => {
@@ -10,19 +10,19 @@ const Navbar = () => {
 
     return (
         <header className="flex justify-between h-full">
-            <img src={uni} alt="logo" className="w-20 h-20" />
+            <img src={WTFlogo} alt="logo" className="h-10 md:h-20 pl-4" />
             <div className="" onClick={handleClick}>
                 {click ? <FaBars /> : <FaTimes />}
             </div>
             <nav className="text-black">
                 <ul className="flex">
-                    <li className="text-4xl m-5">
+                    <li className="text-5xl m-5">
                         <a href="#projects">Staking</a>
                     </li>
-                    <li className="text-4xl m-5">
+                    <li className="text-5xl m-5">
                         <a href="#roadmap">Roadmap</a>
                     </li>
-                    <li className="text-4xl m-5">
+                    <li className="text-5xl m-5">
                         <a href="#team">Team</a>
                     </li>
                 </ul>
