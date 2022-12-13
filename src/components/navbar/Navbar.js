@@ -1,5 +1,5 @@
 import React from "react"
-import WTFlogo from "../../assets/uni.png"
+import WTFlogo from "../../assets/wtf_dude_orange.png"
 import "./Navbar.css"
 
 const Navbar = () => {
@@ -7,33 +7,32 @@ const Navbar = () => {
         <nav className="bg-white text-4xl">
             <div className="container mx-auto px-6 py-3">
                 <div className="flex items-center justify-between">
-                    <ul className="flex">
-                        <li className="flex items-center">
+                    <a href="/">
+                        <div className="flex items-center">
+                            <span className="text-customPurple text-1xl mx-2 font-semibold">
+                                WTF
+                            </span>
                             <img
                                 src={WTFlogo}
                                 alt="WTF logo"
                                 className="w-10 h-10"
                             />
-                            <span className="text-gray-600 text-xl mx-2 font-semibold">
-                                WTF
+                        </div>
+                    </a>
+                    <ul className="LINKS flex">
+                        <li className="flex items-center">
+                            <span className="text-customPurple text-1xl mx-2 font-semibold">
+                                <a href="/">Staking</a>
                             </span>
                         </li>
-
                         <li className="flex items-center">
-                            <span className="text-gray-600 text-xl mx-2 font-semibold">
-                                Staking
+                            <span className="text-customPink text-1xl mx-2 font-semibold">
+                                <a href="/">Roadmap</a>
                             </span>
                         </li>
-
                         <li className="flex items-center">
-                            <span className="text-gray-600 text-xl mx-2 font-semibold">
-                                Roadmap
-                            </span>
-                        </li>
-
-                        <li className="flex items-center">
-                            <span className="text-gray-600 text-xl mx-2 font-semibold">
-                                Team
+                            <span className="text-customOrange text-1xl mx-2 font-semibold">
+                                <a href="/">Team</a>
                             </span>
                         </li>
                     </ul>

@@ -7,12 +7,12 @@
     font-family: Doodle_Head;
 }
 
-/* ::-webkit-scrollbar {
+::-webkit-scrollbar {
     display: none;
-} */
+}
 
 @media screen and (max-width: 768px) {
-    nav {
+    .LINKS {
         display: none;
     }
 
