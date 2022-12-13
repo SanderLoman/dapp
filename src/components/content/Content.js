@@ -1,7 +1,7 @@
 import React from "react"
 
 const Content = () => {
-    return (<></>)
+    return <div className="text-black"></div>
 }
 
 export default Content

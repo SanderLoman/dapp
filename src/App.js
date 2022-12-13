@@ -6,6 +6,9 @@ import Content from "./components/content/Content"
 import SectionOrange from "./components/sectionOrange/SectionOrange"
 import SectionWhite from "./components/sectionWhite/SectionWhite"
 import "./App.css"
+import SectionPurple from "./components/sectionPurple/SectionPurple"
+import SectionPink from "./components/sectionPink/SectionPink"
+import SectionLightPink from "./components/sectionLightPink/SectionLightPink"
 
 function App() {
     const { account, activateBrowserWallet } = useEthers()
@@ -22,10 +25,12 @@ function App() {
             <SectionOrange>
                 <Content />
             </SectionOrange>
-            <SectionWhite>
-                <p className="text-center text-white text-2xl z-auto">test</p>
-            </SectionWhite>
-            <SectionOrange></SectionOrange>
+            <SectionWhite></SectionWhite>
+            <SectionPurple></SectionPurple>
+            <SectionWhite></SectionWhite>
+            <SectionLightPink></SectionLightPink>
+            <SectionWhite></SectionWhite>
+            <SectionPink></SectionPink>
         </DAppProvider>
     )
 }
