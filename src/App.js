@@ -13,9 +13,7 @@ function App() {
                 supportedChains: [ChainId.Goerli, ChainId.BSC, ChainId.Mainnet],
             }}
         >
-            <React.Fragment>
-                <Navbar />
-            </React.Fragment>
+            <Navbar />
             <Header />
             <Content />
         </DAppProvider>
