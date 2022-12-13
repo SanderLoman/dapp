@@ -1,33 +1,45 @@
-import { React, useState } from "react"
-import { FaTimes, FaBars } from "react-icons/fa"
-import WTFlogo from "../../assets/WTFlogo.png"
+import React from "react"
+import WTFlogo from "../../assets/uni.png"
 import "./Navbar.css"
 
 const Navbar = () => {
-    const [click, setClick] = useState(false)
-    const handleClick = () => setClick(!click)
-    const closemenu = () => setClick(false)
-
     return (
-        <header className="flex justify-between h-full">
-            <img src={WTFlogo} alt="logo" className="h-10 md:h-20 pl-4" />
-            <div className="" onClick={handleClick}>
-                {click ? <FaTimes className="FaTimes"/> : <FaBars className="FaTimes"/>}
+        <nav className="bg-white text-4xl">
+            <div className="container mx-auto px-6 py-3">
+                <div className="flex items-center justify-between">
+                    <ul className="flex">
+                        <li className="flex items-center">
+                            <img
+                                src={WTFlogo}
+                                alt="WTF logo"
+                                className="w-10 h-10"
+                            />
+                            <span className="text-gray-600 text-xl mx-2 font-semibold">
+                                WTF
+                            </span>
+                        </li>
+
+                        <li className="flex items-center">
+                            <span className="text-gray-600 text-xl mx-2 font-semibold">
+                                Staking
+                            </span>
+                        </li>
+
+                        <li className="flex items-center">
+                            <span className="text-gray-600 text-xl mx-2 font-semibold">
+                                Roadmap
+                            </span>
+                        </li>
+
+                        <li className="flex items-center">
+                            <span className="text-gray-600 text-xl mx-2 font-semibold">
+                                Team
+                            </span>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <nav className="text-black">
-                <ul className="flex">
-                    <li className="text-5xl m-5">
-                        <a href="#projects">Staking</a>
-                    </li>
-                    <li className="text-5xl m-5">
-                        <a href="#roadmap">Roadmap</a>
-                    </li>
-                    <li className="text-5xl m-5">
-                        <a href="#team">Team</a>
-                    </li>
-                </ul>
-            </nav>
-        </header>
+        </nav>
     )
 }
 

@@ -1,7 +1,7 @@
 import React from "react"
 
 const Content = () => {
-    return null
+    return (<></>)
 }
 
 export default Content
