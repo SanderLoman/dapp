@@ -617,7 +617,7 @@ abstract contract Ownable is Context {
     }
 }
 
-contract POODOGEstake is ReentrancyGuard, Pausable, Ownable {
+contract WTFSTAKING is ReentrancyGuard, Pausable, Ownable {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
 

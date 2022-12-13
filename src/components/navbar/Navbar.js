@@ -43,3 +43,5 @@ const Navbar = () => {
 }
 
 export default Navbar
+
+// import FaTimes and FaBars from react-icons/fa
