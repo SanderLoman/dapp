@@ -7,7 +7,7 @@ const Content = () => {
                 <div className="relative text-center font-bold text-3xl md:text-9xl">
                     WTF DUDES CRYPTO
                 </div>
-                <div className="text-center text-2xl md:text-7xl md:px-[500px] leading-5">
+                <div className="text-center text-2xl md:text-7xl md:px- leading-5">
                     wtf dudes crypto is a token made for the people who suffered
                     in this rough bear market. A lot of you guys probably lost
                     some of your gains because of Bitcoin... Like WTF Bitcoin?!

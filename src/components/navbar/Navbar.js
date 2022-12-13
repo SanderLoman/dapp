@@ -12,7 +12,7 @@ const Navbar = () => {
         <header className="flex justify-between h-full">
             <img src={uni} alt="logo" className="w-20 h-20" />
             <div className="" onClick={handleClick}>
-                {click ? <FaBars /> : <FaTimes />}
+                {click ? <FaTimes className="FaTimes"/> : <FaBars className="FaTimes"/>}
             </div>
             <nav className="text-black">
                 <ul className="flex">
