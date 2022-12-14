@@ -5,17 +5,17 @@ import Header from "./components/header/Header"
 import Content from "./components/content/Content"
 import SectionOrange from "./components/sectionOrange/SectionOrange"
 import SectionWhite from "./components/sectionWhite/SectionWhite"
-import "./App.css"
 import SectionPurple from "./components/sectionPurple/SectionPurple"
 import SectionPink from "./components/sectionPink/SectionPink"
 import SectionLightPink from "./components/sectionLightPink/SectionLightPink"
+import "./App.css"
 
 function App() {
     const { account, activateBrowserWallet } = useEthers()
     return (
         <DAppProvider
             config={{
-                supportedChains: [ChainId.Goerli, ChainId.BSC, ChainId.Mainnet],
+                networks: [ChainId.Goerli, ChainId.BSC, ChainId.Mainnet],
             }}
         >
             <Navbar />

@@ -1,15 +1,17 @@
-import React from "react"
+import { React, useState } from "react"
+import { FaTimes, FaBars } from "react-icons/fa"
 import WTFlogo from "../../assets/wtf_dude_orange.png"
 import "./Navbar.css"
 
 const Navbar = () => {
+    const [isOpen, setIsOpen] = useState(false)
     return (
-        <nav className="bg-white text-4xl">
-            <div className="container mx-auto px-6 py-3">
+        <nav className="border-b text-5xl">
+            <div className="px-6 py-3">
                 <div className="flex items-center justify-between">
                     <a href="/">
                         <div className="flex items-center">
-                            <span className="text-customPurple text-1xl mx-2 font-semibold">
+                            <span className="text-customPurple mx-2 font-semibold">
                                 WTF
                             </span>
                             <img
@@ -19,19 +21,30 @@ const Navbar = () => {
                             />
                         </div>
                     </a>
-                    <ul className="LINKS flex">
+                    <button
+                        className="navbar-toggler"
+                        aria-label="toggle menu"
+                        onClick={() => setIsOpen(!isOpen)}
+                    >
+                        {isOpen ? (
+                            <FaTimes className="sm:hidden" />
+                        ) : (
+                            <FaBars className="sm:hidden" />
+                        )}
+                    </button>
+                    <ul className="sm:flex hidden">
                         <li className="flex items-center">
-                            <span className="text-customPurple text-1xl mx-2 font-semibold">
+                            <span className="text-customPurple mx-2 font-semibold">
                                 <a href="/">Staking</a>
                             </span>
                         </li>
                         <li className="flex items-center">
-                            <span className="text-customPink text-1xl mx-2 font-semibold">
+                            <span className="text-customPink mx-2 font-semibold">
                                 <a href="/">Roadmap</a>
                             </span>
                         </li>
                         <li className="flex items-center">
-                            <span className="text-customOrange text-1xl mx-2 font-semibold">
+                            <span className="text-customOrange mx-2 font-semibold">
                                 <a href="/">Team</a>
                             </span>
                         </li>
@@ -44,6 +57,4 @@ const Navbar = () => {
 
 export default Navbar
 
-// import FaTimes and FaBars from react-icons/fa
-
-// and you can ask chatGPT for questions
+// kijk de video in discord weer verder 

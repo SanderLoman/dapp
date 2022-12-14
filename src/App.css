@@ -10,13 +10,3 @@
 ::-webkit-scrollbar {
     display: none;
 }
-
-@media screen and (max-width: 768px) {
-    .LINKS {
-        display: none;
-    }
-
-    .text-25xl {
-        font-size: 5rem;
-    }
-}
