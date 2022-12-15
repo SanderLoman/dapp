@@ -1,12 +1,13 @@
 import { React, useState } from "react"
 import { FaTimes, FaBars } from "react-icons/fa"
+import { Menu, Transition } from "@headlessui/react"
 import WTFlogo from "../../assets/wtf_dude_orange.png"
 import "./Navbar.css"
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false)
     return (
-        <nav className="border-b text-5xl">
+        <nav className="border-b text-4xl">
             <div className="px-6 py-3">
                 <div className="flex items-center justify-between">
                     <a href="/">
