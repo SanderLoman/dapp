@@ -1,5 +1,6 @@
 import { React, useState } from "react"
 import { FaTimes, FaBars } from "react-icons/fa"
+import { Menu, Transition } from "@headlessui/react"
 import WTFlogo from "../../assets/wtf_dude_orange.png"
 import "./Navbar.css"
 
