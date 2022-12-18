@@ -1,7 +1,7 @@
 import React from "react"
+import HeaderLogo from "../../assets/dexscreener.png"
+import "./Content.css"
 
-const Content = () => {
-    return <div className="text-black"></div>
-}
+const Content = () => {}
 
 export default Content

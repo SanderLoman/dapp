@@ -1,24 +1,21 @@
 import { React, useState } from "react"
 import { FaTimes, FaBars } from "react-icons/fa"
 import { Menu, Transition } from "@headlessui/react"
-import WTFlogo from "../../assets/wtf_dude_orange.png"
+import WTFlogo from "../../assets/wtfdudes_text.png"
 import "./Navbar.css"
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false)
     return (
-        <nav className="text-5xl">
+        <nav className="md:bg-transparent text-5xl bg-white">
             <div className="px-6 py-3">
                 <div className="flex items-center justify-between">
-                    <a href="/">
+                    <a href="#">
                         <div className="flex items-center">
-                            <span className="mx-4 font-semibold">
-                                WTF
-                            </span>
                             <img
                                 src={WTFlogo}
                                 alt="WTF logo"
-                                className="w-10 h-10"
+                                className="h-10"
                             />
                         </div>
                     </a>
@@ -54,27 +51,43 @@ const Navbar = () => {
                 </div>
             </div>
             {/* mobile menu */}
-            <ul
-                className={`sm:hidden ${
-                    isOpen ? "block" : "hidden"
-                } relative top-full right-0 mt-2 px-4 py-2 bg-white shadow-md z-10`}
+            <Transition
+                className="text-5xl fixed w-full h-full"
+                show={isOpen}
+                enter="transition-all duration-500"
+                enterFrom="transform translate-y-full"
+                enterTo="transform translate-y-0"
+                leave="transition-all duration-500"
+                leaveFrom="transform translate-y-0"
+                leaveTo="transform translate-y-full"
             >
-                <li className="block px-4 py-2">
-                    <a href="/" className="flex justify-center font-semibold">
-                        Staking
-                    </a>
-                </li>
-                <li className="block px-4 py-2">
-                    <a href="/" className="flex justify-center font-semibold">
-                        Roadmap
-                    </a>
-                </li>
-                <li className="block px-4 py-2">
-                    <a href="/" className="flex justify-center font-semibold">
-                        Team
-                    </a>
-                </li>
-            </ul>
+                <ul className="sm:hidden top-full h-full px-4 py-2 bg-white shadow-md">
+                    <li className="block px-4 py-2">
+                        <a
+                            href="#"
+                            className="flex justify-center font-semibold border-b text-customPink"
+                        >
+                            Staking
+                        </a>
+                    </li>
+                    <li className="block px-4 py-2">
+                        <a
+                            href="#"
+                            className="flex justify-center font-semibold border-b text-customPurple"
+                        >
+                            Roadmap
+                        </a>
+                    </li>
+                    <li className="block px-4 py-2">
+                        <a
+                            href="#"
+                            className="flex justify-center font-semibold text-customOrange"
+                        >
+                            Team
+                        </a>
+                    </li>
+                </ul>
+            </Transition>
         </nav>
     )
 }

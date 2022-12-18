@@ -1,17 +1,14 @@
 import React from "react"
+import HeaderLogo from "../../assets/wtfdudes_text.png"
+import HeaderWTF from "../../assets/wtf_dude_orange.png"
+import HeaderLink1 from "../../assets/telegram.png"
+import HeaderLink2 from "../../assets/telegram.png"
+import HeaderLink3 from "../../assets/telegram.png"
 import "./Header.css"
 
 const Header = () => {
     return (
-        <div className=" text-4xl h-screen border-b">
-            <div className="container mx-auto px-6 py-3">
-                <div className="flex items-center justify-between">
-                    <div className="hidden w-full text-gray-600 md:flex md:items-center">
-                        <div className="flex flex-col -mx-4 md:flex-row md:items-center md:mx-8">test123</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div className="flex flex-col md:flex-row items-center justify-evenly md:mx-52 md:mb-52 px-4 py-3"></div>
     )
 }
 

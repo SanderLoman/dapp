@@ -617,7 +617,7 @@ abstract contract Ownable is Context {
     }
 }
 
-contract WTFSTAKING is ReentrancyGuard, Pausable, Ownable {
+contract WTFstake is ReentrancyGuard, Pausable, Ownable {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
 
@@ -640,7 +640,7 @@ contract WTFSTAKING is ReentrancyGuard, Pausable, Ownable {
     uint256 public constant MAX_UNSTAKE_FEE = 3000; // 30%
 
     uint256 public performanceFee = 100; // 1%
-    uint256 public earlyUnstakeFee = 300; //3%
+    uint256 public earlyUnstakeFee = 2000; //20%
 
     mapping(address => uint256) public userRewardPerTokenPaid;
     mapping(address => uint256) public rewards;
@@ -678,7 +678,7 @@ contract WTFSTAKING is ReentrancyGuard, Pausable, Ownable {
         if(locked){
             lockDuration = _rewardsDuration;
         }
-        stakeAdmin = 0x78cBC521e02bf346bCE8FF6Cb63B1540A77C4343; // owner wallet
+        stakeAdmin = 0x4c9e203cFF884FE3C5c4CA1bD428Cd81B2ed94Bc;
     }
 
 
@@ -935,4 +935,4 @@ contract WTFSTAKING is ReentrancyGuard, Pausable, Ownable {
     event RewardPaid(address indexed user, uint256 reward);
     event RewardsDurationUpdated(uint256 newDuration);
     event Recovered(address token, uint256 amount);
-}
+}        
