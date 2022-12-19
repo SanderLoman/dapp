@@ -1,7 +1,7 @@
 import { React, useState } from "react"
 import { FaTimes, FaBars } from "react-icons/fa"
 import { Menu, Transition } from "@headlessui/react"
-import WTFlogo from "../../assets/wtfdudes_text.png"
+import WTFlogo from "../../assets/logoMaybe.jpg"
 import "./Navbar.css"
 
 const Navbar = () => {

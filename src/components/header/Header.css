@@ -1,0 +1,25 @@
+.header-container {
+    /* Default styles for all screen sizes */
+}
+
+@media (min-width: 640px) {
+    .header-container {
+        /* Styles for screens with a minimum width of 640px (e.g. tablets) */
+    }
+}
+
+@media (min-width: 1024px) {
+    .header-container {
+        /* Styles for screens with a minimum width of 1024px (e.g. laptops) */
+    }
+}
+
+@media (min-width: 1280px) {
+    .header-container {
+        /* Styles for screens with a minimum width of 1280px (e.g. desktop computers) */
+    }
+}
+
+.header-links img {
+    height: 32px;
+}
