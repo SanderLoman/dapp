@@ -5,6 +5,7 @@ import "./Footer.css"
 
 const Footer = () => {
     return <div className=" h-screen w-screen bg-customOrange">234</div>
+    
 }
 
 export default Footer
