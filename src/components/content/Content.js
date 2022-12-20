@@ -4,7 +4,7 @@ import "./Content.css"
 
 const Content = () => {
     return (
-        <div className="content-container flex md:flex-row items-center w-screen h-screen -mt-40 md:-mt-96">
+        <div className="content-container flex md:flex-row items-center w-screen h-screen">
             <div className="flex flex-col items-center m-4">
                 <h1 className="xl:text-10xl text-5xl font-bold text-center">
                     WTF DUDES CRYPTO
