@@ -18,7 +18,7 @@ const Content = () => {
                     of things prepared so hop in and WTF DUDES this is about to
                     get crazy!
                 </p>
-                <div className="flex flex-row items-center md:flex-row md:text-5xl text-2xl justify-around w-full md:w-2/4">
+                <div className="flex flex-row items-center md:flex-row md:text-5xl text-2xl justify-between md:justify-around w-full lg:w-2/4">
                     <div className="flex items-center">
                         <img src={Check} alt="Check" className="h-6 md:h-auto"/>
                         <p className="">Safe team</p>
