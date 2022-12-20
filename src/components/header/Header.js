@@ -12,9 +12,9 @@ const Header = () => {
             <div className="header-left flex flex-col items-center">
                 <img src={HeaderLogo} alt="Header logo" className="pb-8"/>
                 <div className="header-links flex w-full items-center justify-evenly">
-                    <a href="https://app.uniswap.org/#/swap" target="_blank"><img src={HeaderLink1} alt="Header link 1" className="transform transition-all hover:scale-125"/></a>
-                    <a href="https://dexscreener.com/bsc/" target="_blank"><img src={HeaderLink2} alt="Header link 2" className="transform transition-all hover:scale-125"/></a> {/* Change later link is not right */}
-                    <a href="https://t.me/Sanduhh" target="_blank"><img src={HeaderLink3} alt="Header link 3" className="transform transition-all hover:scale-125"/></a> {/* Change later link is not right */}
+                    <a href="https://app.uniswap.org/#/swap" target="_blank"><img src={HeaderLink1} alt="Header link 1" className="md:transform md:transition-all md:hover:scale-125"/></a>
+                    <a href="https://dexscreener.com/bsc/" target="_blank"><img src={HeaderLink2} alt="Header link 2" className="md:transform md:transition-all md:hover:scale-125"/></a> {/* Change later link is not right */}
+                    <a href="https://t.me/Sanduhh" target="_blank"><img src={HeaderLink3} alt="Header link 3" className="md:transform md:transition-all md:hover:scale-125"/></a> {/* Change later link is not right */}
                 </div>
             </div>
             <div className="header-right">
