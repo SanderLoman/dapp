@@ -7,7 +7,7 @@ module.exports = {
                 customLightPink: "#f3d0f8",
                 customPink: "#e25ed9",
                 customPurple: "#8b5ce0",
-                customOrange: "#fb7d55",
+                customOrange: "#f97623",
             },
             fontSize: {
                 "10xl": "9rem",
