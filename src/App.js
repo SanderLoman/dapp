@@ -16,6 +16,10 @@ function App() {
         >
             <Navbar />
             <Header />
+            <Header />
+            <Header />
+            <Header />
+            <Header />
             <Content />
             <Footer />
         </DAppProvider>

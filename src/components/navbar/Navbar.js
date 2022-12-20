@@ -7,7 +7,7 @@ import "./Navbar.css"
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false)
     return (
-        <nav className="md:bg-transparent text-5xl bg-white">
+        <nav className="md:bg-transparent text-5xl bg-white z-20">
             <div className="px-6 py-3">
                 <div className="flex items-center justify-between">
                     <a href="#">
