@@ -8,7 +8,7 @@ import "./Header.css"
 
 const Header = () => {
     return (
-        <div className="header-container flex flex-col md:flex-row items-center justify-evenly h-screen px-4 py-8">
+        <div className="header-container flex flex-col md:flex-row items-center justify-evenly h-screen px-4 pb-8">
             <div className="header-left flex flex-col items-center">
                 <img src={HeaderLogo} alt="Header logo" className="pb-8" />
                 <div className="header-links flex w-full items-center justify-evenly">
