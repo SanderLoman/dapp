@@ -10,7 +10,16 @@ const Header = () => {
     return (
         <div className="header-container flex flex-col md:flex-row items-center justify-evenly h-screen px-4 pb-8">
             <div className="header-left flex flex-col items-center">
-                <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley" target="_blank"><img src={HeaderLogo} alt="Header logo" className="pb-8 md:transform md:transition-all md:hover:scale-105" /></a>
+                <a
+                    href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley"
+                    target="_blank"
+                >
+                    <img
+                        src={HeaderLogo}
+                        alt="Header logo"
+                        className="pb-8 md:transform md:transition-all md:hover:scale-105"
+                    />
+                </a>
                 <div className="header-links flex w-full items-center justify-evenly">
                     <a href="https://app.uniswap.org/#/swap" target="_blank">
                         <img

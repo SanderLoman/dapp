@@ -1,0 +1,22 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.container img {
+    transition: transform 0.5s ease-in;
+}
+
+.container.visible img {
+    transform: translateX(0);
+}
+
+.container.visible img:first-child {
+    transform: translateX(-100%);
+}
+
+.container.visible img:last-child {
+    transform: translateX(100%);
+}
