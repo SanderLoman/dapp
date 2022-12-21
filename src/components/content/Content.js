@@ -14,18 +14,18 @@ const Content = () => {
         again! We got lots of things prepared so hop in and WTF DUDES this is
         about to get crazy!
       </p>
-      <ul className="Content-list flex flex-row justify-center items-center">
+      <ul className="Content-list flex flex-row justify-around w-full ">
         <li className="Content-list-item md:mr-5">
           <img src={Check} alt="Check" className="Content-check w-auto h-auto" />
-          <p className="Content-list-text text-5xl text-customPurple">Safe team</p>
+          <p className="Content-list-text text-customPurple">Safeteam</p>
         </li>
         <li className="Content-list-item md:mr-5mr-5">
           <img src={Check} alt="Check" className="Content-check w-auto h-auto" />
-          <p className="Content-list-text text-5xl text-customPink">Utility</p>
+          <p className="Content-list-text text-customPink">Utility</p>
         </li>
         <li className="Content-list-item mr-5">
           <img src={Check} alt="Check" className="Content-check w-auto h-auto" />
-          <p className="Content-list-text text-5xl text-customOrange">Community</p>
+          <p className="Content-list-text text-customOrange">Community</p>
         </li>
       </ul>
     </div>
