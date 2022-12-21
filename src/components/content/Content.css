@@ -40,11 +40,11 @@
 
     .Content p {
         font-size: 1.5em;
+        width: 75%;
     }
 
     .Content ul {
-        flex-direction: column;
-        align-items: flex-start;
+        flex-direction: row;
     }
 
     .Content li {
@@ -59,6 +59,7 @@
 
     .Content p {
         font-size: 1.75em;
+        width: 75%;
     }
 
     .Content ul {
@@ -77,6 +78,7 @@
 
     .Content p {
         font-size: 2em;
+        width: 75%;
     }
 
     .Content ul {
@@ -95,6 +97,7 @@
 
     .Content p {
         font-size: 2.25em;
+        width: 75%;
     }
 
     .Content ul {
@@ -113,6 +116,7 @@
 
     .Content p {
         font-size: 2.5em;
+        width: 75%;
     }
 
     .Content ul {
