@@ -19,9 +19,9 @@ function App() {
             <Navbar />
             <Header />
             <Content />
-            {/* <Tokenomics />
+            <Tokenomics />
             <Rand />
-            <Footer /> */}
+            <Footer />
         </DAppProvider>
     )
 }

@@ -1,20 +1,26 @@
 import React from "react"
 import Tokenomic from "../../assets/tokenomicsImage.jpg"
 import Taart from "../../assets/taartImage.jpg"
+import { Slide } from "react-reveal"
+import "./Tokenomics.css"
 
 const Tokenomics = () => {
     return (
-        <div className="flex h-screen justify-around items-center overflow-hidden">
-            <img
-                src={Tokenomic}
-                alt="Tokenomics"
-                className="w-1/4 animate-slide-in-left"
-            />
-            <img
-                src={Taart}
-                alt="Taart"
-                className="w-1/4 animate-slide-in-right"
-            />
+        <div className="tokenomics flex flex-col md:flex-row md:h-[50vh] justify-around items-center overflow-hidden">
+            <Slide left>
+                <img
+                    src={Tokenomic}
+                    alt="Tokenomics"
+                    className="Tokenomic max-w-full animate-slide-in-left"
+                />
+            </Slide>
+            <Slide right>
+                <img
+                    src={Taart}
+                    alt="Taart"
+                    className="Taart max-w-full animate-slide-in-right"
+                />
+            </Slide>
         </div>
     )
 }
