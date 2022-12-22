@@ -2,8 +2,9 @@ import React from "react"
 import "./Footer.css"
 
 const Footer = () => {
-    return null
-    
+    return (
+        <div className="flex flex-col h-screen items-center justify-center bg-customOrange"></div>
+    )
 }
 
 export default Footer

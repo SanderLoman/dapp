@@ -1,22 +1,15 @@
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
+img {
+    width: 100%;
 }
 
-.container img {
-    transition: transform 0.5s ease-in;
+@media (min-width: 640px) {
+    img {
+        max-width: 640px;
+    }
 }
 
-.container.visible img {
-    transform: translateX(0);
-}
-
-.container.visible img:first-child {
-    transform: translateX(-100%);
-}
-
-.container.visible img:last-child {
-    transform: translateX(100%);
+@media (min-width: 1024px) {
+    img {
+        max-width: 1024px;
+    }
 }
