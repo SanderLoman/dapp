@@ -6,19 +6,19 @@ import "./Tokenomics.css"
 
 const Tokenomics = () => {
     return (
-        <div className="tokenomics h-screen flex flex-col md:flex-row md:h-[50vh] justify-around z-10">
+        <div className="tokenomics my-20 flex flex-col md:flex-row">
             <Slide left>
                 <img
                     src={Tokenomic}
                     alt="Tokenomics"
-                    className="Tokenomic w-[300px] md:w-[500px] my-10"
+                    className="Tokenomic mb-20 w-2/3 md:mb-0 md:w-1/5"
                 />
             </Slide>
             <Slide right>
                 <img
                     src={Taart}
                     alt="Taart"
-                    className="Taart w-[300px] md:w-[500px] my-10"
+                    className="Taart w-2/3 md:mb-0 md:w-1/5"
                 />
             </Slide>
         </div>
