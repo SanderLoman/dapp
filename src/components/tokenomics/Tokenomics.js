@@ -6,7 +6,7 @@ import "./Tokenomics.css"
 
 const Tokenomics = () => {
     return (
-        <div className="tokenomics flex flex-col md:flex-row lg:h-[50vh] justify-around items-center overflow-hidden">
+        <div className="tokenomics flex flex-col md:flex-row xl:h-[50vh] justify-around items-center overflow-hidden">
             <Slide left>
                 <img
                     src={Tokenomic}
