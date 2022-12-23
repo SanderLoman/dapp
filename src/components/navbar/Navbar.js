@@ -6,6 +6,8 @@ import "./Navbar.css"
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false)
+
+    const closeMenu = () => setIsOpen(false)
     return (
         <nav className="md:bg-transparent text-5xl bg-white z-20">
             <div className="px-6 py-3">
@@ -66,6 +68,7 @@ const Navbar = () => {
                         <a
                             href="#"
                             className="flex justify-center font-semibold border-b text-customPink"
+                            onClick={closeMenu}
                         >
                             Staking
                         </a>
@@ -74,6 +77,7 @@ const Navbar = () => {
                         <a
                             href="#"
                             className="flex justify-center font-semibold border-b text-customPurple"
+                            onClick={closeMenu}
                         >
                             Roadmap
                         </a>
@@ -82,6 +86,7 @@ const Navbar = () => {
                         <a
                             href="#"
                             className="flex justify-center font-semibold text-customOrange"
+                            onClick={closeMenu}
                         >
                             Team
                         </a>
