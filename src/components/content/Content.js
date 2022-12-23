@@ -22,7 +22,7 @@ const Content = () => {
                     get crazy!
                 </p>
             </Fade>
-            <ul className="Content-list flex flex-row justify-around w-full ">
+            <ul className="Content-list flex flex-row justify-around w-full md:w-2/3 ">
                 <li className="Content-list-item md:mr-5">
                     <Fade delay={500}>
                         <img

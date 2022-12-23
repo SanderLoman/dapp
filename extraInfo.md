@@ -9,7 +9,7 @@ PancakeRouterV2 address: 0x10ED43C718714eb63d5aA57B78B54704E256024E
 *** f3d0f8 licht roze **
 ** 8b5ce0 paars      **
 ** e25ed9 roze       **
-** fb7d55 oranje     **
+** f97623 oranje     **
 
 *** FONT: ***
 

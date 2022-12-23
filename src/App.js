@@ -5,7 +5,7 @@ import Header from "./components/header/Header"
 import Content from "./components/content/Content"
 import Footer from "./components/footer/Footer"
 import Tokenomics from "./components/tokenomics/Tokenomics"
-import Rand from "./components/rand/Rand"
+import Rand from "./components/achtergrond/Rand"
 import "./App.css"
 
 function App() {
@@ -21,7 +21,7 @@ function App() {
             <Content />
             <Tokenomics />
             <Rand />
-            <Footer />
+            {/* <Footer /> */}
         </DAppProvider>
     )
 }
