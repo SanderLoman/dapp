@@ -23,6 +23,10 @@ module.exports = {
             url: process.env.BNB_RPC_URL,
             accounts: [process.env.PRIVATE_KEY_TOKEN_DEPLOYER],
         },
+        mainnet: {
+            url: process.env.ETH_RPC_URL,
+            accounts: [process.env.PRIVATE_KEY_TOKEN_DEPLOYER],
+        },
     },
     etherscan: {
         apiKey: {

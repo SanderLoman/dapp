@@ -1,14 +1,131 @@
-@media screen and (max-width: 640px) {
+.main-container {
+    text-align: center;
 }
 
-@media screen and (min-width: 641px) and (max-width: 768px) {
+@media screen and (max-width: 640px) {
+    .button {
+        height: 20px;
+        width: auto;
+    }
+    
+    .main-container {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding-top: 75px;
+    }
+    
+    .text-container h1 {
+        font-size: 3em;
+    }
+
+    .text-container p {
+        font-size: 1.5em;
+        width: 200%;
+        padding-bottom: 20px;
+    }
+}
+
+@media screen and (min-width: 641px) and (max-width: 767px) {
+    .button {
+        height: 25px;
+        width: auto;
+    }
+
+    .main-container {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding-top: 100px;
+    }
+
+    .text-container h1 {
+        font-size: 3.5em;
+    }
+
+    .text-container p {
+        font-size: 1.75em;
+        width: 200%;
+        padding-bottom: 50px;
+    }
+}
+
+@media screen and (width: 768px) {
+    .button {
+        height: 35px;
+        width: auto;
+    }
+
+    .main-container {
+        padding-top: 250px;
+    }
+
+    .text-container h1 {
+        font-size: 4em;
+    }
+
+    .text-container p {
+        font-size: 2em;
+        padding-bottom: 50px;
+    }
 }
 
 @media screen and (min-width: 769px) and (max-width: 1024px) {
+    .button {
+        height: 35px;
+        width: auto;
+    }
+
+    .main-container {
+        padding-top: 250px;
+    }
+
+    .text-container h1 {
+        font-size: 4em;
+    }
+
+    .text-container p {
+        font-size: 2em;
+        padding-bottom: 50px;
+    }
 }
 
 @media screen and (min-width: 1025px) and (max-width: 1280px) {
+    .button {
+        height: 45px;
+        width: auto;
+    }
+
+    .main-container {
+        padding-top: 300px;
+    }
+
+    .text-container h1 {
+        font-size: 4.5em;
+    }
+
+    .text-container p {
+        font-size: 2.25em;
+        padding-bottom: 50px;
+    }
 }
 
 @media screen and (min-width: 1281px) {
+    .button {
+        height: 50px;
+        width: auto;
+    }
+
+    .main-container {
+        padding-top: 350px;
+    }
+
+    .text-container h1 {
+        font-size: 5em;
+    }
+
+    .text-container p {
+        font-size: 2.5em;
+        padding-bottom: 50px;
+    }
 }

@@ -64,7 +64,7 @@ const Header = () => {
                 </div>
             </div>
             <div className="header-right">
-                <img src={HeaderWTF} alt="Header WTF" className="" />
+                <img src={HeaderWTF} alt="Header WTF" className="headerdude" />
             </div>
         </div>
     )

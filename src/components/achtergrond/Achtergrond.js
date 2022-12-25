@@ -6,7 +6,7 @@ import "./Achtergrond.css"
 const Achtergrond = () => {
     return <div className="rand md:h-[1999px]">
         <Staking />
-        <Roadmap />
+        {/* <Roadmap /> */}
     </div>
 }
 
