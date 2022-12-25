@@ -11,14 +11,14 @@ const Tokenomics = () => {
                 <img
                     src={Tokenomic}
                     alt="Tokenomics"
-                    className="Tokenomic mb-20 w-2/3 md:mb-0 md:w-1/5"
+                    className="Tokenomic mb-20 w-2/3 md:mb-0 md:w-2/5 lg:w-1/5"
                 />
             </Slide>
             <Slide right>
                 <img
                     src={Taart}
                     alt="Taart"
-                    className="Taart w-2/3 md:mb-0 md:w-1/5"
+                    className="Taart w-2/3 md:mb-0 md:w-2/5 lg:w-1/5"
                 />
             </Slide>
         </div>

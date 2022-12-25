@@ -21,7 +21,6 @@ function App() {
             <Content />
             <Tokenomics />
             <Achtergrond />
-            <Tokenomics />
             {/* <Footer /> */}
         </DAppProvider>
     )
