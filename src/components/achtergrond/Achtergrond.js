@@ -4,9 +4,9 @@ import Roadmap from "../roadmap/Roadmap"
 import "./Achtergrond.css"
 
 const Achtergrond = () => {
-    return <div className="rand md:h-[1999px]">
+    return <div className="rand md:h-max">
         <Staking />
-        {/* <Roadmap /> */}
+        <Roadmap />
     </div>
 }
 

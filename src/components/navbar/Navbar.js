@@ -1,7 +1,7 @@
 import { React, useState } from "react"
 import { FaTimes, FaBars } from "react-icons/fa"
 import { Transition } from "@headlessui/react"
-import WTFlogo from "../../assets/logoMaybe.jpg"
+import WTFlogo from "../../assets/LOGO.png"
 import "./Navbar.css"
 
 const Navbar = () => {
@@ -12,15 +12,9 @@ const Navbar = () => {
         <nav className="md:bg-transparent text-5xl bg-white z-20">
             <div className="px-6 py-3">
                 <div className="flex items-center justify-between">
-                    <a href="#">
-                        <div className="flex items-center">
-                            <img
-                                src={WTFlogo}
-                                alt="WTF logo"
-                                className="h-10"
-                            />
-                        </div>
-                    </a>
+                    <div className="flex items-center">
+                        <img src={WTFlogo} alt="WTF logo" className="h-10" />
+                    </div>
                     <button
                         className="navbar-toggler"
                         aria-label="toggle menu"

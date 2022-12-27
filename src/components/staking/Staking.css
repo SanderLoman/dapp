@@ -12,15 +12,15 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        padding-top: 75px;
+        /* padding-top: 200px; */
     }
     
     .text-container h1 {
-        font-size: 3em;
+        font-size: 4em;
     }
 
     .text-container p {
-        font-size: 1.5em;
+        font-size: 2.5em;
         width: 200%;
         padding-bottom: 20px;
     }
@@ -36,15 +36,15 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        padding-top: 100px;
+        /* padding-top: 200px; */
     }
 
     .text-container h1 {
-        font-size: 3.5em;
+        font-size: 5em;
     }
 
     .text-container p {
-        font-size: 1.75em;
+        font-size: 2.75em;
         width: 200%;
         padding-bottom: 50px;
     }
@@ -56,16 +56,12 @@
         width: auto;
     }
 
-    .main-container {
-        padding-top: 250px;
-    }
-
     .text-container h1 {
-        font-size: 4em;
+        font-size: 5em;
     }
 
     .text-container p {
-        font-size: 2em;
+        font-size: 2.5em;
         padding-bottom: 50px;
     }
 }
@@ -76,16 +72,12 @@
         width: auto;
     }
 
-    .main-container {
-        padding-top: 250px;
-    }
-
     .text-container h1 {
-        font-size: 4em;
+        font-size: 5em;
     }
 
     .text-container p {
-        font-size: 2em;
+        font-size: 2.5em;
         padding-bottom: 50px;
     }
 }
@@ -96,16 +88,12 @@
         width: auto;
     }
 
-    .main-container {
-        padding-top: 300px;
-    }
-
     .text-container h1 {
-        font-size: 4.5em;
+        font-size: 6em;
     }
 
     .text-container p {
-        font-size: 2.25em;
+        font-size: 3em;
         padding-bottom: 50px;
     }
 }
@@ -116,16 +104,12 @@
         width: auto;
     }
 
-    .main-container {
-        padding-top: 350px;
-    }
-
     .text-container h1 {
-        font-size: 5em;
+        font-size: 9em;
     }
 
     .text-container p {
-        font-size: 2.5em;
+        font-size: 4em;
         padding-bottom: 50px;
     }
 }
