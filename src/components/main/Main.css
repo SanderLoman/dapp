@@ -1,0 +1,6 @@
+@media screen and (max-width: 767px) {
+    nav {
+        position: sticky;
+        top: 0;
+    }
+}

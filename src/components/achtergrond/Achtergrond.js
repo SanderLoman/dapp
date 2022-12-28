@@ -5,7 +5,7 @@ import "./Achtergrond.css"
 
 const Achtergrond = () => {
     return <div className="rand md:h-max">
-        <Staking />
+        <Staking id="staking"/>
         <Roadmap />
     </div>
 }

@@ -1,0 +1,167 @@
+.nav {
+    position: absolute;
+    top: 0;
+}
+
+@media screen and (max-width: 640px) {
+    .leftpart {
+        height: max-content;
+    }
+
+    .rightpart {
+        height: max-content;
+    }
+
+    .fullpart {
+    }
+
+    .bottompart {
+    }
+
+    .toppart {
+        display: flex;
+        flex-direction: column;
+        font-size: 1.5em;
+        height: max-content;
+        text-align: center;
+        place-items: center;
+    }
+
+    .apy {
+        order: 2;
+    }
+
+    .xforx {
+        order: 1;
+    }
+
+    .apr {
+        order: 3;
+    }
+}
+
+@media screen and (min-width: 641px) and (max-width: 768px) {
+    .leftpart {
+        border-right-width: 2px;
+    }
+
+    .rightpart {
+    }
+
+    .fullpart {
+    }
+
+    .bottompart {
+        display: flex;
+        font-size: 4em;
+    }
+
+    .toppart {
+        font-size: 1.5em;
+        place-items: center;
+    }
+
+    .apy {
+    }
+
+    .xforx {
+    }
+
+    .apr {
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1300px) {
+    .leftpart {
+        border-right-width: 2px;
+    }
+    
+    .rightpart {
+    }
+
+    .fullpart {
+    }
+
+    .bottompart {
+        display: flex;
+        font-size: 4em;
+    }
+
+    .toppart {
+        font-size: 2em;
+        place-items: center;
+    }
+
+    .apy {
+    }
+
+    .xforx {
+    }
+
+    .apr {
+    }
+}
+
+@media screen and (min-width: 1300px) and (max-width: 1580px) {
+    .leftpart {
+        border-right-width: 2px;
+    }
+
+    .rightpart {
+    }
+
+    .fullpart {
+    }
+
+    .bottompart {
+        display: flex;
+        font-size: 3em;
+    }
+
+    .toppart {
+        font-size: 3em;
+        place-items: center;
+    }
+
+    .apy {
+    }
+
+    .xforx {
+    }
+
+    .apr {
+    }
+}
+
+@media screen and (min-width: 1581px) {
+    .leftpart {
+        width: 20%;
+        border-right-width: 2px;
+    }
+
+    .rightpart {
+        width: 80%;
+    }
+
+    .fullpart {
+    }
+
+    .bottompart {
+        display: flex;
+        font-size: 4em;
+    }
+
+    .toppart {
+        font-size: 4em;
+        place-items: center;
+    }
+
+    .apy {
+    }
+
+    .xforx {
+    }
+
+    .apr {
+    }
+}

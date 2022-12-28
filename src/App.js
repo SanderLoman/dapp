@@ -7,12 +7,15 @@ import "./App.css"
 
 function App() {
     const { account, activateBrowserWallet } = useEthers()
-    return <Router>
-        <Routes>
-            <Route path="/" element={<Main />} />
-            <Route path="/tokenstaking" element={<TokenStaking />} />
-        </Routes>
-    </Router>
+
+    return (
+        <Router>
+            <Routes>
+                <Route path="/" element={<Main />} />
+                <Route path="/tokenstaking" element={<TokenStaking />} />
+            </Routes>
+        </Router>
+    )
 }
 
 export default App

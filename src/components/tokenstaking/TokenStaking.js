@@ -1,16 +1,12 @@
-import { React, useState } from "react"
-import { FaTimes, FaBars } from "react-icons/fa"
-import { Transition } from "@headlessui/react"
+import React from "react"
 import WTFlogo from "../../assets/LOGO.png"
 import { Link } from "react-router-dom"
+import "./TokenStaking.css"
 
 const TokenStaking = () => {
-    const [isOpen, setIsOpen] = useState(false)
-
-    let closeMenu = () => setIsOpen(false)
     return (
         <>
-            <nav className="md:bg-transparent text-5xl bg-white z-20">
+            <nav className="nav text-5xl w-full">
                 <div className="px-6 py-3">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center">
@@ -22,64 +18,29 @@ const TokenStaking = () => {
                                 />
                             </Link>
                         </div>
-
-                        <button
-                            className="navbar-toggler"
-                            aria-label="toggle menu"
-                            onClick={() => setIsOpen(!isOpen)}
-                        >
-                            {isOpen ? (
-                                <FaTimes className="sm:hidden" />
-                            ) : (
-                                <FaBars className="sm:hidden" />
-                            )}
-                        </button>
+                        <div className="">Connect</div>
                     </div>
                 </div>
-                {/* mobile menu */}
-                <Transition
-                    className="text-5xl fixed w-full h-full"
-                    show={isOpen}
-                    enter="transition-all duration-500"
-                    enterFrom="transform translate-y-full"
-                    enterTo="transform translate-y-0"
-                    leave="transition-all duration-500"
-                    leaveFrom="transform translate-y-0"
-                    leaveTo="transform translate-y-full"
-                >
-                    <ul className="sm:hidden top-full h-full px-4 py-2 bg-white shadow-md">
-                        <li className="block px-4 py-2">
-                            <a
-                                href="#"
-                                className="flex justify-center font-semibold border-b text-customPink"
-                                onClick={closeMenu}
-                            >
-                                Staking
-                            </a>
-                        </li>
-                        <li className="block px-4 py-2">
-                            <a
-                                href="#"
-                                className="flex justify-center font-semibold border-b text-customPurple"
-                                onClick={closeMenu}
-                            >
-                                Roadmap
-                            </a>
-                        </li>
-                        <li className="block px-4 py-2">
-                            <a
-                                href="#"
-                                className="flex justify-center font-semibold text-customOrange"
-                                onClick={closeMenu}
-                            >
-                                Team
-                            </a>
-                        </li>
-                    </ul>
-                </Transition>
             </nav>
-            <div className="flex flex-col h-max rounded-full border-2 border-red-500 m-40">
-                test!@#
+            <div className="w-screen h-screen flex justify-center items-center">
+                <div className="bg-gradient-to-tr from-customPink via-customPurple to-customOrange rounded-2xl w-5/6 h-3/4 md:w-2/3 md:h-2/3 p-2">
+                    <div className="fullpart bg-white rounded-lg w-full h-full p-2">
+                        <div className="toppart flex justify-between h-1/6 border-b-2 p-2">
+                            <div className="apy">APY: 12.34%</div>
+                            <div className="xforx">$WTF FOR $WTF</div>
+                            <div className="apr">APR: 123.43%</div>
+                        </div>
+                        <div className="bottompart h-5/6">
+                            <div className="leftpart p-2">
+                                <div className="">Total Time:</div>
+                                <div className="">Remaining:</div>
+                                <div className="">TVL:</div>
+                                <div className="">TAX: 1/1</div>
+                            </div>
+                            <div className="rightpart p-2">!@#</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </>
     )

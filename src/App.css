@@ -3,8 +3,13 @@
     src: url(fonts/Doodle_Head.ttf);
 }
 
+@font-face {
+    font-family: Doodle;
+    src: url(fonts/Doodle.ttf);
+}
+
 #root {
-    font-family: Doodle_Head;
+    font-family: 'Doodle_Head', 'Doodle';
 }
 
 ::-webkit-scrollbar {

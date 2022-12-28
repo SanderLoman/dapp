@@ -1,13 +1,16 @@
-import React from "react"
-import HeaderButton from "../../assets/HeaderButton.jpg" //example remove later
+import { React } from "react"
+import HeaderButton from "../../assets/stake.png"
 import dudes2 from "../../assets/staking_dudes.png"
 import { Fade, Slide } from "react-reveal"
 import "./Staking.css"
 import { Link } from "react-router-dom"
 
 const Staking = () => {
+
     return (
-        <div className="main-container flex justify-evenly h-screen">
+        <div
+            className="staking main-container flex justify-evenly h-screen"
+        >
             <div className="image-container flex justify-center items-center w-1/3">
                 <Slide left>
                     <img src={dudes2} alt="Dudes" className="" />
@@ -26,11 +29,11 @@ const Staking = () => {
                 </Fade>
                 <Fade bottom>
                     <Link to="/tokenstaking">
-                    <img
-                        src={HeaderButton}
-                        alt="Staking button"
-                        className="button w-1/5"
-                    />
+                        <img
+                            src={HeaderButton}
+                            alt="Staking button"
+                            className="button w-1/5"
+                        />
                     </Link>
                 </Fade>
             </div>
