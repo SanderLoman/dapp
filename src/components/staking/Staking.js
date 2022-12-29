@@ -1,5 +1,5 @@
 import { React } from "react"
-import HeaderButton from "../../assets/stake.png"
+import StakeButton from "../../assets/stake.png"
 import dudes2 from "../../assets/staking_dudes.png"
 import { Fade, Slide } from "react-reveal"
 import "./Staking.css"
@@ -30,9 +30,9 @@ const Staking = () => {
                 <Fade bottom>
                     <Link to="/tokenstaking">
                         <img
-                            src={HeaderButton}
+                            src={StakeButton}
                             alt="Staking button"
-                            className="button w-1/5"
+                            className="button w-1/5 pb-40"
                         />
                     </Link>
                 </Fade>
