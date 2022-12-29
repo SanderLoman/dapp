@@ -1,4 +1,4 @@
-import { React, useState, useRef } from "react"
+import { React, useState } from "react"
 import { ChainId, DAppProvider, Token, useEthers } from "@usedapp/core"
 import { FaTimes, FaBars } from "react-icons/fa"
 import { Transition } from "@headlessui/react"
@@ -118,7 +118,7 @@ function Main() {
                                 spy={true}
                                 smooth={true}
                                 delay={250}
-                                offset={0}
+                                offset={-100}
                                 duration={500}
                                 onClick={closeMenu}
                                 className="flex justify-center font-semibold border-b text-center text-customPurple py-2"
@@ -132,7 +132,7 @@ function Main() {
                                 spy={true}
                                 smooth={true}
                                 delay={250}
-                                offset={250}
+                                offset={0}
                                 duration={500}
                                 onClick={closeMenu}
                                 className="flex justify-center font-semibold border-b text-center text-customOrange py-2"
