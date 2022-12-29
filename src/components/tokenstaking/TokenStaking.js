@@ -1,4 +1,4 @@
-import React from "react"
+import { React, useEffect } from "react"
 import WTFlogo from "../../assets/LOGO.png"
 import { useEthers } from "@usedapp/core"
 import { Link } from "react-router-dom"
@@ -10,172 +10,6 @@ const provider = new ethers.providers.JsonRpcProvider(
 )
 
 const ABI = [
-    {
-        inputs: [
-            { internalType: "address", name: "_rewardsToken", type: "address" },
-            { internalType: "address", name: "_stakingToken", type: "address" },
-            {
-                internalType: "uint256",
-                name: "_rewardsDuration",
-                type: "uint256",
-            },
-            {
-                internalType: "uint256",
-                name: "_stakingTokensDecimal",
-                type: "uint256",
-            },
-            { internalType: "bool", name: "_locked", type: "bool" },
-        ],
-        stateMutability: "nonpayable",
-        type: "constructor",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: "address",
-                name: "previousOwner",
-                type: "address",
-            },
-            {
-                indexed: true,
-                internalType: "address",
-                name: "newOwner",
-                type: "address",
-            },
-        ],
-        name: "OwnershipTransferred",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "address",
-                name: "account",
-                type: "address",
-            },
-        ],
-        name: "Paused",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "address",
-                name: "token",
-                type: "address",
-            },
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "amount",
-                type: "uint256",
-            },
-        ],
-        name: "Recovered",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "reward",
-                type: "uint256",
-            },
-        ],
-        name: "RewardAdded",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: "address",
-                name: "user",
-                type: "address",
-            },
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "reward",
-                type: "uint256",
-            },
-        ],
-        name: "RewardPaid",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "newDuration",
-                type: "uint256",
-            },
-        ],
-        name: "RewardsDurationUpdated",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: "address",
-                name: "user",
-                type: "address",
-            },
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "amount",
-                type: "uint256",
-            },
-        ],
-        name: "Staked",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: false,
-                internalType: "address",
-                name: "account",
-                type: "address",
-            },
-        ],
-        name: "Unpaused",
-        type: "event",
-    },
-    {
-        anonymous: false,
-        inputs: [
-            {
-                indexed: true,
-                internalType: "address",
-                name: "user",
-                type: "address",
-            },
-            {
-                indexed: false,
-                internalType: "uint256",
-                name: "amount",
-                type: "uint256",
-            },
-        ],
-        name: "Withdrawn",
-        type: "event",
-    },
     {
         inputs: [],
         name: "MAX_PERFORMANCE_FEE",
@@ -293,20 +127,6 @@ const ABI = [
     },
     {
         inputs: [],
-        name: "owner",
-        outputs: [{ internalType: "address", name: "", type: "address" }],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "paused",
-        outputs: [{ internalType: "bool", name: "", type: "bool" }],
-        stateMutability: "view",
-        type: "function",
-    },
-    {
-        inputs: [],
         name: "performanceFee",
         outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
         stateMutability: "view",
@@ -391,45 +211,6 @@ const ABI = [
         type: "function",
     },
     {
-        inputs: [
-            {
-                internalType: "uint256",
-                name: "_earlyUnstakeFee",
-                type: "uint256",
-            },
-        ],
-        name: "setEarlyUnstakeFee",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "uint256",
-                name: "_performanceFee",
-                type: "uint256",
-            },
-        ],
-        name: "setPerformanceFee",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
-        inputs: [
-            {
-                internalType: "uint256",
-                name: "_rewardsDuration",
-                type: "uint256",
-            },
-        ],
-        name: "setRewardsDuration",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
         inputs: [{ internalType: "uint256", name: "amount", type: "uint256" }],
         name: "stake",
         outputs: [],
@@ -441,13 +222,6 @@ const ABI = [
         name: "stake2",
         outputs: [],
         stateMutability: "nonpayable",
-        type: "function",
-    },
-    {
-        inputs: [],
-        name: "stakeAdmin",
-        outputs: [{ internalType: "address", name: "", type: "address" }],
-        stateMutability: "view",
         type: "function",
     },
     {
@@ -509,23 +283,27 @@ const CA = "0xfF844E33cEA04d046B4Ee2Ffb42E0f3F0e33C82d"
 
 const WTFstake = new ethers.Contract(CA, ABI, provider)
 
-const updateEarlyTaxSpan = async () => {
-    const earlyTaxSpan = document.getElementById("earlytax")
-
-    try {
-        const result = await WTFstake.MAX_UNSTAKE_FEE()
-        earlyTaxSpan.innerHTML = result
-    } catch (error) {
-        console.error(error)
-    }
-}
-
-updateEarlyTaxSpan()
-
 const TokenStaking = () => {
     const { account, activateBrowserWallet } = useEthers()
 
     const isConnected = account !== undefined
+
+    //get
+
+    useEffect(() => {
+        // Calculate and update the APR and APY values every 10 seconds
+        setInterval(() => {
+            let apr = null
+            // (1 + interestRate / compoundFrequency) ^
+            // (compoundFrequency / investmentPeriod - 1)
+            let apy = null
+            // (1 + apr / compoundFrequency) ^
+            // (compoundFrequency / investmentPeriod - 1)
+
+            // document.getElementById("apytext").innerHTML = apy
+            // document.getElementById("aprtext").innerHTML = apr
+        }, 10000)
+    }, [])
 
     return (
         <>
@@ -543,7 +321,7 @@ const TokenStaking = () => {
                         </div>
                         {!isConnected ? (
                             <button
-                                className="text-xl"
+                                className=""
                                 onClick={() => activateBrowserWallet()}
                             >
                                 Connect Wallet
@@ -567,22 +345,38 @@ const TokenStaking = () => {
                 <div className="bg-gradient-to-tr from-customPink via-customPurple to-customOrange rounded-2xl w-5/6 h-3/4 md:w-2/3 md:h-2/3 p-2">
                     <div className="fullpart bg-white rounded-lg w-full h-full p-2">
                         <div className="toppart flex justify-between h-1/6 border-b-2 p-2">
-                            <div className="apy">APY: %</div>
+                            <div className="apy">
+                                APY: <span id="apytext">-</span>%
+                            </div>
                             <div className="xforx">$WTF FOR $WTF</div>
-                            <div className="apr">APR: %</div>
+                            <div className="apr">
+                                APR: <span id="aprtext">-</span>%
+                            </div>
                         </div>
                         <div className="bottompart h-5/6">
                             <div className="leftpart p-2">
-                                <div className="border-b">Total Time:</div>
-                                <div className="border-b">Remaining:</div>
-                                <div className="border-b">TAX: / </div>
                                 <div className="border-b">
-                                    Early withdraw TAX:
-                                    <span id="earlytax"></span>%
+                                    Total Time: <span id="time">-</span>
+                                </div>
+                                <div className="border-b">
+                                    Remaining: <span id="timeRemaining">-</span>
+                                </div>
+                                <div className="border-b">
+                                    TAX: <span id="tax1">-</span>/
+                                    <span id="tax2">-</span>
+                                </div>
+                                <div className="border-b">
+                                    Early TAX: <span id="earlytax">-</span>%
                                 </div>
                             </div>
-                            <div className="rightpart p-2">
-                                <div className="border-b">TVL:</div>
+                            <div className="rightpart px-2">
+                                <div className="flex items-center border-b h-1/6">
+                                    TVL: <span id="TVL">-</span>
+                                </div>
+                                <div className="border-2 h-5/6">
+                                    <div className="h-full"></div>
+
+                                </div>
                             </div>
                         </div>
                     </div>

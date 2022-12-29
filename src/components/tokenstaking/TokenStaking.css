@@ -1,10 +1,13 @@
 .nav {
     position: absolute;
     top: 0;
-    font-size: 3em;
 }
 
 @media screen and (max-width: 640px) {
+    .nav {
+        font-size: 2em;
+    }
+
     .leftpart {
         height: max-content;
     }
@@ -42,6 +45,10 @@
 }
 
 @media screen and (min-width: 641px) and (max-width: 768px) {
+    .nav {
+        font-size: 2em;
+    }
+
     .leftpart {
         border-right-width: 2px;
     }
@@ -73,6 +80,10 @@
 }
 
 @media screen and (min-width: 769px) and (max-width: 1300px) {
+    .nav {
+        font-size: 2em;
+    }
+
     .leftpart {
         border-right-width: 2px;
     }
@@ -104,6 +115,10 @@
 }
 
 @media screen and (min-width: 1300px) and (max-width: 1580px) {
+    .nav {
+        font-size: 2.5em;
+    }
+
     .leftpart {
         border-right-width: 2px;
     }
@@ -135,6 +150,10 @@
 }
 
 @media screen and (min-width: 1581px) {
+    .nav {
+        font-size: 3em;
+    }
+
     .leftpart {
         width: 20%;
         border-right-width: 2px;

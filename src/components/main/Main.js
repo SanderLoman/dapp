@@ -74,7 +74,7 @@ function Main() {
                                     to="team"
                                     spy={true}
                                     smooth={true}
-                                    offset={0}
+                                    offset={-375}
                                     duration={500}
                                 >
                                     Team
