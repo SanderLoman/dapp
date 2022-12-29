@@ -1,5 +1,4 @@
 import { React, useState } from "react"
-import { ChainId, DAppProvider, Token, useEthers } from "@usedapp/core"
 import { FaTimes, FaBars } from "react-icons/fa"
 import { Transition } from "@headlessui/react"
 import { Link } from "react-scroll"
@@ -12,8 +11,6 @@ import WTFlogo from "../../assets/LOGO.png"
 import "./Main.css"
 
 function Main() {
-    const { account, activateBrowserWallet } = useEthers()
-
     const [isOpen, setIsOpen] = useState(false)
 
     const closeMenu = () => setIsOpen(false)

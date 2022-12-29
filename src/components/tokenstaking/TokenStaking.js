@@ -1,11 +1,12 @@
 import React from "react"
 import WTFlogo from "../../assets/LOGO.png"
+import { useEthers } from "@usedapp/core"
 import { Link } from "react-router-dom"
 import "./TokenStaking.css"
 const ethers = require("ethers")
 
 const provider = new ethers.providers.JsonRpcProvider(
-    process.env.REACT_APP_BNB_RPC_URL
+    process.env.REACT_APP_GOE_RPC_URL
 )
 
 const ABI = [
@@ -508,7 +509,24 @@ const CA = "0xfF844E33cEA04d046B4Ee2Ffb42E0f3F0e33C82d"
 
 const WTFstake = new ethers.Contract(CA, ABI, provider)
 
+const updateEarlyTaxSpan = async () => {
+    const earlyTaxSpan = document.getElementById("earlytax")
+
+    try {
+        const result = await WTFstake.MAX_UNSTAKE_FEE()
+        earlyTaxSpan.innerHTML = result
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+updateEarlyTaxSpan()
+
 const TokenStaking = () => {
+    const { account, activateBrowserWallet } = useEthers()
+
+    const isConnected = account !== undefined
+
     return (
         <>
             <nav className="nav text-5xl w-full">
@@ -523,7 +541,25 @@ const TokenStaking = () => {
                                 />
                             </Link>
                         </div>
-                        <div className="">Connect</div>
+                        {!isConnected ? (
+                            <button
+                                className="text-xl"
+                                onClick={() => activateBrowserWallet()}
+                            >
+                                Connect Wallet
+                            </button>
+                        ) : (
+                            <div className="flex justify-center items-center">
+                                <div className="">
+                                    {account.slice(0, 6) +
+                                        "..." +
+                                        account.slice(
+                                            account.length - 4,
+                                            account.length
+                                        )}
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             </nav>
@@ -541,7 +577,8 @@ const TokenStaking = () => {
                                 <div className="border-b">Remaining:</div>
                                 <div className="border-b">TAX: / </div>
                                 <div className="border-b">
-                                    Early withdraw TAX: %
+                                    Early withdraw TAX:
+                                    <span id="earlytax"></span>%
                                 </div>
                             </div>
                             <div className="rightpart p-2">

@@ -1,6 +1,7 @@
 .nav {
     position: absolute;
     top: 0;
+    font-size: 3em;
 }
 
 @media screen and (max-width: 640px) {
