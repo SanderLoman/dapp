@@ -9,7 +9,7 @@ import "./Roadmap.css"
 const Roadmap = () => {
     return (
         <div className="roadmap flex flex-col h-max md:h-screen">
-            <div className="flex flex-col justify-center items-center w-5/6 mx-auto text-center mb-28">
+            <div className="flex flex-col justify-center items-center w-5/6 mx-auto text-center">
                 <h1 className="roadmapText leading-none">Roadmap</h1>
                 <p className="smallText">
                     With the right fucking plan, great things can happen!
