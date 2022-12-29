@@ -1,11 +1,11 @@
-@media screen and (min-width: 1536px) {
+@media screen and (min-width: 1036px) {
     .rand {
         background-image: url(../../assets/miss4.png);
         background-size: cover;
     }
 }
 
-@media screen and (max-width: 1536px) {
+@media screen and (max-width: 1036px) {
     .rand {
         background-image: url(../../assets/teloon.png);
         background-size: cover;
