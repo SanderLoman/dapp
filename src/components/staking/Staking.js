@@ -32,7 +32,7 @@ const Staking = () => {
                         <img
                             src={StakeButton}
                             alt="Staking button"
-                            className="button w-1/5 pb-40"
+                            className="button w-1/5 mb-40"
                         />
                     </Link>
                 </Fade>
