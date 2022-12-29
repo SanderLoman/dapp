@@ -3,7 +3,7 @@ import "./Footer.css"
 
 const Footer = () => {
     return (
-        <div className="flex flex-col h-screen items-center justify-center bg-customOrange"></div>
+        <div className="flex flex-col h-[300px] items-center justify-center bg-blue-500"></div>
     )
 }
 

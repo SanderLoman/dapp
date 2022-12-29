@@ -137,6 +137,7 @@
     .leftpart {
         width: 20%;
         border-right-width: 2px;
+        font-size: 0.5em;
     }
 
     .rightpart {

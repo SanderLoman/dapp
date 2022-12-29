@@ -3,7 +3,7 @@ import "./Team.css"
 
 const Team = () => {
   return (
-    <div>Team</div>
+    <div className="team h-screen bg-gray-900"></div>
   )
 }
 

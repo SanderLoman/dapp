@@ -1,4 +1,13 @@
-.rand {
-    background-image: url(../../assets/telefoon.png);
-    background-size: cover;
+@media screen and (min-width: 1536px) {
+    .rand {
+        background-image: url(../../assets/miss4.png);
+        background-size: cover;
+    }
+}
+
+@media screen and (max-width: 1536px) {
+    .rand {
+        background-image: url(../../assets/background.png);
+        background-size: cover;
+    }
 }

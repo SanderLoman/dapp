@@ -32,12 +32,12 @@ const TokenStaking = () => {
                         </div>
                         <div className="bottompart h-5/6">
                             <div className="leftpart p-2">
-                                <div className="">Total Time:</div>
-                                <div className="">Remaining:</div>
-                                <div className="">TVL:</div>
-                                <div className="">TAX: 1/1</div>
+                                <div className="border-b">Total Time:</div>
+                                <div className="border-b">Remaining:</div>
+                                <div className="border-b">TAX: 1 / 1</div>
+                                <div className="border-b">Early withdraw TAX: 20%</div>
                             </div>
-                            <div className="rightpart p-2">!@#</div>
+                            <div className="rightpart p-2"><div className="border-b">TVL:</div></div>
                         </div>
                     </div>
                 </div>

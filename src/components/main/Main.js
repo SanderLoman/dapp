@@ -147,7 +147,7 @@ function Main() {
             <Content />
             <Tokenomics />
             <Achtergrond />
-            {/* <Footer /> */}
+            <Footer />
         </>
     )
 }

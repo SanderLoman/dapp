@@ -9,7 +9,7 @@ const Staking = () => {
 
     return (
         <div
-            className="staking main-container flex justify-evenly h-screen"
+            className="staking main-container flex justify-evenly h-screen pt-52"
         >
             <div className="image-container flex justify-center items-center w-1/3">
                 <Slide left>
