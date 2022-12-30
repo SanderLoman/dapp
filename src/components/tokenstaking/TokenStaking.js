@@ -283,10 +283,6 @@ const CA = "0xfF844E33cEA04d046B4Ee2Ffb42E0f3F0e33C82d"
 
 const WTFstake = new ethers.Contract(CA, ABI, provider)
 
-if (typeof window.ethereum == "undefined") {
-    document.getElementById("isConnected").innerHTML = `No Wallet Detected`
-}
-
 const TokenStaking = () => {
     const { account, activateBrowserWallet } = useEthers()
 
