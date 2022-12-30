@@ -283,12 +283,14 @@ const CA = "0xfF844E33cEA04d046B4Ee2Ffb42E0f3F0e33C82d"
 
 const WTFstake = new ethers.Contract(CA, ABI, provider)
 
+if (typeof window.ethereum == "undefined") {
+    document.getElementById("isConnected").innerHTML = `No Wallet Detected`
+}
+
 const TokenStaking = () => {
     const { account, activateBrowserWallet } = useEthers()
 
     const isConnected = account !== undefined
-
-    //get
 
     useEffect(() => {
         // Calculate and update the APR and APY values every 10 seconds
@@ -321,7 +323,7 @@ const TokenStaking = () => {
                         </div>
                         {!isConnected ? (
                             <button
-                                className=""
+                                className="isConnected"
                                 onClick={() => activateBrowserWallet()}
                             >
                                 Connect Wallet
@@ -342,7 +344,7 @@ const TokenStaking = () => {
                 </div>
             </nav>
             <div className="w-screen h-screen flex justify-center items-center">
-                <div className="bg-gradient-to-tr from-customPink via-customPurple to-customOrange rounded-2xl w-5/6 h-3/4 md:w-2/3 md:h-2/3 p-2">
+                <div className="bg-gradient-to-tr from-customPink via-customPurple to-customOrange rounded-2xl w-5/6 h-3/4 p-2">
                     <div className="fullpart bg-white rounded-lg w-full h-full p-2">
                         <div className="toppart flex justify-between h-1/6 border-b-2 p-2">
                             <div className="apy">

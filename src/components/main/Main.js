@@ -129,7 +129,7 @@ function Main() {
                                 spy={true}
                                 smooth={true}
                                 delay={250}
-                                offset={0}
+                                offset={-80}
                                 duration={500}
                                 onClick={closeMenu}
                                 className="flex justify-center font-semibold border-b text-center text-customOrange py-2"
