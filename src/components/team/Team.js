@@ -12,7 +12,7 @@ const Team = () => {
                     WTF this team can send tokens to the fucking moon!
                 </p>
             </div>
-            <div className="flex flex-col md:flex-row justify-around w-1/2 md:1/4 mx-auto items-center flex-wrap pb-96">
+            <div className="flex flex-col md:flex-row justify-around w-full lg:w-1/2 md:1/4 mx-auto items-center flex-wrap pb-96">
                 <img href="https://t.me/mystachad" src={MisterChad} alt="" className="h-60 mb-20 md:mb-0 hover:cursor-pointer" />
                 <img href="https://t.me/Sanduhh" src={Sander} alt="" className="h-60 hover:cursor-pointer" />
             </div>

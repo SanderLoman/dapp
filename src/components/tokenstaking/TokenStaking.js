@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 import "./TokenStaking.css"
 const ethers = require("ethers")
 
-const provider = new ethers.providers.JsonRpcProvider(
+const provider = new ethers.providers.WebSocketProvider(
     process.env.REACT_APP_GOE_RPC_URL
 )
 
@@ -326,7 +326,7 @@ const TokenStaking = () => {
                             </button>
                         ) : (
                             <div className="flex justify-center items-center">
-                                <div className="">
+                                <div className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl">
                                     {account.slice(0, 6) +
                                         "..." +
                                         account.slice(
@@ -342,38 +342,98 @@ const TokenStaking = () => {
             <div className="w-screen h-screen flex justify-center items-center">
                 <div className="bg-gradient-to-tr from-customPink via-customPurple to-customOrange rounded-2xl w-5/6 h-3/4 p-2">
                     <div className="fullpart bg-white rounded-lg w-full h-full p-2">
-                        <div className="toppart flex justify-between h-1/6 border-b-2 p-2">
-                            <div className="apy">
+                        <div className="toppart flex flex-col md:flex-row justify-between border-b-2 items-center h-1/6 text-xl md:text-2xl lg:text-4xl xl:text-6xl">
+                            <div className="apy order-2 md:order-1">
                                 APY: <span id="apytext">-</span>%
                             </div>
-                            <div className="xforx">$WTF FOR $WTF</div>
-                            <div className="apr">
+                            <div className="xforx order-1 md:order-2">
+                                $WTF FOR $WTF
+                            </div>
+                            <div className="apr order-3 md:order-3">
                                 APR: <span id="aprtext">-</span>%
                             </div>
                         </div>
-                        <div className="bottompart h-5/6">
-                            <div className="leftpart p-2">
+                        <div className="bottompart flex flex-col md:flex-row w-full h-5/6">
+                            <div className="leftpart md:w-1/6 text-xl md:text-2xl lg:text-3xl xl:text-4xl text-center md:text-start">
                                 <div className="border-b">
-                                    Total Time: <span id="time">-</span>
+                                    Total Time: 7 days
                                 </div>
                                 <div className="border-b">
-                                    Remaining: <span id="timeRemaining">-</span>
+                                    Remaining: <span className="">-</span>
                                 </div>
                                 <div className="border-b">
-                                    TAX: <span id="tax1">-</span>/
-                                    <span id="tax2">-</span>
+                                    TAX: <span className="">-</span>/
+                                    <span className="">-</span>
                                 </div>
                                 <div className="border-b">
-                                    Early TAX: <span id="earlytax">-</span>%
+                                    Early Tax: <span className="">-</span>
                                 </div>
                             </div>
-                            <div className="rightpart px-2">
-                                <div className="flex items-center border-b h-1/6">
-                                    TVL: <span id="TVL">-</span>
+                            <div className="flex flex-col md:w-5/6 h-full md:pl-2 md:border-l">
+                                <div className="flex justify-between flex-col items-center md:flex-row text-lg md:text-2xl lg:text-4xl xl:text-5xl h-1/6 border-b">
+                                    <div className="text-center">
+                                        TVL:
+                                        <span className="">
+                                            <span> </span>532.432.212
+                                        </span>
+                                    </div>
+                                    <div className="text-center">
+                                        You Hold:
+                                        <span className="">
+                                            <span> </span>523.342.523
+                                        </span>
+                                    </div>
                                 </div>
-                                <div className="border-2 h-5/6">
-                                    <div className="h-full"></div>
-
+                                <div className="rightpart flex flex-col md:flex-row text-center w-full h-5/6">
+                                    <div className="md:w-1/3 h-1/3 md:h-full border-b md:border-b-0 text-lg md:text-2xl lg:text-4xl xl:text-5xl">
+                                        <div className="h-1/2">
+                                            <span className="text-lg md:text-3xl lg:text-5xl xl:text-7xl">
+                                                STAKE
+                                            </span>
+                                        </div>
+                                        <div className="flex justify-center items-center h-1/2">
+                                            <div className="bg-gradient-to-tr from-customPink via-customPurple to-customOrange rounded-2xl p-1 w-max mx-auto">
+                                                <button className="text-lg md:text-2xl lg:text-3xl xl:text-5xl bg-white rounded-xl px-4">
+                                                    Stake
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="flex flex-row md:flex-col md:w-1/3 h-1/3 md:h-full md:border-l border-b md:border-b-0 md:border-r">
+                                        <div className="flex justify-center items-center md:h-1/3 w-1/3 md:w-full order-1 md:order-1">
+                                            <span className="text-lg md:text-2xl lg:text-3xl xl:text-5xl">
+                                                Tokens Staked:
+                                                <span className="">-</span>
+                                            </span>
+                                        </div>
+                                        <div className="flex justify-center items-center md:h-1/3 w-1/3 md:w-full order-3 md:order-2">
+                                            <span className="text-lg md:text-2xl lg:text-3xl xl:text-5xl">
+                                                Your Rewards:
+                                                <span className="">-</span>
+                                            </span>
+                                        </div>
+                                        <div className="flex justify-center items-center md:h-1/3 w-1/3 md:w-full order-2 md:order-3">
+                                            <div className="bg-gradient-to-tr from-customPink via-customPurple to-customOrange rounded-2xl p-1 w-max mx-auto">
+                                                <button className="text-lg md:text-2xl lg:text-3xl xl:text-5xl bg-white rounded-xl px-4 hover:bg-gray-100 active:bg-gray-200">
+                                                    Claim
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="flex flex-col md:w-1/3 h-1/3 md:h-full">
+                                        <div className="h-1/2">
+                                            <span className="text-lg md:text-3xl lg:text-5xl xl:text-7xl">
+                                                WITHDRAW
+                                            </span>
+                                        </div>
+                                        <div className="flex justify-center items-center h-1/2">
+                                            <div className="bg-gradient-to-tr from-customPink via-customPurple to-customOrange rounded-2xl p-1 w-max mx-auto">
+                                                <button className="text-lg md:text-2xl lg:text-3xl xl:text-5xl bg-white rounded-xl px-4">
+                                                    Withdraw
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

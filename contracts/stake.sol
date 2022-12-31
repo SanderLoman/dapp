@@ -452,10 +452,10 @@ contract WTFstake is ReentrancyGuard, Pausable, Ownable {
     bool public locked;
 
     uint256 public constant MAX_PERFORMANCE_FEE = 100; // 1%
-    uint256 public constant MAX_UNSTAKE_FEE = 2000; // 20%
+    uint256 public constant MAX_UNSTAKE_FEE = 3000; // 30%
 
     uint256 public performanceFee = 100; // 1%
-    uint256 public earlyUnstakeFee = 2000; //20%
+    uint256 public earlyUnstakeFee = 3000; //30%
 
     mapping(address => uint256) public userRewardPerTokenPaid;
     mapping(address => uint256) public rewards;

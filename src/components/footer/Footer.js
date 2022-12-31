@@ -56,7 +56,7 @@ const Footer = () => {
                     not a registered broker, analyst or investment advisor.
                     Everything that we provide on this site is purely for
                     guidance, informational and educational purposes. All
-                    information contained herein should be independently
+                    information contained in here should be independently
                     verified and confirmed. We do not accept any liability for
                     any loss or damage whatsoever caused in reliance upon such
                     information or services. Please be aware of the risks
@@ -66,7 +66,7 @@ const Footer = () => {
                     before making any investment decisions.
                 </p>
             </div>
-            <p className="flex justify-center text-2xl">
+            <p className="flex justify-center text-lg md:text-2xl">
                 © 2023 WTFDUDES - All rights reserved
             </p>
         </div>
