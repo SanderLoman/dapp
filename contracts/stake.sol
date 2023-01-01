@@ -451,7 +451,7 @@ contract WTFstake is ReentrancyGuard, Pausable, Ownable {
     bool private initialised;
     bool public locked;
 
-    uint256 public constant MAX_PERFORMANCE_FEE = 100; // 1%
+    uint256 public constant MAX_PERFORMANCE_FEE = 300; // 3%
     uint256 public constant MAX_UNSTAKE_FEE = 3000; // 30%
 
     uint256 public performanceFee = 100; // 1%

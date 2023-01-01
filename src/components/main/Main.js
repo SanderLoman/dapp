@@ -63,7 +63,7 @@ function Main() {
                                     to="roadmap"
                                     spy={true}
                                     smooth={true}
-                                    offset={-200}
+                                    offset={0}
                                     duration={500}
                                 >
                                     Roadmap
@@ -74,7 +74,7 @@ function Main() {
                                     to="team"
                                     spy={true}
                                     smooth={true}
-                                    offset={-375}
+                                    offset={0}
                                     duration={500}
                                 >
                                     Team

@@ -319,7 +319,7 @@ const TokenStaking = () => {
                         </div>
                         {!isConnected ? (
                             <button
-                                className="isConnected"
+                                className="isConnected text-xl md:text-2xl lg:text-3xl xl:text-5xl"
                                 onClick={() => activateBrowserWallet()}
                             >
                                 Connect Wallet
@@ -374,13 +374,13 @@ const TokenStaking = () => {
                                     <div className="text-center">
                                         TVL:
                                         <span className="">
-                                            <span> </span>532.432.212
+                                            <span> </span>-
                                         </span>
                                     </div>
                                     <div className="text-center">
                                         You Hold:
                                         <span className="">
-                                            <span> </span>523.342.523
+                                            <span> </span>-
                                         </span>
                                     </div>
                                 </div>
@@ -393,7 +393,7 @@ const TokenStaking = () => {
                                         </div>
                                         <div className="flex justify-center items-center h-1/2">
                                             <div className="bg-gradient-to-tr from-customPink via-customPurple to-customOrange rounded-2xl p-1 w-max mx-auto">
-                                                <button className="text-lg md:text-2xl lg:text-3xl xl:text-5xl bg-white rounded-xl px-4">
+                                                <button className="text-lg md:text-2xl lg:text-3xl xl:text-5xl bg-white rounded-xl px-4 hover:bg-gray-100 active:bg-gray-200">
                                                     Stake
                                                 </button>
                                             </div>
@@ -402,13 +402,13 @@ const TokenStaking = () => {
                                     <div className="flex flex-row md:flex-col md:w-1/3 h-1/3 md:h-full md:border-l border-b md:border-b-0 md:border-r">
                                         <div className="flex justify-center items-center md:h-1/3 w-1/3 md:w-full order-1 md:order-1">
                                             <span className="text-lg md:text-2xl lg:text-3xl xl:text-5xl">
-                                                Tokens Staked:
+                                                Tokens Staked:<span> </span>
                                                 <span className="">-</span>
                                             </span>
                                         </div>
                                         <div className="flex justify-center items-center md:h-1/3 w-1/3 md:w-full order-3 md:order-2">
                                             <span className="text-lg md:text-2xl lg:text-3xl xl:text-5xl">
-                                                Your Rewards:
+                                                Your Rewards:<span> </span>
                                                 <span className="">-</span>
                                             </span>
                                         </div>
@@ -428,7 +428,7 @@ const TokenStaking = () => {
                                         </div>
                                         <div className="flex justify-center items-center h-1/2">
                                             <div className="bg-gradient-to-tr from-customPink via-customPurple to-customOrange rounded-2xl p-1 w-max mx-auto">
-                                                <button className="text-lg md:text-2xl lg:text-3xl xl:text-5xl bg-white rounded-xl px-4">
+                                                <button className="text-lg md:text-2xl lg:text-3xl xl:text-5xl bg-white rounded-xl px-4 hover:bg-gray-100 active:bg-gray-200">
                                                     Withdraw
                                                 </button>
                                             </div>
