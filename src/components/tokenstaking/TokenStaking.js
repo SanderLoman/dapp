@@ -392,10 +392,17 @@ const TokenStaking = () => {
                                             </span>
                                         </div>
                                         <div className="flex justify-center items-center h-1/2">
-                                            <div className="bg-gradient-to-tr from-customPink via-customPurple to-customOrange rounded-2xl p-1 w-max mx-auto">
-                                                <button className="text-lg md:text-2xl lg:text-3xl xl:text-5xl bg-white rounded-xl px-4 hover:bg-gray-100 active:bg-gray-200">
-                                                    Stake
-                                                </button>
+                                            <div className="bg-gradient-to-tr from-customPink via-customPurple to-customOrange rounded-2xl p-1 mx-auto">
+                                                <div className="flex justify-between text-lg md:text-2xl lg:text-3xl xl:text-5xl bg-white rounded-xl">
+                                                    <input
+                                                        className="appearance-none bg-gray-100 text-lg md:text-2xl lg:text-3xl xl:text-4xl rounded-tl-xl rounded-bl-xl acitve:outline-none focus:outline-none"
+                                                        type="number"
+                                                        placeholder="Amout to approve"
+                                                    />
+                                                    <button className="px-2 border-l-2 bg-gray-100 active:bg-gray-200 rounded-tr-xl rounded-br-xl text-lg md:text-2xl lg:text-3xl xl:text-5xl">
+                                                        Approve
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
