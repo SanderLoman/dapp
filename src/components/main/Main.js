@@ -10,7 +10,7 @@ import Footer from "../footer/Footer"
 import WTFlogo from "../../assets/LOGO.png"
 import "./Main.css"
 
-function Main() {
+const Main = () => {
     const [isOpen, setIsOpen] = useState(false)
 
     const closeMenu = () => setIsOpen(false)

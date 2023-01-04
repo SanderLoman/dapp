@@ -1,5 +1,7 @@
-import { React, useEffect } from "react"
+import { React, useEffect, useState } from "react"
 import WTFlogo from "../../assets/LOGO.png"
+import Test from "../connectbutton/ConnectButton"
+import { ConnectButton } from "@rainbow-me/rainbowkit"
 import { useEthers } from "@usedapp/core"
 import { Link } from "react-router-dom"
 import "./TokenStaking.css"
@@ -11,42 +13,268 @@ const provider = new ethers.providers.WebSocketProvider(
 
 const ABI = [
     {
+        inputs: [
+            {
+                internalType: "address",
+                name: "_rewardsToken",
+                type: "address",
+            },
+            {
+                internalType: "address",
+                name: "_stakingToken",
+                type: "address",
+            },
+            {
+                internalType: "uint256",
+                name: "_rewardsDuration",
+                type: "uint256",
+            },
+            {
+                internalType: "uint256",
+                name: "_stakingTokensDecimal",
+                type: "uint256",
+            },
+            {
+                internalType: "bool",
+                name: "_locked",
+                type: "bool",
+            },
+        ],
+        stateMutability: "nonpayable",
+        type: "constructor",
+    },
+    {
+        anonymous: false,
+        inputs: [
+            {
+                indexed: true,
+                internalType: "address",
+                name: "previousOwner",
+                type: "address",
+            },
+            {
+                indexed: true,
+                internalType: "address",
+                name: "newOwner",
+                type: "address",
+            },
+        ],
+        name: "OwnershipTransferred",
+        type: "event",
+    },
+    {
+        anonymous: false,
+        inputs: [
+            {
+                indexed: false,
+                internalType: "address",
+                name: "account",
+                type: "address",
+            },
+        ],
+        name: "Paused",
+        type: "event",
+    },
+    {
+        anonymous: false,
+        inputs: [
+            {
+                indexed: false,
+                internalType: "address",
+                name: "token",
+                type: "address",
+            },
+            {
+                indexed: false,
+                internalType: "uint256",
+                name: "amount",
+                type: "uint256",
+            },
+        ],
+        name: "Recovered",
+        type: "event",
+    },
+    {
+        anonymous: false,
+        inputs: [
+            {
+                indexed: false,
+                internalType: "uint256",
+                name: "reward",
+                type: "uint256",
+            },
+        ],
+        name: "RewardAdded",
+        type: "event",
+    },
+    {
+        anonymous: false,
+        inputs: [
+            {
+                indexed: true,
+                internalType: "address",
+                name: "user",
+                type: "address",
+            },
+            {
+                indexed: false,
+                internalType: "uint256",
+                name: "reward",
+                type: "uint256",
+            },
+        ],
+        name: "RewardPaid",
+        type: "event",
+    },
+    {
+        anonymous: false,
+        inputs: [
+            {
+                indexed: false,
+                internalType: "uint256",
+                name: "newDuration",
+                type: "uint256",
+            },
+        ],
+        name: "RewardsDurationUpdated",
+        type: "event",
+    },
+    {
+        anonymous: false,
+        inputs: [
+            {
+                indexed: true,
+                internalType: "address",
+                name: "user",
+                type: "address",
+            },
+            {
+                indexed: false,
+                internalType: "uint256",
+                name: "amount",
+                type: "uint256",
+            },
+        ],
+        name: "Staked",
+        type: "event",
+    },
+    {
+        anonymous: false,
+        inputs: [
+            {
+                indexed: false,
+                internalType: "address",
+                name: "account",
+                type: "address",
+            },
+        ],
+        name: "Unpaused",
+        type: "event",
+    },
+    {
+        anonymous: false,
+        inputs: [
+            {
+                indexed: true,
+                internalType: "address",
+                name: "user",
+                type: "address",
+            },
+            {
+                indexed: false,
+                internalType: "uint256",
+                name: "amount",
+                type: "uint256",
+            },
+        ],
+        name: "Withdrawn",
+        type: "event",
+    },
+    {
         inputs: [],
         name: "MAX_PERFORMANCE_FEE",
-        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        outputs: [
+            {
+                internalType: "uint256",
+                name: "",
+                type: "uint256",
+            },
+        ],
         stateMutability: "view",
         type: "function",
     },
     {
         inputs: [],
         name: "MAX_UNSTAKE_FEE",
-        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        outputs: [
+            {
+                internalType: "uint256",
+                name: "",
+                type: "uint256",
+            },
+        ],
         stateMutability: "view",
         type: "function",
     },
     {
-        inputs: [{ internalType: "address", name: "account", type: "address" }],
+        inputs: [
+            {
+                internalType: "address",
+                name: "account",
+                type: "address",
+            },
+        ],
         name: "balanceOf",
-        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        outputs: [
+            {
+                internalType: "uint256",
+                name: "",
+                type: "uint256",
+            },
+        ],
         stateMutability: "view",
         type: "function",
     },
     {
         inputs: [],
         name: "earlyUnstakeFee",
-        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        outputs: [
+            {
+                internalType: "uint256",
+                name: "",
+                type: "uint256",
+            },
+        ],
         stateMutability: "view",
         type: "function",
     },
     {
-        inputs: [{ internalType: "address", name: "account", type: "address" }],
+        inputs: [
+            {
+                internalType: "address",
+                name: "account",
+                type: "address",
+            },
+        ],
         name: "earned",
-        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        outputs: [
+            {
+                internalType: "uint256",
+                name: "",
+                type: "uint256",
+            },
+        ],
         stateMutability: "view",
         type: "function",
     },
     {
-        inputs: [{ internalType: "uint256", name: "amount", type: "uint256" }],
+        inputs: [
+            {
+                internalType: "uint256",
+                name: "amount",
+                type: "uint256",
+            },
+        ],
         name: "emergencyWithdraw",
         outputs: [],
         stateMutability: "nonpayable",
@@ -69,35 +297,65 @@ const ABI = [
     {
         inputs: [],
         name: "getRewardForDuration",
-        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        outputs: [
+            {
+                internalType: "uint256",
+                name: "",
+                type: "uint256",
+            },
+        ],
         stateMutability: "view",
         type: "function",
     },
     {
         inputs: [],
         name: "lastTimeRewardApplicable",
-        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        outputs: [
+            {
+                internalType: "uint256",
+                name: "",
+                type: "uint256",
+            },
+        ],
         stateMutability: "view",
         type: "function",
     },
     {
         inputs: [],
         name: "lastUpdateTime",
-        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        outputs: [
+            {
+                internalType: "uint256",
+                name: "",
+                type: "uint256",
+            },
+        ],
         stateMutability: "view",
         type: "function",
     },
     {
         inputs: [],
         name: "lockDuration",
-        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        outputs: [
+            {
+                internalType: "uint256",
+                name: "",
+                type: "uint256",
+            },
+        ],
         stateMutability: "view",
         type: "function",
     },
     {
         inputs: [],
         name: "locked",
-        outputs: [{ internalType: "bool", name: "", type: "bool" }],
+        outputs: [
+            {
+                internalType: "bool",
+                name: "",
+                type: "bool",
+            },
+        ],
         stateMutability: "view",
         type: "function",
     },
@@ -110,16 +368,36 @@ const ABI = [
     },
     {
         inputs: [
-            { internalType: "uint256", name: "a", type: "uint256" },
-            { internalType: "uint256", name: "b", type: "uint256" },
+            {
+                internalType: "uint256",
+                name: "a",
+                type: "uint256",
+            },
+            {
+                internalType: "uint256",
+                name: "b",
+                type: "uint256",
+            },
         ],
         name: "min",
-        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        outputs: [
+            {
+                internalType: "uint256",
+                name: "",
+                type: "uint256",
+            },
+        ],
         stateMutability: "pure",
         type: "function",
     },
     {
-        inputs: [{ internalType: "uint256", name: "reward", type: "uint256" }],
+        inputs: [
+            {
+                internalType: "uint256",
+                name: "reward",
+                type: "uint256",
+            },
+        ],
         name: "notifyRewardAmount",
         outputs: [],
         stateMutability: "nonpayable",
@@ -127,32 +405,92 @@ const ABI = [
     },
     {
         inputs: [],
+        name: "owner",
+        outputs: [
+            {
+                internalType: "address",
+                name: "",
+                type: "address",
+            },
+        ],
+        stateMutability: "view",
+        type: "function",
+    },
+    {
+        inputs: [],
+        name: "paused",
+        outputs: [
+            {
+                internalType: "bool",
+                name: "",
+                type: "bool",
+            },
+        ],
+        stateMutability: "view",
+        type: "function",
+    },
+    {
+        inputs: [],
         name: "performanceFee",
-        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        outputs: [
+            {
+                internalType: "uint256",
+                name: "",
+                type: "uint256",
+            },
+        ],
         stateMutability: "view",
         type: "function",
     },
     {
         inputs: [],
         name: "periodFinish",
-        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        outputs: [
+            {
+                internalType: "uint256",
+                name: "",
+                type: "uint256",
+            },
+        ],
         stateMutability: "view",
         type: "function",
     },
     {
         inputs: [
-            { internalType: "uint256", name: "n", type: "uint256" },
-            { internalType: "uint256", name: "e", type: "uint256" },
+            {
+                internalType: "uint256",
+                name: "n",
+                type: "uint256",
+            },
+            {
+                internalType: "uint256",
+                name: "e",
+                type: "uint256",
+            },
         ],
         name: "pow",
-        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        outputs: [
+            {
+                internalType: "uint256",
+                name: "",
+                type: "uint256",
+            },
+        ],
         stateMutability: "pure",
         type: "function",
     },
     {
         inputs: [
-            { internalType: "address", name: "tokenAddress", type: "address" },
-            { internalType: "uint256", name: "tokenAmount", type: "uint256" },
+            {
+                internalType: "address",
+                name: "tokenAddress",
+                type: "address",
+            },
+            {
+                internalType: "uint256",
+                name: "tokenAmount",
+                type: "uint256",
+            },
         ],
         name: "recoverERC20",
         outputs: [],
@@ -169,35 +507,71 @@ const ABI = [
     {
         inputs: [],
         name: "rewardPerToken",
-        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        outputs: [
+            {
+                internalType: "uint256",
+                name: "",
+                type: "uint256",
+            },
+        ],
         stateMutability: "view",
         type: "function",
     },
     {
         inputs: [],
         name: "rewardPerTokenStored",
-        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        outputs: [
+            {
+                internalType: "uint256",
+                name: "",
+                type: "uint256",
+            },
+        ],
         stateMutability: "view",
         type: "function",
     },
     {
         inputs: [],
         name: "rewardRate",
-        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        outputs: [
+            {
+                internalType: "uint256",
+                name: "",
+                type: "uint256",
+            },
+        ],
         stateMutability: "view",
         type: "function",
     },
     {
-        inputs: [{ internalType: "address", name: "", type: "address" }],
+        inputs: [
+            {
+                internalType: "address",
+                name: "",
+                type: "address",
+            },
+        ],
         name: "rewards",
-        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        outputs: [
+            {
+                internalType: "uint256",
+                name: "",
+                type: "uint256",
+            },
+        ],
         stateMutability: "view",
         type: "function",
     },
     {
         inputs: [],
         name: "rewardsDuration",
-        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        outputs: [
+            {
+                internalType: "uint256",
+                name: "",
+                type: "uint256",
+            },
+        ],
         stateMutability: "view",
         type: "function",
     },
@@ -205,20 +579,75 @@ const ABI = [
         inputs: [],
         name: "rewardsToken",
         outputs: [
-            { internalType: "contract IERC20", name: "", type: "address" },
+            {
+                internalType: "contract IERC20",
+                name: "",
+                type: "address",
+            },
         ],
         stateMutability: "view",
         type: "function",
     },
     {
-        inputs: [{ internalType: "uint256", name: "amount", type: "uint256" }],
+        inputs: [
+            {
+                internalType: "uint256",
+                name: "_earlyUnstakeFee",
+                type: "uint256",
+            },
+        ],
+        name: "setEarlyUnstakeFee",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+    },
+    {
+        inputs: [
+            {
+                internalType: "uint256",
+                name: "_performanceFee",
+                type: "uint256",
+            },
+        ],
+        name: "setPerformanceFee",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+    },
+    {
+        inputs: [
+            {
+                internalType: "uint256",
+                name: "_rewardsDuration",
+                type: "uint256",
+            },
+        ],
+        name: "setRewardsDuration",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+    },
+    {
+        inputs: [
+            {
+                internalType: "uint256",
+                name: "amount",
+                type: "uint256",
+            },
+        ],
         name: "stake",
         outputs: [],
         stateMutability: "nonpayable",
         type: "function",
     },
     {
-        inputs: [{ internalType: "uint256", name: "amount", type: "uint256" }],
+        inputs: [
+            {
+                internalType: "uint256",
+                name: "amount",
+                type: "uint256",
+            },
+        ],
         name: "stake2",
         outputs: [],
         stateMutability: "nonpayable",
@@ -226,9 +655,26 @@ const ABI = [
     },
     {
         inputs: [],
+        name: "stakeAdmin",
+        outputs: [
+            {
+                internalType: "address",
+                name: "",
+                type: "address",
+            },
+        ],
+        stateMutability: "view",
+        type: "function",
+    },
+    {
+        inputs: [],
         name: "stakingToken",
         outputs: [
-            { internalType: "contract IERC20", name: "", type: "address" },
+            {
+                internalType: "contract IERC20",
+                name: "",
+                type: "address",
+            },
         ],
         stateMutability: "view",
         type: "function",
@@ -236,20 +682,36 @@ const ABI = [
     {
         inputs: [],
         name: "stakingTokensDecimalRate",
-        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        outputs: [
+            {
+                internalType: "uint256",
+                name: "",
+                type: "uint256",
+            },
+        ],
         stateMutability: "view",
         type: "function",
     },
     {
         inputs: [],
         name: "totalSupply",
-        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        outputs: [
+            {
+                internalType: "uint256",
+                name: "",
+                type: "uint256",
+            },
+        ],
         stateMutability: "view",
         type: "function",
     },
     {
         inputs: [
-            { internalType: "address", name: "newOwner", type: "address" },
+            {
+                internalType: "address",
+                name: "newOwner",
+                type: "address",
+            },
         ],
         name: "transferOwnership",
         outputs: [],
@@ -257,21 +719,45 @@ const ABI = [
         type: "function",
     },
     {
-        inputs: [{ internalType: "address", name: "", type: "address" }],
+        inputs: [
+            {
+                internalType: "address",
+                name: "",
+                type: "address",
+            },
+        ],
         name: "userRewardPerTokenPaid",
-        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        outputs: [
+            {
+                internalType: "uint256",
+                name: "",
+                type: "uint256",
+            },
+        ],
         stateMutability: "view",
         type: "function",
     },
     {
-        inputs: [{ internalType: "uint256", name: "amount", type: "uint256" }],
+        inputs: [
+            {
+                internalType: "uint256",
+                name: "amount",
+                type: "uint256",
+            },
+        ],
         name: "withdraw",
         outputs: [],
         stateMutability: "nonpayable",
         type: "function",
     },
     {
-        inputs: [{ internalType: "uint256", name: "amount", type: "uint256" }],
+        inputs: [
+            {
+                internalType: "uint256",
+                name: "amount",
+                type: "uint256",
+            },
+        ],
         name: "withdraw2",
         outputs: [],
         stateMutability: "nonpayable",
@@ -285,23 +771,7 @@ const WTFstake = new ethers.Contract(CA, ABI, provider)
 
 const TokenStaking = () => {
     const { account, activateBrowserWallet } = useEthers()
-
     const isConnected = account !== undefined
-
-    useEffect(() => {
-        // Calculate and update the APR and APY values every 10 seconds
-        setInterval(() => {
-            let apr = null
-            // (1 + interestRate / compoundFrequency) ^
-            // (compoundFrequency / investmentPeriod - 1)
-            let apy = null
-            // (1 + apr / compoundFrequency) ^
-            // (compoundFrequency / investmentPeriod - 1)
-
-            // document.getElementById("apytext").innerHTML = apy
-            // document.getElementById("aprtext").innerHTML = apr
-        }, 10000)
-    }, [])
 
     return (
         <>
@@ -318,23 +788,19 @@ const TokenStaking = () => {
                             </Link>
                         </div>
                         {!isConnected ? (
-                            <button
-                                className="isConnected text-xl md:text-2xl lg:text-3xl xl:text-5xl"
-                                onClick={() => activateBrowserWallet()}
-                            >
-                                Connect Wallet
-                            </button>
+                            <Test />
                         ) : (
-                            <div className="flex justify-center items-center">
-                                <div className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl">
-                                    {account.slice(0, 6) +
-                                        "..." +
-                                        account.slice(
-                                            account.length - 4,
-                                            account.length
-                                        )}
-                                </div>
-                            </div>
+                            null
+                            // <div className="flex justify-center items-center">
+                            //     <div className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl">
+                            //         {account.slice(0, 6) +
+                            //             "..." +
+                            //             account.slice(
+                            //                 account.length - 4,
+                            //                 account.length
+                            //             )}
+                            //     </div>
+                            // </div>
                         )}
                     </div>
                 </div>
@@ -373,7 +839,7 @@ const TokenStaking = () => {
                                 <div className="flex justify-between flex-col items-center md:flex-row text-lg md:text-2xl lg:text-4xl xl:text-5xl h-1/6 border-b">
                                     <div className="text-center">
                                         TVL:
-                                        <span className="">
+                                        <span className="TVL">
                                             <span> </span>-
                                         </span>
                                     </div>
@@ -393,14 +859,14 @@ const TokenStaking = () => {
                                         </div>
                                         <div className="flex justify-center items-center h-1/2">
                                             <div className="bg-gradient-to-tr from-customPink via-customPurple to-customOrange rounded-2xl p-1 mx-auto">
-                                                <div className="flex justify-between text-lg md:text-2xl lg:text-3xl xl:text-5xl bg-white rounded-xl">
+                                                <div className="flex md:flex-col justify-between text-lg md:text-2xl lg:text-3xl xl:text-5xl bg-white rounded-xl">
                                                     <input
-                                                        className="appearance-none bg-gray-100 text-lg md:text-2xl lg:text-3xl xl:text-4xl rounded-tl-xl rounded-bl-xl acitve:outline-none focus:outline-none"
+                                                        className="bg-gray-100 text-lg md:text-2xl lg:text-3xl xl:text-4xl rounded-tl-xl rounded-bl-xl md:rounded-bl-none md:rounded-tr-xl acitve:outline-none focus:outline-none text-center"
                                                         type="number"
-                                                        placeholder="Amout to approve"
+                                                        placeholder="Amount to stake"
                                                     />
-                                                    <button className="px-2 border-l-2 bg-gray-100 active:bg-gray-200 rounded-tr-xl rounded-br-xl text-lg md:text-2xl lg:text-3xl xl:text-5xl">
-                                                        Approve
+                                                    <button className="px-2 border-t bg-gray-100 active:bg-gray-200 rounded-br-xl rounded-tr-xl md:rounded-tr-none md:rounded-bl-xl text-lg md:text-2xl lg:text-3xl xl:text-4xl">
+                                                        Stake
                                                     </button>
                                                 </div>
                                             </div>
@@ -421,7 +887,7 @@ const TokenStaking = () => {
                                         </div>
                                         <div className="flex justify-center items-center md:h-1/3 w-1/3 md:w-full order-2 md:order-3">
                                             <div className="bg-gradient-to-tr from-customPink via-customPurple to-customOrange rounded-2xl p-1 w-max mx-auto">
-                                                <button className="text-lg md:text-2xl lg:text-3xl xl:text-5xl bg-white rounded-xl px-4 hover:bg-gray-100 active:bg-gray-200">
+                                                <button className="text-lg md:text-2xl lg:text-3xl xl:text-4xl bg-white rounded-xl px-4 hover:bg-gray-100 active:bg-gray-200">
                                                     Claim
                                                 </button>
                                             </div>
@@ -434,10 +900,17 @@ const TokenStaking = () => {
                                             </span>
                                         </div>
                                         <div className="flex justify-center items-center h-1/2">
-                                            <div className="bg-gradient-to-tr from-customPink via-customPurple to-customOrange rounded-2xl p-1 w-max mx-auto">
-                                                <button className="text-lg md:text-2xl lg:text-3xl xl:text-5xl bg-white rounded-xl px-4 hover:bg-gray-100 active:bg-gray-200">
-                                                    Withdraw
-                                                </button>
+                                            <div className="bg-gradient-to-tr from-customPink via-customPurple to-customOrange rounded-2xl p-1 mx-auto">
+                                                <div className="flex md:flex-col justify-between text-lg md:text-2xl lg:text-3xl xl:text-5xl bg-white rounded-xl">
+                                                    <input
+                                                        className="bg-gray-100 text-lg md:text-2xl lg:text-3xl xl:text-4xl rounded-tl-xl rounded-bl-xl md:rounded-bl-none md:rounded-tr-xl acitve:outline-none focus:outline-none text-center"
+                                                        type="number"
+                                                        placeholder="Amount to withdraw"
+                                                    />
+                                                    <button className="px-2 border-t bg-gray-100 active:bg-gray-200 rounded-br-xl rounded-tr-xl md:rounded-tr-none md:rounded-bl-xl text-lg md:text-2xl lg:text-3xl xl:text-4xl">
+                                                        Withdraw
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
