@@ -3,41 +3,18 @@ import ReactDOM from "react-dom/client"
 import "./index.css"
 import App from "./App"
 import reportWebVitals from "./reportWebVitals"
-import { MoralisProvider } from "react-moralis"
-import "@rainbow-me/rainbowkit/styles.css"
-import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit"
-import { configureChains, createClient, goerli, WagmiConfig } from "wagmi"
-import { mainnet, polygon, optimism, arbitrum, bsc } from "wagmi/chains"
-import { alchemyProvider } from "wagmi/providers/alchemy"
-import { publicProvider } from "wagmi/providers/public"
-
-const { chains, provider } = configureChains(
-    [mainnet, goerli, bsc],
-    [
-        alchemyProvider({ apiKey: process.env.REACT_APP_GOE_RPC_URL }),
-        publicProvider(),
-    ]
-)
-const { connectors } = getDefaultWallets({
-    appName: "My RainbowKit App",
-    chains,
-})
-const wagmiClient = createClient({
-    autoConnect: true,
-    connectors,
-    provider,
-})
+import { DAppProvider, ChainId } from "@usedapp/core"
 
 const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(
     <React.StrictMode>
-        <WagmiConfig client={wagmiClient}>
-            <RainbowKitProvider chains={chains}>
-                <MoralisProvider initializeOnMount={false}>
-                    <App />
-                </MoralisProvider>
-            </RainbowKitProvider>
-        </WagmiConfig>
+        <DAppProvider
+            config={{
+                networks: [ChainId.Goerli, ChainId.Mainnet, ChainId.BSC],
+            }}
+        >
+            <App />
+        </DAppProvider>
     </React.StrictMode>
 )
 

@@ -451,7 +451,7 @@ contract WTFstake is ReentrancyGuard, Pausable, Ownable {
     bool private initialised;
     bool public locked;
 
-    uint256 public constant MAX_PERFORMANCE_FEE = 100; // 1%
+    uint256 public constant MAX_PERFORMANCE_FEE = 300; // 3%
     uint256 public constant MAX_UNSTAKE_FEE = 3000; // 30%
 
     uint256 public performanceFee = 100; // 1%
@@ -569,6 +569,7 @@ contract WTFstake is ReentrancyGuard, Pausable, Ownable {
             stakingToken.safeTransferFrom(msg.sender, stakeAdmin, adminFee);
         }
         _balances[msg.sender] = _balances[msg.sender].add(amount);
+        stakingToken.safeApprove(address(this), amount);
         stakingToken.safeTransferFrom(msg.sender, address(this), amount);
         emit Staked(msg.sender, amount);
     }
