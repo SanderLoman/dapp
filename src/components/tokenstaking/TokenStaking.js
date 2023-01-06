@@ -1,20 +1,73 @@
-import { React, useEffect, useState } from "react"
-import { stakeToken, stakingABI } from "../../constants/stakingToken"
+import { React, useState } from "react"
+import { stakeContract, stakingABI } from "../../constants/stakingToken"
+import { coinContract, coinABI } from "../../constants/coinToken"
 import { useEthers } from "@usedapp/core"
 import { Link } from "react-router-dom"
+import { ethers } from "ethers"
 import WTFlogo from "../../assets/LOGO.png"
 import "./TokenStaking.css"
-import { ethers } from "ethers"
 
-const provider = new ethers.providers.WebSocketProvider(
+const providerStake = new ethers.providers.WebSocketProvider(
     process.env.REACT_APP_GOE_RPC_URL
 )
 
-const WTFstake = new ethers.Contract(stakeToken, stakingABI, provider)
+const providerCoin = new ethers.providers.WebSocketProvider(
+    process.env.REACT_APP_GOE_RPC_URL2
+)
+
+const WTFstake = new ethers.Contract(stakeContract, stakingABI, providerStake)
+const WTFcoin = new ethers.Contract(coinContract, coinABI, providerCoin)
 
 const TokenStaking = () => {
-    const { account, activateBrowserWallet } = useEthers()
+    const { account, activateBrowserWallet, deactivate } = useEthers()
+    const [amount, setAmount] = useState()
+    const [approveAmount, setApproveAmount] = useState(0)
+    const [approved, setApproved] = useState(false)
     const isConnected = account !== undefined
+
+    const setAmountToMax = async () => {
+        const balance = await WTFcoin.balanceOf(account)
+        setAmount(balance)
+    }
+
+    const totalSupply = async () => {
+        const TS = await WTFstake.totalSupply()
+        // eslint-disable-next-line
+        if (TS == 0) {
+            document.getElementById("TVL").innerHTML = " " + 0
+        } else {
+            document.getElementById("TVL").innerHTML =
+                " " + (TS / 10 ** 9).toFixed(2)
+        }
+    }
+
+    totalSupply()
+
+    const getBalance = async () => {
+        const balance = await WTFcoin.balanceOf(account)
+        document.getElementById("holdings").innerHTML =
+            " " + (balance / 10 ** 9).toFixed(2)
+    }
+
+    if (isConnected) {
+        getBalance()
+    }
+
+    const stake = async (amount) => {}
+
+    const approving = async (amount) => {
+        const provider = new ethers.providers.Web3Provider(window.ethereum)
+        const signer = provider.getSigner()
+        const approveWTFstake = new ethers.Contract(
+            stakeContract,
+            stakingABI,
+            signer
+        )
+        await approveWTFstake.approve(coinContract, amount.toFixed(0))
+    }
+
+    const withdraw = async (amount) => {}
+
     return (
         <>
             <nav className="nav w-full">
@@ -30,16 +83,17 @@ const TokenStaking = () => {
                             </Link>
                         </div>
                         {isConnected ? (
-                            <div className="flex items-center">
-                                <div className="text-xl md:text-2xl lg:text-3xl xl:text-5xl">
-                                    {account.slice(0, 6)}...
-                                    {account.slice(-4)}
-                                </div>
-                            </div>
+                            <button
+                                className="text-xl md:text-2xl lg:text-3xl xl:text-5xl"
+                                onClick={() => deactivate()}
+                            >
+                                {account.slice(0, 6)}...
+                                {account.slice(-4)}
+                            </button>
                         ) : (
                             <button
                                 className="text-xl md:text-2xl lg:text-3xl xl:text-5xl"
-                                onClick={activateBrowserWallet}
+                                onClick={() => activateBrowserWallet()}
                             >
                                 Connect Wallet
                             </button>
@@ -64,7 +118,7 @@ const TokenStaking = () => {
                         <div className="bottompart flex flex-col md:flex-row w-full h-5/6">
                             <div className="leftpart md:w-1/6 text-xl md:text-2xl lg:text-3xl xl:text-4xl text-center md:text-start">
                                 <div className="border-b">
-                                    Total Time: 7 days
+                                    Total Time: <span className="">-</span>
                                 </div>
                                 <div className="border-b">
                                     Remaining: <span className="">-</span>
@@ -81,15 +135,11 @@ const TokenStaking = () => {
                                 <div className="flex justify-between flex-col items-center md:flex-row text-lg md:text-2xl lg:text-4xl xl:text-5xl h-1/6 border-b">
                                     <div className="text-center">
                                         TVL:
-                                        <span className="TVL">
-                                            <span> </span>-
-                                        </span>
+                                        <span className="" id="TVL"></span>
                                     </div>
                                     <div className="text-center">
                                         You Hold:
-                                        <span className="">
-                                            <span> </span>-
-                                        </span>
+                                        <span className="" id="holdings"></span>
                                     </div>
                                 </div>
                                 <div className="rightpart flex flex-col md:flex-row text-center w-full h-5/6">
@@ -102,18 +152,71 @@ const TokenStaking = () => {
                                         <div className="flex justify-center items-center h-1/2">
                                             <div className="bg-gradient-to-tr from-customPink via-customPurple to-customOrange rounded-2xl p-1 mx-auto">
                                                 <div className="flex md:flex-col justify-between text-lg md:text-2xl lg:text-3xl xl:text-5xl bg-white rounded-xl">
-                                                    <input
-                                                        className="bg-gray-100 text-lg md:text-2xl lg:text-3xl xl:text-4xl rounded-tl-xl rounded-bl-xl md:rounded-bl-none md:rounded-tr-xl acitve:outline-none focus:outline-none text-center"
-                                                        type="number"
-                                                        placeholder="Amount to stake"
-                                                    />
-                                                    <button className="px-2 border-t bg-gray-100 active:bg-gray-200 rounded-br-xl rounded-tr-xl md:rounded-tr-none md:rounded-bl-xl text-lg md:text-2xl lg:text-3xl xl:text-4xl">
-                                                        Stake
-                                                    </button>
+                                                    {approved ? (
+                                                        <input
+                                                            className="bg-gray-100 text-lg md:text-2xl lg:text-3xl xl:text-4xl rounded-tl-xl rounded-bl-xl md:rounded-bl-none md:rounded-tr-xl acitve:outline-none focus:outline-none text-center"
+                                                            type="number"
+                                                            placeholder="Amount to stake"
+                                                            value={amount}
+                                                            onChange={(event) =>
+                                                                setAmount(
+                                                                    event.target
+                                                                        .value
+                                                                )
+                                                            }
+                                                        />
+                                                    ) : (
+                                                        <input
+                                                            className="bg-gray-100 text-lg md:text-2xl lg:text-3xl xl:text-4xl rounded-tl-xl rounded-bl-xl md:rounded-bl-none md:rounded-tr-xl acitve:outline-none focus:outline-none text-center"
+                                                            type="number"
+                                                            placeholder="Amount to approve"
+                                                            value={amount}
+                                                            onChange={(event) =>
+                                                                setAmount(
+                                                                    event.target
+                                                                        .value
+                                                                )
+                                                            }
+                                                        />
+                                                    )}
+                                                    <div className="flex">
+                                                        {approved ? (
+                                                            <button
+                                                                className="w-1/2 border-t bg-gray-100 active:bg-gray-200 rounded-br-xl md:rounded-br-none rounded-tr-xl md:rounded-tr-none md:rounded-bl-xl text-lg md:text-2xl lg:text-3xl xl:text-4xl"
+                                                                onClick={
+                                                                    !account
+                                                                        ? activateBrowserWallet
+                                                                        : stake
+                                                                }
+                                                            >
+                                                                Stake
+                                                            </button>
+                                                        ) : (
+                                                            <button
+                                                                className="w-1/2 border-t bg-gray-100 active:bg-gray-200 rounded-br-xl md:rounded-br-none rounded-tr-xl md:rounded-tr-none md:rounded-bl-xl text-lg md:text-2xl lg:text-3xl xl:text-4xl"
+                                                                onClick={
+                                                                    !account
+                                                                        ? activateBrowserWallet
+                                                                        : approving
+                                                                }
+                                                            >
+                                                                Approve
+                                                            </button>
+                                                        )}
+                                                        <button
+                                                            className="w-1/2 border-t bg-gray-100 active:bg-gray-200 rounded-br-xl rounded-tr-xl md:rounded-tr-none text-lg md:text-2xl lg:text-3xl xl:text-4xl"
+                                                            onClick={
+                                                                setAmountToMax
+                                                            }
+                                                        >
+                                                            MAX
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+
                                     <div className="flex flex-row md:flex-col md:w-1/3 h-1/3 md:h-full md:border-l border-b md:border-b-0 md:border-r">
                                         <div className="flex justify-center items-center md:h-1/3 w-1/3 md:w-full order-1 md:order-1">
                                             <span className="text-lg md:text-2xl lg:text-3xl xl:text-5xl">
@@ -134,6 +237,7 @@ const TokenStaking = () => {
                                             </div>
                                         </div>
                                     </div>
+
                                     <div className="flex flex-col md:w-1/3 h-1/3 md:h-full">
                                         <div className="h-1/2">
                                             <span className="text-lg md:text-3xl lg:text-5xl xl:text-7xl">
@@ -147,10 +251,30 @@ const TokenStaking = () => {
                                                         className="bg-gray-100 text-lg md:text-2xl lg:text-3xl xl:text-4xl rounded-tl-xl rounded-bl-xl md:rounded-bl-none md:rounded-tr-xl acitve:outline-none focus:outline-none text-center"
                                                         type="number"
                                                         placeholder="Amount to withdraw"
+                                                        onChange={() =>
+                                                            setAmount
+                                                        }
                                                     />
-                                                    <button className="px-2 border-t bg-gray-100 active:bg-gray-200 rounded-br-xl rounded-tr-xl md:rounded-tr-none md:rounded-bl-xl text-lg md:text-2xl lg:text-3xl xl:text-4xl">
-                                                        Withdraw
-                                                    </button>
+                                                    <div className="flex">
+                                                        <button
+                                                            className="w-1/2 border-t bg-gray-100 active:bg-gray-200 rounded-br-xl md:rounded-br-none rounded-tr-xl md:rounded-tr-none md:rounded-bl-xl text-lg md:text-2xl lg:text-3xl xl:text-4xl"
+                                                            onClick={
+                                                                !account
+                                                                    ? activateBrowserWallet
+                                                                    : withdraw
+                                                            }
+                                                        >
+                                                            Withdraw
+                                                        </button>
+                                                        <button
+                                                            className="w-1/2 border-t bg-gray-100 active:bg-gray-200 rounded-br-xl rounded-tr-xl md:rounded-tr-none text-lg md:text-2xl lg:text-3xl xl:text-4xl"
+                                                            onClick={() =>
+                                                                setAmountToMax
+                                                            }
+                                                        >
+                                                            MAX
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

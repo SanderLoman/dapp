@@ -16,7 +16,7 @@ module.exports = {
             // },
         },
         goerli: {
-            url: process.env.GOE_RPC_URL,
+            url: process.env.REACT_APP_GOE_RPC_URL,
             accounts: [process.env.GOE_PRIVATE_KEY],
         },
         bsc: {

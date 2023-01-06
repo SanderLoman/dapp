@@ -1,7 +1,7 @@
 import React from "react"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
-import Main from "./components/main/Main"
 import TokenStaking from "./components/tokenstaking/TokenStaking"
+import Main from "./components/main/Main"
 import "./App.css"
 
 function App() {

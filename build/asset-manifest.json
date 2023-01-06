@@ -1,29 +1,32 @@
 {
   "files": {
-    "main.css": "/static/css/main.6b0277fa.css",
-    "main.js": "/static/js/main.6f961851.js",
-    "static/js/787.03770da1.chunk.js": "/static/js/787.03770da1.chunk.js",
-    "static/media/background.png": "/static/media/background.e917d9a991d0a992b61c.png",
+    "main.css": "/static/css/main.06320b3c.css",
+    "main.js": "/static/js/main.10f3b022.js",
+    "static/js/27.ea81e33b.chunk.js": "/static/js/27.ea81e33b.chunk.js",
+    "static/media/teloon.png": "/static/media/teloon.8213b09138b5d712751c.png",
     "static/media/miss4.png": "/static/media/miss4.20bb9a29de89857cda98.png",
     "static/media/staking_dudes.png": "/static/media/staking_dudes.472ed864e5f533a36ebd.png",
+    "static/media/dexscreener.png": "/static/media/dexscreener.e0bcf1638e2f3fe1eb74.png",
     "static/media/wtf_dude_orange.png": "/static/media/wtf_dude_orange.772c2dc77ac4f3cd1d16.png",
+    "static/media/uni.png": "/static/media/uni.1f68ee4f5aebda8d12b3.png",
+    "static/media/twitter.png": "/static/media/twitter.2763c3c89b262b0e42ad.png",
+    "static/media/etherscan.png": "/static/media/etherscan.925c8d19feeee5ee7aba.png",
+    "static/media/diagram.png": "/static/media/diagram.e497c74d7b78fccbb97b.png",
+    "static/media/misterchad.png": "/static/media/misterchad.a4c1a673f8672f806e60.png",
     "static/media/Doodle.ttf": "/static/media/Doodle.445f2900c67f803d3cac.ttf",
+    "static/media/sander.png": "/static/media/sander.e6a90ed1f364a857116a.png",
     "static/media/wtfdudes_text.png": "/static/media/wtfdudes_text.8e6bab4b5977a2092893.png",
     "static/media/tokenomicsImage.jpg": "/static/media/tokenomicsImage.1ea0650a54afaf67d72b.jpg",
     "static/media/LOGO.png": "/static/media/LOGO.ee7b7b31713d9fab85c9.png",
-    "static/media/taartImage.jpg": "/static/media/taartImage.a605cd003e63b0381356.jpg",
     "static/media/Doodle_Head.ttf": "/static/media/Doodle_Head.f4461022260012d49a5a.ttf",
     "static/media/level2.png": "/static/media/level2.42a5cd2acb62421375ba.png",
     "static/media/level1.png": "/static/media/level1.7ce20fa1a1a0ff4a4e04.png",
+    "static/media/level4.png": "/static/media/level4.fc968b28aabc7b404a1e.png",
     "static/media/level3.png": "/static/media/level3.7fbc0ff2c5eb0a9e41c1.png",
-    "static/media/level4.png": "/static/media/level4.19ebf4397c41f2e9db22.png",
-    "index.html": "/index.html",
-    "main.6b0277fa.css.map": "/static/css/main.6b0277fa.css.map",
-    "main.6f961851.js.map": "/static/js/main.6f961851.js.map",
-    "787.03770da1.chunk.js.map": "/static/js/787.03770da1.chunk.js.map"
+    "index.html": "/index.html"
   },
   "entrypoints": [
-    "static/css/main.6b0277fa.css",
-    "static/js/main.6f961851.js"
+    "static/css/main.06320b3c.css",
+    "static/js/main.10f3b022.js"
   ]
 }
