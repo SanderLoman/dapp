@@ -165,7 +165,7 @@ const TokenStaking = () => {
                     </div>
                 </div>
             </nav>
-            <div className="w-screen my-24 md:my-0 md:h-screen flex justify-center items-center">
+            <div className="w-screen my-20 md:my-0 md:h-screen flex justify-center items-center">
                 <div className="bg-gradient-to-tr from-customPink via-customPurple to-customOrange rounded-2xl w-5/6 h-3/4 p-2">
                     <div className="fullpart bg-white rounded-lg w-full h-full p-2">
                         <div className="toppart flex flex-col md:flex-row justify-between border-b-2 items-center h-1/6 text-xl md:text-2xl lg:text-4xl xl:text-6xl">
@@ -382,25 +382,25 @@ const TokenStaking = () => {
                                                     </div>
                                                 </div>
                                             </div>
-                                                <div className="flex justify-between items-center py-2">
-                                                    <Switch
-                                                        checked={enabled}
-                                                        onChange={setEnabled}
-                                                        className={`relative inline-flex h-[38px] w-[74px] shrink-0 cursor-pointer border-2 border-gray-200 rounded-full bg-gradient-to-tr from-customPink via-customPurple to-customOrange transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
-                                                    >
-                                                        <span
-                                                            aria-hidden="true"
-                                                            className={`${
-                                                                enabled
-                                                                    ? "translate-x-9 bg-gray-300"
-                                                                    : "translate-x-0 bg-white"
-                                                            } pointer-events-none h-[34px] w-[34px] transform rounded-full  transition duration-200 ease-in-out`}
-                                                        />
-                                                    </Switch>
-                                                    <span className="text-lg md:text-2xl lg:text-3xl xl:text-4xl">
-                                                        Emergency Withdraw?
-                                                    </span>
-                                                </div>
+                                            <div className="flex justify-center items-center py-2 w-full">
+                                                <Switch
+                                                    checked={enabled}
+                                                    onChange={setEnabled}
+                                                    className={`relative inline-flex h-[38px] w-[74px] shrink-0 cursor-pointer border-2 border-transparent rounded-full bg-gradient-to-tr from-customPink via-customPurple to-customOrange transition-colors duration-200 ease-in-out mr-5`}
+                                                >
+                                                    <span
+                                                        aria-hidden="true"
+                                                        className={`${
+                                                            enabled
+                                                                ? "translate-x-9 bg-gray-300"
+                                                                : "translate-x-0 bg-white"
+                                                        } pointer-events-none h-[34px] w-[34px] transform rounded-full transition duration-200 ease-in-out`}
+                                                    />
+                                                </Switch>
+                                                <span className="text-lg md:text-2xl lg:text-3xl xl:text-4xl">
+                                                    Early Withdraw?
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -414,3 +414,11 @@ const TokenStaking = () => {
 }
 
 export default TokenStaking
+
+// TODO:
+// 1. make the bigNumber error go away in the stake function
+// 2. make staking appear when a user has approved the contract to spend their tokens
+// 3. make the withdraw function work
+// 4. make the early withdraw function work
+// 5. make APY and APR work
+// 6. understand the staking contract its functions and know how it works
