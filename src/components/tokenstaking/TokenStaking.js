@@ -27,7 +27,7 @@ const TokenStaking = () => {
 
     const setAmountToMax = async () => {
         const balance = await WTFcoin.balanceOf(account)
-        setAmount(balance)
+        setAmount(((balance) / 10 ** 9).toFixed(0))
     }
 
     const totalSupply = async () => {
@@ -63,7 +63,7 @@ const TokenStaking = () => {
             stakingABI,
             signer
         )
-        await approveWTFstake.approve(coinContract, amount.toFixed(0))
+        await approveWTFstake.approve(coinContract, amount)
     }
 
     const withdraw = async (amount) => {}
@@ -106,55 +106,72 @@ const TokenStaking = () => {
                     <div className="fullpart bg-white rounded-lg w-full h-full p-2">
                         <div className="toppart flex flex-col md:flex-row justify-between border-b-2 items-center h-1/6 text-xl md:text-2xl lg:text-4xl xl:text-6xl">
                             <div className="apy order-2 md:order-1">
-                                APY: <span id="apytext">-</span>%
+                                APY: <span id="apytext">?</span>%
                             </div>
                             <div className="xforx order-1 md:order-2">
                                 $WTF FOR $WTF
                             </div>
                             <div className="apr order-3 md:order-3">
-                                APR: <span id="aprtext">-</span>%
+                                APR: <span id="aprtext">?</span>%
                             </div>
                         </div>
                         <div className="bottompart flex flex-col md:flex-row w-full h-5/6">
                             <div className="leftpart md:w-1/6 text-xl md:text-2xl lg:text-3xl xl:text-4xl text-center md:text-start">
                                 <div className="border-b">
-                                    Total Time: <span className="">-</span>
+                                    Total Time:{" "}
+                                    <span className="" id="totalTime">
+                                        ?
+                                    </span>
                                 </div>
                                 <div className="border-b">
-                                    Remaining: <span className="">-</span>
+                                    Remaining:{" "}
+                                    <span className="remaining">?</span>
                                 </div>
                                 <div className="border-b">
-                                    TAX: <span className="">-</span>/
-                                    <span className="">-</span>
+                                    TAX:{" "}
+                                    <span className="" id="tax">
+                                        ?
+                                    </span>
+                                    /
+                                    <span className="" id="tax">
+                                        ?
+                                    </span>
                                 </div>
                                 <div className="border-b">
-                                    Early Tax: <span className="">-</span>
+                                    Early Tax:{" "}
+                                    <span className="" id="EarlyTax">
+                                        ?
+                                    </span>
                                 </div>
                             </div>
                             <div className="flex flex-col md:w-5/6 h-full md:pl-2 md:border-l">
                                 <div className="flex justify-between flex-col items-center md:flex-row text-lg md:text-2xl lg:text-4xl xl:text-5xl h-1/6 border-b">
                                     <div className="text-center">
                                         TVL:
-                                        <span className="" id="TVL"></span>
+                                        <span className="" id="TVL">
+                                            ?
+                                        </span>
                                     </div>
                                     <div className="text-center">
-                                        You Hold:
-                                        <span className="" id="holdings"></span>
+                                        You Hold:{" "}
+                                        <span className="" id="holdings">
+                                            ?
+                                        </span>
                                     </div>
                                 </div>
                                 <div className="rightpart flex flex-col md:flex-row text-center w-full h-5/6">
                                     <div className="md:w-1/3 h-1/3 md:h-full border-b md:border-b-0 text-lg md:text-2xl lg:text-4xl xl:text-5xl">
-                                        <div className="h-1/2">
+                                        <div className="h-1/3 md:h-1/2">
                                             <span className="text-lg md:text-3xl lg:text-5xl xl:text-7xl">
                                                 STAKE
                                             </span>
                                         </div>
-                                        <div className="flex justify-center items-center h-1/2">
+                                        <div className="flex justify-center items-center h-2/3 md:h-1/2">
                                             <div className="bg-gradient-to-tr from-customPink via-customPurple to-customOrange rounded-2xl p-1 mx-auto">
-                                                <div className="flex md:flex-col justify-between text-lg md:text-2xl lg:text-3xl xl:text-5xl bg-white rounded-xl">
+                                                <div className="flex flex-col justify-between text-lg md:text-2xl lg:text-3xl xl:text-5xl bg-white rounded-xl">
                                                     {approved ? (
                                                         <input
-                                                            className="bg-gray-100 text-lg md:text-2xl lg:text-3xl xl:text-4xl rounded-tl-xl rounded-bl-xl md:rounded-bl-none md:rounded-tr-xl acitve:outline-none focus:outline-none text-center"
+                                                            className="bg-gray-100 w-2/3 text-lg md:text-2xl lg:text-3xl xl:text-4xl rounded-tl-xl rounded-bl-xl md:rounded-bl-none rounded-tr-xl acitve:outline-none focus:outline-none text-center"
                                                             type="number"
                                                             placeholder="Amount to stake"
                                                             value={amount}
@@ -167,7 +184,7 @@ const TokenStaking = () => {
                                                         />
                                                     ) : (
                                                         <input
-                                                            className="bg-gray-100 text-lg md:text-2xl lg:text-3xl xl:text-4xl rounded-tl-xl rounded-bl-xl md:rounded-bl-none md:rounded-tr-xl acitve:outline-none focus:outline-none text-center"
+                                                            className="bg-gray-100  w-2/3text-lg md:text-2xl lg:text-3xl xl:text-4xl rounded-tl-xl rounded-bl-none rounded-tr-xl acitve:outline-none focus:outline-none text-center"
                                                             type="number"
                                                             placeholder="Amount to approve"
                                                             value={amount}
@@ -182,7 +199,7 @@ const TokenStaking = () => {
                                                     <div className="flex">
                                                         {approved ? (
                                                             <button
-                                                                className="w-1/2 border-t bg-gray-100 active:bg-gray-200 rounded-br-xl md:rounded-br-none rounded-tr-xl md:rounded-tr-none md:rounded-bl-xl text-lg md:text-2xl lg:text-3xl xl:text-4xl"
+                                                                className="w-1/2 border-t bg-gray-100 active:bg-gray-200 rounded-br-xl md:rounded-br-none rounded-tr-xl md:rounded-tr-none rounded-bl-xl text-lg md:text-2xl lg:text-3xl xl:text-4xl"
                                                                 onClick={
                                                                     !account
                                                                         ? activateBrowserWallet
@@ -193,7 +210,7 @@ const TokenStaking = () => {
                                                             </button>
                                                         ) : (
                                                             <button
-                                                                className="w-1/2 border-t bg-gray-100 active:bg-gray-200 rounded-br-xl md:rounded-br-none rounded-tr-xl md:rounded-tr-none md:rounded-bl-xl text-lg md:text-2xl lg:text-3xl xl:text-4xl"
+                                                                className="w-1/2 border-t bg-gray-100 active:bg-gray-200 rounded-br-none rounded-tr-none rounded-bl-xl  text-lg md:text-2xl lg:text-3xl xl:text-4xl"
                                                                 onClick={
                                                                     !account
                                                                         ? activateBrowserWallet
@@ -220,13 +237,21 @@ const TokenStaking = () => {
                                     <div className="flex flex-row md:flex-col md:w-1/3 h-1/3 md:h-full md:border-l border-b md:border-b-0 md:border-r">
                                         <div className="flex justify-center items-center md:h-1/3 w-1/3 md:w-full order-1 md:order-1">
                                             <span className="text-lg md:text-2xl lg:text-3xl xl:text-5xl">
-                                                Tokens Staked:<span> </span>
-                                                <span className="">-</span>
+                                                Tokens Staked:{" "}
+                                                <span
+                                                    className=""
+                                                    id="tokenStaked"
+                                                >
+                                                    ?
+                                                </span>
                                             </span>
                                         </div>
                                         <div className="flex justify-center items-center md:h-1/3 w-1/3 md:w-full order-3 md:order-2">
                                             <span className="text-lg md:text-2xl lg:text-3xl xl:text-5xl">
-                                                Your Rewards:
+                                                Your Rewards:{" "}
+                                                <span className="" id="rewards">
+                                                    ?
+                                                </span>
                                             </span>
                                         </div>
                                         <div className="flex justify-center items-center md:h-1/3 w-1/3 md:w-full order-2 md:order-3">
@@ -245,10 +270,10 @@ const TokenStaking = () => {
                                             </span>
                                         </div>
                                         <div className="flex justify-center items-center h-1/2">
-                                            <div className="bg-gradient-to-tr from-customPink via-customPurple to-customOrange rounded-2xl p-1 mx-auto">
-                                                <div className="flex md:flex-col justify-between text-lg md:text-2xl lg:text-3xl xl:text-5xl bg-white rounded-xl">
+                                            <div className="bg-gradient-to-tr from-customPink via-customPurple to-customOrange rounded-2xl p-1 mx-auto ">
+                                                <div className="flex flex-col justify-between text-lg md:text-2xl lg:text-3xl xl:text-5xl bg-white rounded-xl">
                                                     <input
-                                                        className="bg-gray-100 text-lg md:text-2xl lg:text-3xl xl:text-4xl rounded-tl-xl rounded-bl-xl md:rounded-bl-none md:rounded-tr-xl acitve:outline-none focus:outline-none text-center"
+                                                        className="bg-gray-100 text-lg md:text-2xl lg:text-3xl xl:text-4xl rounded-tl-xl rounded-bl-xl md:rounded-bl-none rounded-tr-xl acitve:outline-none focus:outline-none text-center"
                                                         type="number"
                                                         placeholder="Amount to withdraw"
                                                         onChange={() =>
@@ -257,7 +282,7 @@ const TokenStaking = () => {
                                                     />
                                                     <div className="flex">
                                                         <button
-                                                            className="w-1/2 border-t bg-gray-100 active:bg-gray-200 rounded-br-xl md:rounded-br-none rounded-tr-xl md:rounded-tr-none md:rounded-bl-xl text-lg md:text-2xl lg:text-3xl xl:text-4xl"
+                                                            className="w-1/2 border-t bg-gray-100 active:bg-gray-200 rounded-br-none rounded-tr-none rounded-bl-xl text-lg md:text-2xl lg:text-3xl xl:text-4xl"
                                                             onClick={
                                                                 !account
                                                                     ? activateBrowserWallet
