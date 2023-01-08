@@ -18,6 +18,42 @@ const providerCoin = new ethers.providers.WebSocketProvider(
 const WTFstake = new ethers.Contract(stakeContract, stakingABI, providerStake)
 const WTFcoin = new ethers.Contract(coinContract, coinABI, providerCoin)
 
+const tax = async () => {
+    const tax = await WTFstake.performanceFee()
+    document.getElementById("tax").innerHTML = " " + tax / 100 + " "
+    document.getElementById("tax2").innerHTML = " " + tax / 100 + "%"
+}
+
+const earlyTax = async () => {
+    const earlyTax = await WTFstake.earlyUnstakeFee()
+    document.getElementById("earlyTax").innerHTML = " " + earlyTax / 100 + "%"
+}
+
+const totalTime = async () => {
+    const TT = await WTFstake.lockDuration()
+    document.getElementById("totalTime").innerHTML =
+        " " + (TT / 86400).toFixed(0) + " days"
+}
+
+const totalSupply = async () => {
+    const TS = await WTFstake.totalSupply()
+    // eslint-disable-next-line
+    if (TS == 0) {
+        document.getElementById("TVL").innerHTML = " " + 0
+    } else {
+        document.getElementById("TVL").innerHTML =
+            " " + (TS / 10 ** 9).toFixed(0)
+    }
+}
+
+const remainingTime = async () => {}
+
+tax()
+earlyTax()
+totalTime()
+totalSupply()
+remainingTime()
+
 const TokenStaking = () => {
     const { account, activateBrowserWallet, deactivate } = useEthers()
     const [amount, setAmount] = useState()
@@ -52,19 +88,6 @@ const TokenStaking = () => {
         }
     }
 
-    const totalSupply = async () => {
-        const TS = await WTFstake.totalSupply()
-        // eslint-disable-next-line
-        if (TS == 0) {
-            document.getElementById("TVL").innerHTML = " " + 0
-        } else {
-            document.getElementById("TVL").innerHTML =
-                " " + (TS / 10 ** 9).toFixed(0)
-        }
-    }
-
-    totalSupply()
-
     const getBalance = async () => {
         const balance = await WTFcoin.balanceOf(account)
         document.getElementById("holdings").innerHTML =
@@ -82,6 +105,11 @@ const TokenStaking = () => {
             signer
         )
         await approveWTFstake.approve(coinContract, amount)
+
+        const approved = await WTFcoin.allowance(account, stakeContract)
+        if (approved > 0) {
+            setApproved(true)
+        }
     }
 
     const withdraw = async (amount) => {}
@@ -157,13 +185,13 @@ const TokenStaking = () => {
                                         ?
                                     </span>
                                     /
-                                    <span className="" id="tax">
+                                    <span className="" id="tax2">
                                         ?
                                     </span>
                                 </div>
                                 <div className="border-b">
                                     Early Tax:{" "}
-                                    <span className="" id="EarlyTax">
+                                    <span className="" id="earlyTax">
                                         ?
                                     </span>
                                 </div>

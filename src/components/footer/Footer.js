@@ -66,7 +66,7 @@ const Footer = () => {
                     before making any investment decisions.
                 </p>
             </div>
-            <p className="flex justify-center text-lg md:text-2xl">
+            <p className="flex justify-center text-lg md:text-2xl text-center">
                 © 2023 WTFDUDES - All rights reserved
             </p>
         </div>

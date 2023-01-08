@@ -1,4 +1,4 @@
-const stakeContract = "0xaE7d49CCbA42eB86CC1a72B9176A73dD2451452A"
+const stakeContract = "0x4a3724c53C1768d570A8587Cd6722e1C21e32A46"
 
 const stakingABI = require("./stakingToken.json")
 
