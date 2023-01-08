@@ -4,6 +4,7 @@ import { coinContract, coinABI } from "../../constants/coinToken"
 import { useEthers } from "@usedapp/core"
 import { Link } from "react-router-dom"
 import { ethers } from "ethers"
+import { Switch } from "@headlessui/react"
 import WTFlogo from "../../assets/LOGO.png"
 import "./TokenStaking.css"
 
@@ -59,11 +60,20 @@ const TokenStaking = () => {
     const [amount, setAmount] = useState()
     const [approveAmount, setApproveAmount] = useState(0)
     const [approved, setApproved] = useState(false)
+    const [enabled, setEnabled] = useState(false)
     const isConnected = account !== undefined
 
     const setAmountToMax = async () => {
         const balance = await WTFcoin.balanceOf(account)
         setAmount((balance / 10 ** 9).toFixed(0) - 1)
+    }
+
+    const getRewards = async () => {
+        const provider = new ethers.providers.Web3Provider(window.ethereum)
+        const signer = provider.getSigner()
+        const contract = new ethers.Contract(stakeContract, stakingABI, signer)
+        const tx = await contract.getReward()
+        await tx.wait()
     }
 
     const rewards = async () => {
@@ -105,8 +115,10 @@ const TokenStaking = () => {
             signer
         )
         await approveWTFstake.approve(coinContract, amount)
+        await approveWTFstake.wait()
 
         const approved = await WTFcoin.allowance(account, stakeContract)
+        await approved.wait()
         if (approved > 0) {
             setApproved(true)
         }
@@ -153,7 +165,7 @@ const TokenStaking = () => {
                     </div>
                 </div>
             </nav>
-            <div className="w-screen h-screen flex justify-center items-center">
+            <div className="w-screen my-24 md:my-0 md:h-screen flex justify-center items-center">
                 <div className="bg-gradient-to-tr from-customPink via-customPurple to-customOrange rounded-2xl w-5/6 h-3/4 p-2">
                     <div className="fullpart bg-white rounded-lg w-full h-full p-2">
                         <div className="toppart flex flex-col md:flex-row justify-between border-b-2 items-center h-1/6 text-xl md:text-2xl lg:text-4xl xl:text-6xl">
@@ -212,7 +224,7 @@ const TokenStaking = () => {
                                     </div>
                                 </div>
                                 <div className="rightpart flex flex-col md:flex-row text-center w-full h-5/6">
-                                    <div className="md:w-1/3 h-1/3 md:h-full border-b md:border-b-0 text-lg md:text-2xl lg:text-4xl xl:text-5xl">
+                                    <div className="md:w-1/3 h-1/3 md:h-full pb-2 md:pb-0 border-b md:border-b-0 text-lg md:text-2xl lg:text-4xl xl:text-5xl">
                                         <div className="h-1/3 md:h-1/2">
                                             <span className="text-lg md:text-3xl lg:text-5xl xl:text-7xl">
                                                 STAKE
@@ -308,7 +320,10 @@ const TokenStaking = () => {
                                         </div>
                                         <div className="flex justify-center items-center md:h-1/3 w-1/3 md:w-full order-2 md:order-3">
                                             <div className="bg-gradient-to-tr from-customPink via-customPurple to-customOrange rounded-2xl p-1 w-max mx-auto">
-                                                <button className="text-lg md:text-2xl lg:text-3xl xl:text-4xl bg-white rounded-xl px-4 hover:bg-gray-100 active:bg-gray-200">
+                                                <button
+                                                    className="text-lg md:text-2xl lg:text-3xl xl:text-4xl bg-white rounded-xl px-4 hover:bg-gray-100 active:bg-gray-200"
+                                                    onClick={getRewards}
+                                                >
                                                     Claim
                                                 </button>
                                             </div>
@@ -321,9 +336,9 @@ const TokenStaking = () => {
                                                 WITHDRAW
                                             </span>
                                         </div>
-                                        <div className="flex justify-center items-center h-1/2">
-                                            <div className="bg-gradient-to-tr from-customPink via-customPurple to-customOrange rounded-2xl p-1 mx-auto ">
-                                                <div className="flex flex-col justify-between text-lg md:text-2xl lg:text-3xl xl:text-5xl bg-white rounded-xl">
+                                        <div className="flex flex-col justify-center items-center h-1/2">
+                                            <div className="bg-gradient-to-tr from-customPink via-customPurple to-customOrange rounded-2xl p-1 mx-auto">
+                                                <div className="flex flex-col justify-between text-lg md:text-2xl lg:text-3xl xl:text-5xl bg-white rounded-xl items">
                                                     <input
                                                         className="bg-gray-100 text-lg md:text-2xl lg:text-3xl xl:text-4xl rounded-tl-xl rounded-bl-xl md:rounded-bl-none rounded-tr-xl acitve:outline-none focus:outline-none text-center"
                                                         type="number"
@@ -333,16 +348,29 @@ const TokenStaking = () => {
                                                         }
                                                     />
                                                     <div className="flex">
-                                                        <button
-                                                            className="w-1/2 border-t bg-gray-100 active:bg-gray-200 rounded-br-none rounded-tr-none rounded-bl-xl text-lg md:text-2xl lg:text-3xl xl:text-4xl"
-                                                            onClick={
-                                                                !account
-                                                                    ? activateBrowserWallet
-                                                                    : withdraw
-                                                            }
-                                                        >
-                                                            Withdraw
-                                                        </button>
+                                                        {enabled ? (
+                                                            <button
+                                                                className="w-1/2 border-t bg-gray-100 active:bg-gray-200 rounded-br-none rounded-tr-none rounded-bl-xl text-lg md:text-2xl lg:text-3xl xl:text-4xl"
+                                                                onClick={
+                                                                    !account
+                                                                        ? activateBrowserWallet
+                                                                        : withdraw
+                                                                }
+                                                            >
+                                                                Withdraw
+                                                            </button>
+                                                        ) : (
+                                                            <button
+                                                                className="w-1/2 border-t bg-gray-100 active:bg-gray-200 rounded-br-none rounded-tr-none rounded-bl-xl text-lg md:text-2xl lg:text-3xl xl:text-4xl"
+                                                                onClick={
+                                                                    !account
+                                                                        ? activateBrowserWallet
+                                                                        : withdraw
+                                                                }
+                                                            >
+                                                                Withdraw
+                                                            </button>
+                                                        )}
                                                         <button
                                                             className="w-1/2 border-t bg-gray-100 active:bg-gray-200 rounded-br-xl rounded-tr-xl md:rounded-tr-none text-lg md:text-2xl lg:text-3xl xl:text-4xl"
                                                             onClick={() =>
@@ -354,6 +382,25 @@ const TokenStaking = () => {
                                                     </div>
                                                 </div>
                                             </div>
+                                                <div className="flex justify-between items-center py-2">
+                                                    <Switch
+                                                        checked={enabled}
+                                                        onChange={setEnabled}
+                                                        className={`relative inline-flex h-[38px] w-[74px] shrink-0 cursor-pointer border-2 border-gray-200 rounded-full bg-gradient-to-tr from-customPink via-customPurple to-customOrange transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
+                                                    >
+                                                        <span
+                                                            aria-hidden="true"
+                                                            className={`${
+                                                                enabled
+                                                                    ? "translate-x-9 bg-gray-300"
+                                                                    : "translate-x-0 bg-white"
+                                                            } pointer-events-none h-[34px] w-[34px] transform rounded-full  transition duration-200 ease-in-out`}
+                                                        />
+                                                    </Switch>
+                                                    <span className="text-lg md:text-2xl lg:text-3xl xl:text-4xl">
+                                                        Emergency Withdraw?
+                                                    </span>
+                                                </div>
                                         </div>
                                     </div>
                                 </div>
