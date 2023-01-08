@@ -27,7 +27,29 @@ const TokenStaking = () => {
 
     const setAmountToMax = async () => {
         const balance = await WTFcoin.balanceOf(account)
-        setAmount(((balance) / 10 ** 9).toFixed(0))
+        setAmount((balance / 10 ** 9).toFixed(0) - 1)
+    }
+
+    const rewards = async () => {
+        const R = await WTFstake.earned(account)
+        // eslint-disable-next-line
+        if (R == 0) {
+            document.getElementById("rewards").innerHTML = " " + 0
+        } else {
+            document.getElementById("rewards").innerHTML =
+                " " + (R / 10 ** 9).toFixed(0)
+        }
+    }
+
+    const stakedTokens = async () => {
+        const ST = await WTFstake.balanceOf(account)
+        // eslint-disable-next-line
+        if (ST == 0) {
+            document.getElementById("tokenStaked").innerHTML = " " + 0
+        } else {
+            document.getElementById("tokenStaked").innerHTML =
+                " " + (ST / 10 ** 9).toFixed(0)
+        }
     }
 
     const totalSupply = async () => {
@@ -37,7 +59,7 @@ const TokenStaking = () => {
             document.getElementById("TVL").innerHTML = " " + 0
         } else {
             document.getElementById("TVL").innerHTML =
-                " " + (TS / 10 ** 9).toFixed(2)
+                " " + (TS / 10 ** 9).toFixed(0)
         }
     }
 
@@ -46,11 +68,7 @@ const TokenStaking = () => {
     const getBalance = async () => {
         const balance = await WTFcoin.balanceOf(account)
         document.getElementById("holdings").innerHTML =
-            " " + (balance / 10 ** 9).toFixed(2)
-    }
-
-    if (isConnected) {
-        getBalance()
+            " " + ((balance / 10 ** 9).toFixed(0) - 1)
     }
 
     const stake = async (amount) => {}
@@ -67,6 +85,12 @@ const TokenStaking = () => {
     }
 
     const withdraw = async (amount) => {}
+
+    if (isConnected) {
+        getBalance()
+        stakedTokens()
+        rewards()
+    }
 
     return (
         <>
@@ -174,7 +198,7 @@ const TokenStaking = () => {
                                                             className="bg-gray-100 w-2/3 text-lg md:text-2xl lg:text-3xl xl:text-4xl rounded-tl-xl rounded-bl-xl md:rounded-bl-none rounded-tr-xl acitve:outline-none focus:outline-none text-center"
                                                             type="number"
                                                             placeholder="Amount to stake"
-                                                            value={amount}
+                                                            value={amount || ""}
                                                             onChange={(event) =>
                                                                 setAmount(
                                                                     event.target
@@ -187,7 +211,7 @@ const TokenStaking = () => {
                                                             className="bg-gray-100  w-2/3text-lg md:text-2xl lg:text-3xl xl:text-4xl rounded-tl-xl rounded-bl-none rounded-tr-xl acitve:outline-none focus:outline-none text-center"
                                                             type="number"
                                                             placeholder="Amount to approve"
-                                                            value={amount}
+                                                            value={amount || ""}
                                                             onChange={(event) =>
                                                                 setAmount(
                                                                     event.target
