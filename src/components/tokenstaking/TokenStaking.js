@@ -422,3 +422,4 @@ export default TokenStaking
 // 4. make the early withdraw function work
 // 5. make APY and APR work
 // 6. understand the staking contract its functions and know how it works
+// 7. make sure react doesnt rerender specific functions, so that we dont overload the api with requests (could make a function that gets the data on refresh and only once)
