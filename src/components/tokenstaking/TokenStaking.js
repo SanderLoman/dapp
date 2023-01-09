@@ -58,7 +58,6 @@ remainingTime()
 const TokenStaking = () => {
     const { account, activateBrowserWallet, deactivate } = useEthers()
     const [amount, setAmount] = useState()
-    const [approveAmount, setApproveAmount] = useState(0)
     const [approved, setApproved] = useState(false)
     const [enabled, setEnabled] = useState(false)
     const isConnected = account !== undefined
@@ -107,20 +106,34 @@ const TokenStaking = () => {
     const stake = async (amount) => {}
 
     const approving = async (amount) => {
-        const provider = new ethers.providers.Web3Provider(window.ethereum)
-        const signer = provider.getSigner()
-        const approveWTFstake = new ethers.Contract(
-            stakeContract,
-            stakingABI,
-            signer
-        )
-        await approveWTFstake.approve(coinContract, amount)
-        await approveWTFstake.wait()
+        try {
+            const provider = new ethers.providers.Web3Provider(window.ethereum)
+            const signer = provider.getSigner()
+            const contract = new ethers.Contract(coinContract, coinABI, signer)
 
-        const approved = await WTFcoin.allowance(account, stakeContract)
-        await approved.wait()
-        if (approved > 0) {
+            await contract.approve(stakeContract, amount)
+            await contract.wait()
+            await contract.allowance(account, stakeContract)
+            await contract.wait()
             setApproved(true)
+        } catch {
+            throw new Error("User denied approving tokens.")
+        }
+    }
+
+    const earlyWithdraw = async (amount) => {
+        try {
+            const provider = new ethers.providers.Web3Provider(window.ethereum)
+            const signer = provider.getSigner()
+            const contract = new ethers.Contract(
+                stakeContract,
+                stakingABI,
+                signer
+            )
+            const tx = await contract.emergencyWithdraw(amount)
+            await tx.wait()
+        } catch {
+            throw new Error("User denied early withdraw.")
         }
     }
 
@@ -248,7 +261,7 @@ const TokenStaking = () => {
                                                         />
                                                     ) : (
                                                         <input
-                                                            className="bg-gray-100  w-2/3text-lg md:text-2xl lg:text-3xl xl:text-4xl rounded-tl-xl rounded-bl-none rounded-tr-xl acitve:outline-none focus:outline-none text-center"
+                                                            className="bg-gray-100 text-lg md:text-2xl lg:text-3xl xl:text-4xl rounded-tl-xl rounded-bl-none rounded-tr-xl acitve:outline-none focus:outline-none text-center"
                                                             type="number"
                                                             placeholder="Amount to approve"
                                                             value={amount || ""}
@@ -267,7 +280,10 @@ const TokenStaking = () => {
                                                                 onClick={
                                                                     !account
                                                                         ? activateBrowserWallet
-                                                                        : stake
+                                                                        : () =>
+                                                                              stake(
+                                                                                  amount
+                                                                              )
                                                                 }
                                                             >
                                                                 Stake
@@ -278,14 +294,17 @@ const TokenStaking = () => {
                                                                 onClick={
                                                                     !account
                                                                         ? activateBrowserWallet
-                                                                        : approving
+                                                                        : () =>
+                                                                              approving(
+                                                                                  amount
+                                                                              )
                                                                 }
                                                             >
                                                                 Approve
                                                             </button>
                                                         )}
                                                         <button
-                                                            className="w-1/2 border-t bg-gray-100 active:bg-gray-200 rounded-br-xl rounded-tr-xl md:rounded-tr-none text-lg md:text-2xl lg:text-3xl xl:text-4xl"
+                                                            className="w-1/2 border-t bg-gray-100 active:bg-gray-200 rounded-br-xl rounded-tr-none text-lg md:text-2xl lg:text-3xl xl:text-4xl"
                                                             onClick={
                                                                 setAmountToMax
                                                             }
@@ -340,7 +359,7 @@ const TokenStaking = () => {
                                             <div className="bg-gradient-to-tr from-customPink via-customPurple to-customOrange rounded-2xl p-1 mx-auto">
                                                 <div className="flex flex-col justify-between text-lg md:text-2xl lg:text-3xl xl:text-5xl bg-white rounded-xl items">
                                                     <input
-                                                        className="bg-gray-100 text-lg md:text-2xl lg:text-3xl xl:text-4xl rounded-tl-xl rounded-bl-xl md:rounded-bl-none rounded-tr-xl acitve:outline-none focus:outline-none text-center"
+                                                        className="bg-gray-100 text-lg md:text-2xl lg:text-3xl xl:text-4xl rounded-tl-xl rounded-bl-none rounded-tr-xl acitve:outline-none focus:outline-none text-center"
                                                         type="number"
                                                         placeholder="Amount to withdraw"
                                                         onChange={() =>
@@ -350,11 +369,11 @@ const TokenStaking = () => {
                                                     <div className="flex">
                                                         {enabled ? (
                                                             <button
-                                                                className="w-1/2 border-t bg-gray-100 active:bg-gray-200 rounded-br-none rounded-tr-none rounded-bl-xl text-lg md:text-2xl lg:text-3xl xl:text-4xl"
+                                                                className="w-1/2 border-t bg-gray-100 active:bg-gray-200 text-red-500 rounded-br-none rounded-tr-none rounded-bl-xl text-lg md:text-2xl lg:text-3xl xl:text-4xl"
                                                                 onClick={
                                                                     !account
                                                                         ? activateBrowserWallet
-                                                                        : withdraw
+                                                                        : earlyWithdraw
                                                                 }
                                                             >
                                                                 Withdraw
@@ -372,7 +391,7 @@ const TokenStaking = () => {
                                                             </button>
                                                         )}
                                                         <button
-                                                            className="w-1/2 border-t bg-gray-100 active:bg-gray-200 rounded-br-xl rounded-tr-xl md:rounded-tr-none text-lg md:text-2xl lg:text-3xl xl:text-4xl"
+                                                            className="w-1/2 border-t bg-gray-100 active:bg-gray-200 rounded-br-xl rounded-tr-none text-lg md:text-2xl lg:text-3xl xl:text-4xl"
                                                             onClick={() =>
                                                                 setAmountToMax
                                                             }
@@ -416,10 +435,13 @@ const TokenStaking = () => {
 export default TokenStaking
 
 // TODO:
-// 1. make the bigNumber error go away in the stake function
+// 1. make the approve function work with the correct amount of tokens in gwei
 // 2. make staking appear when a user has approved the contract to spend their tokens
-// 3. make the withdraw function work
-// 4. make the early withdraw function work
-// 5. make APY and APR work
-// 6. understand the staking contract its functions and know how it works
-// 7. make sure react doesnt rerender specific functions, so that we dont overload the api with requests (could make a function that gets the data on refresh and only once)
+// 3. calculate the remaining time for the pool to end
+// 4. make the withdraw function work
+// 5. make the early withdraw function work
+// 6. make APY and APR work
+// 7. understand the staking contract its functions and know how it works
+// 8. make sure react doesnt rerender specific functions, so that we dont overload the api with requests (could make a function that gets the data on refresh and only once)
+// 9. make loading icons when approving, staking, withdrawing, claiming rewards
+// 10. make pop up notifications when succesfully or failing approving, staking, withdrawing, claiming.
