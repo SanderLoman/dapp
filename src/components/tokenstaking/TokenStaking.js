@@ -3,7 +3,7 @@ import { stakeContract, stakingABI } from "../../constants/stakingToken"
 import { coinContract, coinABI } from "../../constants/coinToken"
 import { useEthers } from "@usedapp/core"
 import { Link } from "react-router-dom"
-import { ethers } from "ethers"
+import { BigNumber, ethers } from "ethers"
 import { Switch } from "@headlessui/react"
 import WTFlogo from "../../assets/LOGO.png"
 import "./TokenStaking.css"
@@ -106,35 +106,17 @@ const TokenStaking = () => {
     const stake = async (amount) => {}
 
     const approving = async (amount) => {
-        try {
-            const provider = new ethers.providers.Web3Provider(window.ethereum)
-            const signer = provider.getSigner()
-            const contract = new ethers.Contract(coinContract, coinABI, signer)
-
-            await contract.approve(stakeContract, amount)
-            await contract.wait()
-            await contract.allowance(account, stakeContract)
-            await contract.wait()
-            setApproved(true)
-        } catch {
-            throw new Error("User denied approving tokens.")
-        }
+        const provider = new ethers.providers.Web3Provider(window.ethereum)
+        const signer = provider.getSigner()
+        const contract = new ethers.Contract(coinContract, coinABI, signer)
     }
 
     const earlyWithdraw = async (amount) => {
-        try {
-            const provider = new ethers.providers.Web3Provider(window.ethereum)
-            const signer = provider.getSigner()
-            const contract = new ethers.Contract(
-                stakeContract,
-                stakingABI,
-                signer
-            )
-            const tx = await contract.emergencyWithdraw(amount)
-            await tx.wait()
-        } catch {
-            throw new Error("User denied early withdraw.")
-        }
+        const provider = new ethers.providers.Web3Provider(window.ethereum)
+        const signer = provider.getSigner()
+        const contract = new ethers.Contract(stakeContract, stakingABI, signer)
+        const tx = await contract.emergencyWithdraw(amount)
+        await tx.wait()
     }
 
     const withdraw = async (amount) => {}
