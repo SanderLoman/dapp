@@ -106,16 +106,31 @@ const TokenStaking = () => {
     const stake = async (amount) => {}
 
     const approving = async (amount) => {
-        const provider = new ethers.providers.Web3Provider(window.ethereum)
-        const signer = provider.getSigner()
-        const contract = new ethers.Contract(coinContract, coinABI, signer)
+        try {
+            const provider = new ethers.providers.Web3Provider(window.ethereum)
+            const signer = provider.getSigner()
+            const contract = new ethers.Contract(coinContract, coinABI, signer)
+            const tx = await contract.approve(
+                stakeContract,
+                (amount * 10 ** 9).toString()
+            )
+            await tx.wait()
+            const tx2 = await WTFcoin.allowance(account, stakeContract)
+            await tx2.wait()
+
+            setApproved(true) // maybe change later to check if approved or not,
+        } catch (error) {
+            throw new Error("User denied transaction signature")
+        }
     }
 
     const earlyWithdraw = async (amount) => {
         const provider = new ethers.providers.Web3Provider(window.ethereum)
         const signer = provider.getSigner()
         const contract = new ethers.Contract(stakeContract, stakingABI, signer)
-        const tx = await contract.emergencyWithdraw(amount)
+        const tx = await contract.emergencyWithdraw(
+            (amount * 10 ** 9).toString()
+        )
         await tx.wait()
     }
 
@@ -230,7 +245,7 @@ const TokenStaking = () => {
                                                 <div className="flex flex-col justify-between text-lg md:text-2xl lg:text-3xl xl:text-5xl bg-white rounded-xl">
                                                     {approved ? (
                                                         <input
-                                                            className="bg-gray-100 w-2/3 text-lg md:text-2xl lg:text-3xl xl:text-4xl rounded-tl-xl rounded-bl-xl md:rounded-bl-none rounded-tr-xl acitve:outline-none focus:outline-none text-center"
+                                                            className="bg-gray-100 text-lg md:text-2xl lg:text-3xl xl:text-4xl rounded-tl-xl rounded-bl-xl md:rounded-bl-none rounded-tr-xl acitve:outline-none focus:outline-none text-center"
                                                             type="number"
                                                             placeholder="Amount to stake"
                                                             value={amount || ""}
