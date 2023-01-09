@@ -435,7 +435,7 @@ const TokenStaking = () => {
 export default TokenStaking
 
 // TODO:
-// 1. make the approve function work with the correct amount of tokens in gwei
+// 1. make the approve function work with the correct amount of tokens in gwei and make sure no overflow errors occur
 // 2. make staking appear when a user has approved the contract to spend their tokens
 // 3. calculate the remaining time for the pool to end
 // 4. make the withdraw function work
