@@ -67,12 +67,13 @@ const TokenStaking = () => {
             document.getElementById("tax").innerHTML = " " + tax / 100 + " "
             document.getElementById("tax2").innerHTML = " " + tax / 100 + "%"
         }
-        
+
         const earlyTax = async () => {
             const earlyTax = await WTFstake.earlyUnstakeFee()
-            document.getElementById("earlyTax").innerHTML = " " + earlyTax / 100 + "%"
+            document.getElementById("earlyTax").innerHTML =
+                " " + earlyTax / 100 + "%"
         }
-        
+
         const totalSupply = async () => {
             const TS = await WTFstake.totalSupply()
             // eslint-disable-next-line
@@ -83,29 +84,29 @@ const TokenStaking = () => {
                     " " + (TS / 10 ** 9).toFixed(0)
             }
         }
-        
+
         const totalTime = async () => {
             const TT = await WTFstake.lockDuration()
             document.getElementById("totalTime").innerHTML =
                 " " + (TT / 86400).toFixed(0) + " days"
         }
-        
+
         const remainingTime = async () => {
             const LD = await WTFstake.lockDuration()
             const PF = await WTFstake.periodFinish()
             const PFminusRT = PF - LD
-        
+
             const provider = new ethers.providers.Web3Provider(window.ethereum)
             const block = await provider.getBlock()
             const timestamp = block.timestamp
-        
+
             const RT = PF - timestamp
-        
+
             const days = Math.floor(RT / (24 * 60 * 60))
             const hours = Math.floor((RT % (24 * 60 * 60)) / (60 * 60))
             const minutes = Math.floor((RT % (60 * 60)) / 60)
             const seconds = Math.floor(RT % 60)
-        
+
             if (PFminusRT >= timestamp) {
                 document.getElementById("remaining").innerHTML = "Over!"
             } else {
@@ -124,7 +125,7 @@ const TokenStaking = () => {
                     "s"
             }
         }
-        
+
         tax()
         earlyTax()
         totalSupply()
@@ -520,13 +521,14 @@ const TokenStaking = () => {
 export default TokenStaking
 
 // TODO:
-// 1. make the approve function work with the correct amount of tokens in gwei and make sure no overflow errors occur ✅
-// 2. make staking appear when a user has approved the contract to spend their tokens
-// 3. calculate the remaining time for the pool to end ✅
-// 4. make the withdraw function work
-// 5. make the early withdraw function work
-// 6. make APY and APR work
-// 7. understand the staking contract its functions and know how it works
-// 8. make sure react doesnt rerender specific functions, so that we dont overload the api with requests (could make a function that gets the data on refresh and only once)
-// 9. make loading icons when approving, staking, withdrawing, claiming rewards
-// 10. make pop up notifications when succesfully or failing approving, staking, withdrawing, claiming.
+// 1. make the approve function work with the correct amount of tokens in gwei and make sure no overflow errors occur. ✅
+// 2. make staking appear when a user has approved the contract to spend their tokens. ❌
+// 3. calculate the remaining time for the pool to end. ✅
+// 4. make the withdraw function work. ❌
+// 5. make the early withdraw function work. ✅
+// 6. make APY and APR work. ❌
+// 7. understand the staking contract its functions and know how it works. ✅
+// 8. make sure react doesnt rerender specific functions, so that we dont overload the api with requests (could make a function that gets the data on refresh and only once). ✅
+// 9. make loading icons when approving, staking, withdrawing, claiming rewards. ❌
+// 10. make pop up notifications when succesfully or failing approving, staking, withdrawing, claiming. ❌
+// 11. make the remaining tokens after the first decimal disappear. ❌
