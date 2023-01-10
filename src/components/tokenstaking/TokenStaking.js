@@ -3,7 +3,7 @@ import { stakeContract, stakingABI } from "../../constants/stakingToken"
 import { coinContract, coinABI } from "../../constants/coinToken"
 import { useEthers } from "@usedapp/core"
 import { Link } from "react-router-dom"
-import { BigNumber, ethers } from "ethers"
+import { ethers } from "ethers"
 import { Switch } from "@headlessui/react"
 import WTFlogo from "../../assets/LOGO.png"
 import "./TokenStaking.css"
@@ -30,12 +30,6 @@ const earlyTax = async () => {
     document.getElementById("earlyTax").innerHTML = " " + earlyTax / 100 + "%"
 }
 
-const totalTime = async () => {
-    const TT = await WTFstake.lockDuration()
-    document.getElementById("totalTime").innerHTML =
-        " " + (TT / 86400).toFixed(0) + " days"
-}
-
 const totalSupply = async () => {
     const TS = await WTFstake.totalSupply()
     // eslint-disable-next-line
@@ -47,17 +41,57 @@ const totalSupply = async () => {
     }
 }
 
-const remainingTime = async () => {}
+const totalTime = async () => {
+    const TT = await WTFstake.lockDuration()
+    document.getElementById("totalTime").innerHTML =
+        " " + (TT / 86400).toFixed(0) + " days"
+}
+
+const remainingTime = async () => {
+    const LD = await WTFstake.lockDuration()
+    const PF = await WTFstake.periodFinish()
+    const PFminusRT = PF - LD
+
+    const provider = new ethers.providers.Web3Provider(window.ethereum)
+    const block = await provider.getBlock()
+    const timestamp = block.timestamp
+
+    const RT = PF - timestamp
+
+    const days = Math.floor(RT / (24 * 60 * 60))
+    const hours = Math.floor((RT % (24 * 60 * 60)) / (60 * 60))
+    const minutes = Math.floor((RT % (60 * 60)) / 60)
+    const seconds = Math.floor(RT % 60)
+
+    if (PFminusRT >= timestamp) {
+        document.getElementById("remaining").innerHTML = " " + 0
+    } else {
+        document.getElementById("remaining").innerHTML =
+            " " +
+            days +
+            "d" +
+            " " +
+            hours +
+            "h" +
+            " " +
+            minutes +
+            "m" +
+            " " +
+            seconds +
+            "s"
+    }
+}
 
 tax()
 earlyTax()
-totalTime()
 totalSupply()
+totalTime()
 remainingTime()
 
 const TokenStaking = () => {
     const { account, activateBrowserWallet, deactivate } = useEthers()
     const [amount, setAmount] = useState()
+    const [withdrawAmount, setWithdrawAmount] = useState()
     const [approved, setApproved] = useState(false)
     const [enabled, setEnabled] = useState(false)
     const isConnected = account !== undefined
@@ -65,6 +99,11 @@ const TokenStaking = () => {
     const setAmountToMax = async () => {
         const balance = await WTFcoin.balanceOf(account)
         setAmount((balance / 10 ** 9).toFixed(0) - 1)
+    }
+
+    const setWithdrawAmountToMax = async () => {
+        const balance = await WTFstake.balanceOf(account)
+        setWithdrawAmount((balance / 10 ** 9).toFixed(0) - 1)
     }
 
     const getRewards = async () => {
@@ -199,7 +238,9 @@ const TokenStaking = () => {
                                 </div>
                                 <div className="border-b">
                                     Remaining:{" "}
-                                    <span className="remaining">?</span>
+                                    <span className="" id="remaining">
+                                        ?
+                                    </span>
                                 </div>
                                 <div className="border-b">
                                     TAX:{" "}
@@ -241,11 +282,11 @@ const TokenStaking = () => {
                                             </span>
                                         </div>
                                         <div className="flex justify-center items-center h-2/3 md:h-1/2">
-                                            <div className="bg-gradient-to-tr from-customPink via-customPurple to-customOrange rounded-2xl p-1 mx-auto">
-                                                <div className="flex flex-col justify-between text-lg md:text-2xl lg:text-3xl xl:text-5xl bg-white rounded-xl">
+                                            <div className="bg-gradient-to-tr w-3/4 from-customPink via-customPurple to-customOrange rounded-2xl p-1 mx-auto">
+                                                <div className="flex flex-col justify-between w-full text-lg md:text-2xl lg:text-3xl xl:text-5xl bg-white rounded-xl">
                                                     {approved ? (
                                                         <input
-                                                            className="bg-gray-100 text-lg md:text-2xl lg:text-3xl xl:text-4xl rounded-tl-xl rounded-bl-xl md:rounded-bl-none rounded-tr-xl acitve:outline-none focus:outline-none text-center"
+                                                            className="bg-gray-100 text-lg md:text-2xl lg:text-2xl xl:text-3xl rounded-tl-xl rounded-bl-xl md:rounded-bl-none rounded-tr-xl acitve:outline-none focus:outline-none text-center"
                                                             type="number"
                                                             placeholder="Amount to stake"
                                                             value={amount || ""}
@@ -258,7 +299,7 @@ const TokenStaking = () => {
                                                         />
                                                     ) : (
                                                         <input
-                                                            className="bg-gray-100 text-lg md:text-2xl lg:text-3xl xl:text-4xl rounded-tl-xl rounded-bl-none rounded-tr-xl acitve:outline-none focus:outline-none text-center"
+                                                            className="bg-gray-100 text-lg md:text-2xl lg:text-2xl xl:text-3xl rounded-tl-xl rounded-bl-none rounded-tr-xl acitve:outline-none focus:outline-none text-center"
                                                             type="number"
                                                             placeholder="Amount to approve"
                                                             value={amount || ""}
@@ -273,7 +314,7 @@ const TokenStaking = () => {
                                                     <div className="flex">
                                                         {approved ? (
                                                             <button
-                                                                className="w-1/2 border-t bg-gray-100 active:bg-gray-200 rounded-br-xl md:rounded-br-none rounded-tr-xl md:rounded-tr-none rounded-bl-xl text-lg md:text-2xl lg:text-3xl xl:text-4xl"
+                                                                className="w-1/2 border-t bg-gray-100 active:bg-gray-200 rounded-br-xl md:rounded-br-none rounded-tr-xl md:rounded-tr-none rounded-bl-xl text-lg md:text-2xl lg:text-2xl xl:text-3xl"
                                                                 onClick={
                                                                     !account
                                                                         ? activateBrowserWallet
@@ -287,7 +328,7 @@ const TokenStaking = () => {
                                                             </button>
                                                         ) : (
                                                             <button
-                                                                className="w-1/2 border-t bg-gray-100 active:bg-gray-200 rounded-br-none rounded-tr-none rounded-bl-xl  text-lg md:text-2xl lg:text-3xl xl:text-4xl"
+                                                                className="w-1/2 border-t bg-gray-100 active:bg-gray-200 rounded-br-none rounded-tr-none rounded-bl-xl  text-lg md:text-2xl lg:text-2xl xl:text-3xl"
                                                                 onClick={
                                                                     !account
                                                                         ? activateBrowserWallet
@@ -301,7 +342,7 @@ const TokenStaking = () => {
                                                             </button>
                                                         )}
                                                         <button
-                                                            className="w-1/2 border-t bg-gray-100 active:bg-gray-200 rounded-br-xl rounded-tr-none text-lg md:text-2xl lg:text-3xl xl:text-4xl"
+                                                            className="w-1/2 border-t bg-gray-100 active:bg-gray-200 rounded-br-xl rounded-tr-none text-lg md:text-2xl lg:text-2xl xl:text-3xl"
                                                             onClick={
                                                                 setAmountToMax
                                                             }
@@ -353,20 +394,25 @@ const TokenStaking = () => {
                                             </span>
                                         </div>
                                         <div className="flex flex-col justify-center items-center h-1/2">
-                                            <div className="bg-gradient-to-tr from-customPink via-customPurple to-customOrange rounded-2xl p-1 mx-auto">
-                                                <div className="flex flex-col justify-between text-lg md:text-2xl lg:text-3xl xl:text-5xl bg-white rounded-xl items">
+                                            <div className="bg-gradient-to-tr w-3/4 from-customPink via-customPurple to-customOrange rounded-2xl p-1 mx-auto">
+                                                <div className=" w-full flex flex-col justify-between text-lg md:text-2xl lg:text-3xl xl:text-5xl bg-white rounded-xl items">
                                                     <input
-                                                        className="bg-gray-100 text-lg md:text-2xl lg:text-3xl xl:text-4xl rounded-tl-xl rounded-bl-none rounded-tr-xl acitve:outline-none focus:outline-none text-center"
+                                                        className="bg-gray-100 text-lg md:text-2xl lg:text-2xl xl:text-3xl rounded-tl-xl rounded-bl-none rounded-tr-xl acitve:outline-none focus:outline-none text-center"
                                                         type="number"
                                                         placeholder="Amount to withdraw"
-                                                        onChange={() =>
-                                                            setAmount
+                                                        value={
+                                                            withdrawAmount || ""
+                                                        }
+                                                        onChange={(e) =>
+                                                            setWithdrawAmount(
+                                                                e.target.value
+                                                            )
                                                         }
                                                     />
                                                     <div className="flex">
                                                         {enabled ? (
                                                             <button
-                                                                className="w-1/2 border-t bg-gray-100 active:bg-gray-200 text-red-500 rounded-br-none rounded-tr-none rounded-bl-xl text-lg md:text-2xl lg:text-3xl xl:text-4xl"
+                                                                className="w-1/2 border-t bg-gray-100 active:bg-gray-200 text-red-500 rounded-br-none rounded-tr-none rounded-bl-xl text-lg md:text-2xl lg:text-2xl xl:text-3xl"
                                                                 onClick={
                                                                     !account
                                                                         ? activateBrowserWallet
@@ -377,7 +423,7 @@ const TokenStaking = () => {
                                                             </button>
                                                         ) : (
                                                             <button
-                                                                className="w-1/2 border-t bg-gray-100 active:bg-gray-200 rounded-br-none rounded-tr-none rounded-bl-xl text-lg md:text-2xl lg:text-3xl xl:text-4xl"
+                                                                className="w-1/2 border-t bg-gray-100 active:bg-gray-200 rounded-br-none rounded-tr-none rounded-bl-xl text-lg md:text-2xl lg:text-2xl xl:text-3xl"
                                                                 onClick={
                                                                     !account
                                                                         ? activateBrowserWallet
@@ -388,9 +434,9 @@ const TokenStaking = () => {
                                                             </button>
                                                         )}
                                                         <button
-                                                            className="w-1/2 border-t bg-gray-100 active:bg-gray-200 rounded-br-xl rounded-tr-none text-lg md:text-2xl lg:text-3xl xl:text-4xl"
-                                                            onClick={() =>
-                                                                setAmountToMax
+                                                            className="w-1/2 border-t bg-gray-100 active:bg-gray-200 rounded-br-xl rounded-tr-none text-lg md:text-2xl lg:text-2xl xl:text-3xl"
+                                                            onClick={
+                                                                setWithdrawAmountToMax
                                                             }
                                                         >
                                                             MAX
