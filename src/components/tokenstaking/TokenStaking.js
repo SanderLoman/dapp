@@ -103,7 +103,7 @@ const TokenStaking = () => {
 
     const setWithdrawAmountToMax = async () => {
         const balance = await WTFstake.balanceOf(account)
-        setWithdrawAmount((balance / 10 ** 9).toFixed(0) - 1)
+        setWithdrawAmount((balance / 10 ** 9).toFixed(0))
     }
 
     const getRewards = async () => {
@@ -142,7 +142,17 @@ const TokenStaking = () => {
             " " + ((balance / 10 ** 9).toFixed(0) - 1)
     }
 
-    const stake = async (amount) => {}
+    const stake = async (amount) => {
+        const provider = new ethers.providers.Web3Provider(window.ethereum)
+        const signer = provider.getSigner()
+        const contract = new ethers.Contract(stakeContract, stakingABI, signer)
+        if (amount == 0) {
+            throw new Error("Amount cannot be 0")
+        } else {
+            const tx = await contract.stake((amount * 10 ** 9).toString())
+            await tx.wait()
+        }
+    }
 
     const approving = async (amount) => {
         try {
@@ -177,7 +187,13 @@ const TokenStaking = () => {
         await tx.wait()
     }
 
-    const withdraw = async (amount) => {}
+    const withdraw = async (amount) => {
+        const provider = new ethers.providers.Web3Provider(window.ethereum)
+        const signer = provider.getSigner()
+        const contract = new ethers.Contract(stakeContract, stakingABI, signer)
+        const tx = await contract.withdraw((amount * 10 ** 9).toString())
+        await tx.wait()
+    }
 
     if (isConnected) {
         getBalance()
@@ -420,7 +436,10 @@ const TokenStaking = () => {
                                                                 onClick={
                                                                     !account
                                                                         ? activateBrowserWallet
-                                                                        : earlyWithdraw
+                                                                        : () =>
+                                                                              earlyWithdraw(
+                                                                                  withdrawAmount
+                                                                              )
                                                                 }
                                                             >
                                                                 Withdraw
@@ -431,7 +450,10 @@ const TokenStaking = () => {
                                                                 onClick={
                                                                     !account
                                                                         ? activateBrowserWallet
-                                                                        : withdraw
+                                                                        : () =>
+                                                                              withdraw(
+                                                                                  withdrawAmount
+                                                                              )
                                                                 }
                                                             >
                                                                 Withdraw
