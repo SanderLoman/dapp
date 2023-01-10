@@ -149,15 +149,19 @@ const TokenStaking = () => {
             const provider = new ethers.providers.Web3Provider(window.ethereum)
             const signer = provider.getSigner()
             const contract = new ethers.Contract(coinContract, coinABI, signer)
-            const tx = await contract.approve(
-                stakeContract,
-                (amount * 10 ** 9).toString()
-            )
-            await tx.wait()
-            const tx2 = await WTFcoin.allowance(account, stakeContract)
-            await tx2.wait()
+            if (amount == 0) {
+                throw new Error("Amount cannot be 0")
+            } else {
+                const tx = await contract.approve(
+                    stakeContract,
+                    (amount * 10 ** 9).toString()
+                )
+                await tx.wait()
+                const tx2 = await WTFcoin.allowance(account, stakeContract)
+                await tx2.wait()
 
-            setApproved(true) // maybe change later to check if approved or not,
+                setApproved(true) // maybe change later to check if approved or not
+            }
         } catch (error) {
             throw new Error("User denied transaction signature")
         }
@@ -478,9 +482,9 @@ const TokenStaking = () => {
 export default TokenStaking
 
 // TODO:
-// 1. make the approve function work with the correct amount of tokens in gwei and make sure no overflow errors occur
+// 1. make the approve function work with the correct amount of tokens in gwei and make sure no overflow errors occur ✅
 // 2. make staking appear when a user has approved the contract to spend their tokens
-// 3. calculate the remaining time for the pool to end
+// 3. calculate the remaining time for the pool to end ✅
 // 4. make the withdraw function work
 // 5. make the early withdraw function work
 // 6. make APY and APR work
