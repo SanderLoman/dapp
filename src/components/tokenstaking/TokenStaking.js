@@ -1,4 +1,4 @@
-import { React, useState } from "react"
+import { React, useEffect, useState } from "react"
 import { stakeContract, stakingABI } from "../../constants/stakingToken"
 import { coinContract, coinABI } from "../../constants/coinToken"
 import { useEthers } from "@usedapp/core"
@@ -19,75 +19,6 @@ const providerCoin = new ethers.providers.WebSocketProvider(
 const WTFstake = new ethers.Contract(stakeContract, stakingABI, providerStake)
 const WTFcoin = new ethers.Contract(coinContract, coinABI, providerCoin)
 
-const tax = async () => {
-    const tax = await WTFstake.performanceFee()
-    document.getElementById("tax").innerHTML = " " + tax / 100 + " "
-    document.getElementById("tax2").innerHTML = " " + tax / 100 + "%"
-}
-
-const earlyTax = async () => {
-    const earlyTax = await WTFstake.earlyUnstakeFee()
-    document.getElementById("earlyTax").innerHTML = " " + earlyTax / 100 + "%"
-}
-
-const totalSupply = async () => {
-    const TS = await WTFstake.totalSupply()
-    // eslint-disable-next-line
-    if (TS == 0) {
-        document.getElementById("TVL").innerHTML = " " + 0
-    } else {
-        document.getElementById("TVL").innerHTML =
-            " " + (TS / 10 ** 9).toFixed(0)
-    }
-}
-
-const totalTime = async () => {
-    const TT = await WTFstake.lockDuration()
-    document.getElementById("totalTime").innerHTML =
-        " " + (TT / 86400).toFixed(0) + " days"
-}
-
-const remainingTime = async () => {
-    const LD = await WTFstake.lockDuration()
-    const PF = await WTFstake.periodFinish()
-    const PFminusRT = PF - LD
-
-    const provider = new ethers.providers.Web3Provider(window.ethereum)
-    const block = await provider.getBlock()
-    const timestamp = block.timestamp
-
-    const RT = PF - timestamp
-
-    const days = Math.floor(RT / (24 * 60 * 60))
-    const hours = Math.floor((RT % (24 * 60 * 60)) / (60 * 60))
-    const minutes = Math.floor((RT % (60 * 60)) / 60)
-    const seconds = Math.floor(RT % 60)
-
-    if (PFminusRT >= timestamp) {
-        document.getElementById("remaining").innerHTML = "Over!"
-    } else {
-        document.getElementById("remaining").innerHTML =
-            " " +
-            days +
-            "d" +
-            " " +
-            hours +
-            "h" +
-            " " +
-            minutes +
-            "m" +
-            " " +
-            seconds +
-            "s"
-    }
-}
-
-tax()
-earlyTax()
-totalSupply()
-totalTime()
-remainingTime()
-
 const TokenStaking = () => {
     const { account, activateBrowserWallet, deactivate } = useEthers()
     const [amount, setAmount] = useState()
@@ -95,6 +26,111 @@ const TokenStaking = () => {
     const [approved, setApproved] = useState(false)
     const [enabled, setEnabled] = useState(false)
     const isConnected = account !== undefined
+
+    useEffect(() => {
+        const rewards = async () => {
+            const R = await WTFstake.earned(account)
+            // eslint-disable-next-line
+            if (R == 0) {
+                document.getElementById("rewards").innerHTML = " " + 0
+            } else {
+                document.getElementById("rewards").innerHTML =
+                    " " + (R / 10 ** 9).toFixed(0)
+            }
+        }
+
+        const stakedTokens = async () => {
+            const ST = await WTFstake.balanceOf(account)
+            // eslint-disable-next-line
+            if (ST == 0) {
+                document.getElementById("tokenStaked").innerHTML = " " + 0
+            } else {
+                document.getElementById("tokenStaked").innerHTML =
+                    " " + (ST / 10 ** 9).toFixed(0)
+            }
+        }
+
+        const getBalance = async () => {
+            const balance = await WTFcoin.balanceOf(account)
+            document.getElementById("holdings").innerHTML =
+                " " + ((balance / 10 ** 9).toFixed(0) - 1)
+        }
+
+        if (isConnected) {
+            getBalance()
+            stakedTokens()
+            rewards()
+        }
+
+        const tax = async () => {
+            const tax = await WTFstake.performanceFee()
+            document.getElementById("tax").innerHTML = " " + tax / 100 + " "
+            document.getElementById("tax2").innerHTML = " " + tax / 100 + "%"
+        }
+        
+        const earlyTax = async () => {
+            const earlyTax = await WTFstake.earlyUnstakeFee()
+            document.getElementById("earlyTax").innerHTML = " " + earlyTax / 100 + "%"
+        }
+        
+        const totalSupply = async () => {
+            const TS = await WTFstake.totalSupply()
+            // eslint-disable-next-line
+            if (TS == 0) {
+                document.getElementById("TVL").innerHTML = " " + 0
+            } else {
+                document.getElementById("TVL").innerHTML =
+                    " " + (TS / 10 ** 9).toFixed(0)
+            }
+        }
+        
+        const totalTime = async () => {
+            const TT = await WTFstake.lockDuration()
+            document.getElementById("totalTime").innerHTML =
+                " " + (TT / 86400).toFixed(0) + " days"
+        }
+        
+        const remainingTime = async () => {
+            const LD = await WTFstake.lockDuration()
+            const PF = await WTFstake.periodFinish()
+            const PFminusRT = PF - LD
+        
+            const provider = new ethers.providers.Web3Provider(window.ethereum)
+            const block = await provider.getBlock()
+            const timestamp = block.timestamp
+        
+            const RT = PF - timestamp
+        
+            const days = Math.floor(RT / (24 * 60 * 60))
+            const hours = Math.floor((RT % (24 * 60 * 60)) / (60 * 60))
+            const minutes = Math.floor((RT % (60 * 60)) / 60)
+            const seconds = Math.floor(RT % 60)
+        
+            if (PFminusRT >= timestamp) {
+                document.getElementById("remaining").innerHTML = "Over!"
+            } else {
+                document.getElementById("remaining").innerHTML =
+                    " " +
+                    days +
+                    "d" +
+                    " " +
+                    hours +
+                    "h" +
+                    " " +
+                    minutes +
+                    "m" +
+                    " " +
+                    seconds +
+                    "s"
+            }
+        }
+        
+        tax()
+        earlyTax()
+        totalSupply()
+        totalTime()
+        remainingTime()
+    }, [account])
 
     const setAmountToMax = async () => {
         const balance = await WTFcoin.balanceOf(account)
@@ -112,34 +148,6 @@ const TokenStaking = () => {
         const contract = new ethers.Contract(stakeContract, stakingABI, signer)
         const tx = await contract.getReward()
         await tx.wait()
-    }
-
-    const rewards = async () => {
-        const R = await WTFstake.earned(account)
-        // eslint-disable-next-line
-        if (R == 0) {
-            document.getElementById("rewards").innerHTML = " " + 0
-        } else {
-            document.getElementById("rewards").innerHTML =
-                " " + (R / 10 ** 9).toFixed(0)
-        }
-    }
-
-    const stakedTokens = async () => {
-        const ST = await WTFstake.balanceOf(account)
-        // eslint-disable-next-line
-        if (ST == 0) {
-            document.getElementById("tokenStaked").innerHTML = " " + 0
-        } else {
-            document.getElementById("tokenStaked").innerHTML =
-                " " + (ST / 10 ** 9).toFixed(0)
-        }
-    }
-
-    const getBalance = async () => {
-        const balance = await WTFcoin.balanceOf(account)
-        document.getElementById("holdings").innerHTML =
-            " " + ((balance / 10 ** 9).toFixed(0) - 1)
     }
 
     const stake = async (amount) => {
@@ -173,7 +181,7 @@ const TokenStaking = () => {
                 setApproved(true) // maybe change later to check if approved or not
             }
         } catch (error) {
-            throw new Error("User denied transaction signature")
+            throw new Error("Error approving tokens")
         }
     }
 
@@ -188,17 +196,25 @@ const TokenStaking = () => {
     }
 
     const withdraw = async (amount) => {
-        const provider = new ethers.providers.Web3Provider(window.ethereum)
-        const signer = provider.getSigner()
-        const contract = new ethers.Contract(stakeContract, stakingABI, signer)
-        const tx = await contract.withdraw((amount * 10 ** 9).toString())
-        await tx.wait()
-    }
-
-    if (isConnected) {
-        getBalance()
-        stakedTokens()
-        rewards()
+        try {
+            const provider = new ethers.providers.Web3Provider(window.ethereum)
+            const signer = provider.getSigner()
+            const contract = new ethers.Contract(
+                stakeContract,
+                stakingABI,
+                signer
+            )
+            if (withdrawAmount == 0) {
+                throw new Error("Amount cannot be 0")
+            } else {
+                const tx = await contract.withdraw(
+                    (amount * 10 ** 9).toString()
+                )
+                await tx.wait()
+            }
+        } catch (error) {
+            throw new Error(error)
+        }
     }
 
     return (
@@ -251,7 +267,7 @@ const TokenStaking = () => {
                         <div className="bottompart flex flex-col md:flex-row w-full h-5/6">
                             <div className="leftpart md:w-1/6 text-xl md:text-2xl lg:text-3xl xl:text-4xl text-center md:text-start">
                                 <div className="border-b">
-                                    Total Time:{" "}
+                                    Lock Time:{" "}
                                     <span className="" id="totalTime">
                                         ?
                                     </span>
@@ -282,7 +298,7 @@ const TokenStaking = () => {
                             <div className="flex flex-col md:w-5/6 h-full md:pl-2 md:border-l">
                                 <div className="flex justify-between flex-col items-center md:flex-row text-lg md:text-2xl lg:text-4xl xl:text-5xl h-1/6 border-b">
                                     <div className="text-center">
-                                        TVL:
+                                        TVL:{" "}
                                         <span className="" id="TVL">
                                             ?
                                         </span>
@@ -375,7 +391,7 @@ const TokenStaking = () => {
                                         </div>
                                     </div>
 
-                                    <div className="flex flex-row md:flex-col md:w-1/3 h-1/3 md:h-full md:border-l border-b md:border-b-0 md:border-r">
+                                    <div className="flex flex-row md:flex-col md:w-1/3 h-1/3 md:h-full md:border-l border-b md:border-b-0 md:border-r px-2">
                                         <div className="flex justify-center items-center md:h-1/3 w-1/3 md:w-full order-1 md:order-1">
                                             <span className="text-lg md:text-2xl lg:text-3xl xl:text-5xl">
                                                 Tokens Staked:{" "}
