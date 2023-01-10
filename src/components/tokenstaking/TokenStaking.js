@@ -64,7 +64,7 @@ const remainingTime = async () => {
     const seconds = Math.floor(RT % 60)
 
     if (PFminusRT >= timestamp) {
-        document.getElementById("remaining").innerHTML = " " + 0
+        document.getElementById("remaining").innerHTML = "Over!"
     } else {
         document.getElementById("remaining").innerHTML =
             " " +
