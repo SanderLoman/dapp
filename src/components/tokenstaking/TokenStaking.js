@@ -3,7 +3,7 @@ import { stakeContract, stakingABI } from "../../constants/stakingToken"
 import { coinContract, coinABI } from "../../constants/coinToken"
 import { useEthers } from "@usedapp/core"
 import { Link } from "react-router-dom"
-import { ethers } from "ethers"
+import { BigNumber, ethers } from "ethers"
 import { Switch } from "@headlessui/react"
 import WTFlogo from "../../assets/LOGO.png"
 import "./TokenStaking.css"
@@ -21,7 +21,9 @@ const WTFcoin = new ethers.Contract(coinContract, coinABI, providerCoin)
 
 const TokenStaking = () => {
     const { account, activateBrowserWallet, deactivate } = useEthers()
+    const [amountDisplay, setAmountDisplay] = useState()
     const [amount, setAmount] = useState()
+    const [withdrawAmountDisplay, setWithdrawAmountDisplay] = useState()
     const [withdrawAmount, setWithdrawAmount] = useState()
     const [approved, setApproved] = useState(false)
     const [enabled, setEnabled] = useState(false)
@@ -53,7 +55,7 @@ const TokenStaking = () => {
         const getBalance = async () => {
             const balance = await WTFcoin.balanceOf(account)
             document.getElementById("holdings").innerHTML =
-                " " + ((balance / 10 ** 9).toFixed(0))
+                " " + (balance / 10 ** 9).toFixed(0)
         }
 
         if (isConnected) {
@@ -94,7 +96,7 @@ const TokenStaking = () => {
         const remainingTime = async () => {
             const LD = await WTFstake.lockDuration() // 604800
             const PF = await WTFstake.periodFinish() // 1673941680
-            const PFminusRT = PF - LD 
+            const PFminusRT = PF - LD
 
             const provider = new ethers.providers.Web3Provider(window.ethereum)
             const block = await provider.getBlock()
@@ -126,6 +128,19 @@ const TokenStaking = () => {
             }
         }
 
+        const checkApprove = async () => {
+            // check if the allowance is greater than 0, if it is, set the approved state to true
+            const allowance = await WTFcoin.allowance(account, stakeContract)
+            if (allowance > 0) {
+                setApproved(true)
+            } else {
+                setApproved(false)
+            }
+        }
+
+        if (isConnected) {
+            checkApprove()
+        }
         tax()
         earlyTax()
         totalSupply()
@@ -133,14 +148,26 @@ const TokenStaking = () => {
         remainingTime()
     }, [account])
 
+    const checkApproveAmount = async (amount) => {
+        // listen to the onChange event of the approve input, if the value is greater than what the allowance is, set the approved state to false
+        const allowance = await WTFcoin.allowance(account, stakeContract)
+        if (amount > allowance) {
+            setApproved(false)
+        }
+    }
+
     const setAmountToMax = async () => {
-        const balance = await WTFcoin.balanceOf(account)
-        setAmount((balance / 10 ** 9).toFixed(0))
+        const balanceDisplay = await WTFcoin.balanceOf(account)
+        setAmountDisplay((balanceDisplay / 10 ** 9).toFixed(0))
+        const balance = balanceDisplay
+        setAmount(balance)
     }
 
     const setWithdrawAmountToMax = async () => {
-        const balance = await WTFstake.balanceOf(account)
-        setWithdrawAmount((balance / 10 ** 9).toFixed(0))
+        const balanceDisplay = await WTFstake.balanceOf(account)
+        setWithdrawAmountDisplay((balanceDisplay / 10 ** 9).toFixed(0))
+        const balance = balanceDisplay
+        setWithdrawAmount(balance)
     }
 
     const getRewards = async () => {
@@ -158,12 +185,12 @@ const TokenStaking = () => {
         if (amount == 0) {
             throw new Error("Amount cannot be 0")
         } else {
-            const tx = await contract.stake((amount * 10 ** 9).toString())
+            const tx = await contract.stake(amount.toString())
             await tx.wait()
         }
     }
 
-    // You can use the allowance method to check if the spender is approved to transfer tokens on behalf of the owner. 
+    // You can use the allowance method to check if the spender is approved to transfer tokens on behalf of the owner.
     // the method will return you the approved amount to spend
 
     const approving = async (amount) => {
@@ -174,16 +201,12 @@ const TokenStaking = () => {
             if (amount == 0) {
                 throw new Error("Amount cannot be 0")
             } else {
-                const tx = await contract.approve(
-                    stakeContract,
-                    (amount * 10 ** 9).toString()
-                )
-                await tx.wait()
+                await contract.approve(stakeContract, amount.toString())
 
                 setApproved(true) // maybe change later to check if approved or not (probs check with allowance method)
             }
         } catch (error) {
-            throw new Error("Error approving tokens")
+            throw new Error("User denied transaction signature")
         }
     }
 
@@ -191,10 +214,7 @@ const TokenStaking = () => {
         const provider = new ethers.providers.Web3Provider(window.ethereum)
         const signer = provider.getSigner()
         const contract = new ethers.Contract(stakeContract, stakingABI, signer)
-        const tx = await contract.emergencyWithdraw(
-            (amount * 10 ** 9).toString()
-        )
-        await tx.wait()
+        await contract.emergencyWithdraw((amount * 10 ** 9).toString())
     }
 
     const withdraw = async (amount) => {
@@ -327,22 +347,33 @@ const TokenStaking = () => {
                                                             className="bg-gray-100 text-lg md:text-2xl lg:text-2xl xl:text-3xl rounded-tl-xl rounded-bl-xl md:rounded-bl-none rounded-tr-xl acitve:outline-none focus:outline-none text-center"
                                                             type="number"
                                                             placeholder="Amount to stake"
-                                                            value={amount || ""}
-                                                            onChange={(event) =>
-                                                                setAmount(
+                                                            value={
+                                                                amountDisplay ||
+                                                                ""
+                                                            }
+                                                            onChange={(
+                                                                event
+                                                            ) => {
+                                                                setAmountDisplay(
                                                                     event.target
                                                                         .value
                                                                 )
-                                                            }
+                                                                checkApproveAmount(
+                                                                    amount
+                                                                )
+                                                            }}
                                                         />
                                                     ) : (
                                                         <input
                                                             className="bg-gray-100 text-lg md:text-2xl lg:text-2xl xl:text-3xl rounded-tl-xl rounded-bl-none rounded-tr-xl acitve:outline-none focus:outline-none text-center"
                                                             type="number"
                                                             placeholder="Amount to approve"
-                                                            value={amount || ""}
+                                                            value={
+                                                                amountDisplay ||
+                                                                ""
+                                                            }
                                                             onChange={(event) =>
-                                                                setAmount(
+                                                                setAmountDisplay(
                                                                     event.target
                                                                         .value
                                                                 )
@@ -439,10 +470,11 @@ const TokenStaking = () => {
                                                         type="number"
                                                         placeholder="Amount to withdraw"
                                                         value={
-                                                            withdrawAmount || ""
+                                                            withdrawAmountDisplay ||
+                                                            ""
                                                         }
                                                         onChange={(e) =>
-                                                            setWithdrawAmount(
+                                                            setWithdrawAmountDisplay(
                                                                 e.target.value
                                                             )
                                                         }
