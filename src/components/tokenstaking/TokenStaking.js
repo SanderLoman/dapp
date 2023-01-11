@@ -182,7 +182,7 @@ const TokenStaking = () => {
                 const tx2 = await WTFcoin.allowance(account, stakeContract)
                 await tx2.wait()
 
-                setApproved(true) // maybe change later to check if approved or not
+                setApproved(true) // maybe change later to check if approved or not (probs check with allowance method)
             }
         } catch (error) {
             throw new Error("Error approving tokens")
