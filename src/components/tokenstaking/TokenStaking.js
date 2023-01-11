@@ -179,8 +179,6 @@ const TokenStaking = () => {
                     (amount * 10 ** 9).toString()
                 )
                 await tx.wait()
-                const tx2 = await WTFcoin.allowance(account, stakeContract)
-                await tx2.wait()
 
                 setApproved(true) // maybe change later to check if approved or not (probs check with allowance method)
             }
