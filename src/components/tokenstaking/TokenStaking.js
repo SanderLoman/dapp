@@ -26,6 +26,7 @@ const TokenStaking = () => {
     const [withdrawAmountDisplay, setWithdrawAmountDisplay] = useState()
     const [withdrawAmount, setWithdrawAmount] = useState()
     const [approved, setApproved] = useState(false)
+    const [staked, setStaked] = useState(false)
     const [enabled, setEnabled] = useState(false)
     const isConnected = account !== undefined
 
@@ -186,7 +187,6 @@ const TokenStaking = () => {
             throw new Error("Amount cannot be 0")
         } else {
             const tx = await contract.stake(amount.toString())
-            await tx.wait()
         }
     }
 
@@ -202,8 +202,7 @@ const TokenStaking = () => {
                 throw new Error("Amount cannot be 0")
             } else {
                 await contract.approve(stakeContract, amount.toString())
-
-                setApproved(true) // maybe change later to check if approved or not (probs check with allowance method)
+                setApproved(true)
             }
         } catch (error) {
             throw new Error("User denied transaction signature")
@@ -214,7 +213,7 @@ const TokenStaking = () => {
         const provider = new ethers.providers.Web3Provider(window.ethereum)
         const signer = provider.getSigner()
         const contract = new ethers.Contract(stakeContract, stakingABI, signer)
-        await contract.emergencyWithdraw((amount * 10 ** 9).toString())
+        await contract.emergencyWithdraw(amount.toString())
     }
 
     const withdraw = async (amount) => {
@@ -229,9 +228,7 @@ const TokenStaking = () => {
             if (withdrawAmount == 0) {
                 throw new Error("Amount cannot be 0")
             } else {
-                const tx = await contract.withdraw(
-                    (amount * 10 ** 9).toString()
-                )
+                const tx = await contract.withdraw(amount.toString())
                 await tx.wait()
             }
         } catch (error) {
@@ -555,7 +552,7 @@ export default TokenStaking
 
 // TODO:
 // 1. make the approve function work with the correct amount of tokens in gwei and make sure no overflow errors occur. ✅
-// 2. make staking appear when a user has approved the contract to spend their tokens. ❌
+// 2. make staking appear when a user has approved the contract to spend their tokens. ✅
 // 3. calculate the remaining time for the pool to end. ✅
 // 4. make the withdraw function work. ❌
 // 5. make the early withdraw function work. ✅
