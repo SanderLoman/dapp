@@ -53,7 +53,7 @@ const TokenStaking = () => {
         const getBalance = async () => {
             const balance = await WTFcoin.balanceOf(account)
             document.getElementById("holdings").innerHTML =
-                " " + ((balance / 10 ** 9).toFixed(0) - 1)
+                " " + ((balance / 10 ** 9).toFixed(0))
         }
 
         if (isConnected) {
@@ -92,9 +92,9 @@ const TokenStaking = () => {
         }
 
         const remainingTime = async () => {
-            const LD = await WTFstake.lockDuration()
-            const PF = await WTFstake.periodFinish()
-            const PFminusRT = PF - LD
+            const LD = await WTFstake.lockDuration() // 604800
+            const PF = await WTFstake.periodFinish() // 1673941680
+            const PFminusRT = PF - LD 
 
             const provider = new ethers.providers.Web3Provider(window.ethereum)
             const block = await provider.getBlock()
@@ -135,7 +135,7 @@ const TokenStaking = () => {
 
     const setAmountToMax = async () => {
         const balance = await WTFcoin.balanceOf(account)
-        setAmount((balance / 10 ** 9).toFixed(0) - 1)
+        setAmount((balance / 10 ** 9).toFixed(0))
     }
 
     const setWithdrawAmountToMax = async () => {
@@ -162,6 +162,9 @@ const TokenStaking = () => {
             await tx.wait()
         }
     }
+
+    // You can use the allowance method to check if the spender is approved to transfer tokens on behalf of the owner. 
+    // the method will return you the approved amount to spend
 
     const approving = async (amount) => {
         try {

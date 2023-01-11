@@ -9,7 +9,7 @@ const main = async () => {
     console.log("Account balance:", ((before = await deployer.getBalance()) / 1e18).toFixed(4), "ETH")
 
     const Contract = await hre.ethers.getContractFactory("WTFstake")
-    const contract = await Contract.deploy("0xaAE5D0839Bb0102C782007952E34A9dc56f63481", "0xaAE5D0839Bb0102C782007952E34A9dc56f63481", 604800, 9, true)
+    const contract = await Contract.deploy("0x68D301f364F53E1F85Dc7e410F1068df3364181a", "0x68D301f364F53E1F85Dc7e410F1068df3364181a", 604800, 9, true)
 
     await contract.deployed()
 

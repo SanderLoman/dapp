@@ -1,4 +1,4 @@
-const coinContract = "0xaAE5D0839Bb0102C782007952E34A9dc56f63481"
+const coinContract = "0x68D301f364F53E1F85Dc7e410F1068df3364181a"
 
 const coinABI = require("./coinToken.json")
 
