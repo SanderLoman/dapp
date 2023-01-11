@@ -132,7 +132,8 @@ const TokenStaking = () => {
         const checkApprove = async () => {
             // check if the allowance is greater than 0, if it is, set the approved state to true
             const allowance = await WTFcoin.allowance(account, stakeContract)
-            if (allowance > 0) {
+            const stakeBalance = await WTFstake.balanceOf(account)
+            if (allowance > stakeBalance) {
                 setApproved(true)
             } else {
                 setApproved(false)
@@ -150,7 +151,6 @@ const TokenStaking = () => {
     }, [account])
 
     const checkApproveAmount = async (amount) => {
-        // listen to the onChange event of the approve input, if the value is greater than what the allowance is, set the approved state to false
         const allowance = await WTFcoin.allowance(account, stakeContract)
         if (amount > allowance) {
             setApproved(false)
@@ -552,13 +552,13 @@ export default TokenStaking
 
 // TODO:
 // 1. make the approve function work with the correct amount of tokens in gwei and make sure no overflow errors occur. ✅
-// 2. make staking appear when a user has approved the contract to spend their tokens. ✅
+// 2. make staking appear when a user has approved the contract to spend their tokens. ❌
 // 3. calculate the remaining time for the pool to end. ✅
 // 4. make the withdraw function work. ❌
-// 5. make the early withdraw function work. ✅
+// 5. make the early withdraw function work. ❌
 // 6. make APY and APR work. ❌
-// 7. understand the staking contract its functions and know how it works. ✅
-// 8. make sure react doesnt rerender specific functions, so that we dont overload the api with requests (could make a function that gets the data on refresh and only once). ✅
+// 7. understand the staking contract its functions and know how it works. ❌
+// 8. make sure react doesnt rerender specific functions, so that we dont overload the api with requests (could make a function that gets the data on refresh and only once). ✅❌
 // 9. make loading icons when approving, staking, withdrawing, claiming rewards. ❌
 // 10. make pop up notifications when succesfully or failing approving, staking, withdrawing, claiming. ❌
 // 11. make the remaining tokens after the first decimal disappear. ❌
